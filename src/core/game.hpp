@@ -1,24 +1,18 @@
 #pragma once
 
-#include "../entities/player.hpp"
+#include "tilemap/tilemap.hpp"
+#include "resources/resources.hpp"
+#include "debug/logger.hpp"
+
 #include "../entities/entity-manager.hpp"
-
-#include "../economy/economy.hpp"
-
 #include "../ui/core/ui.hpp"
 #include "../ui/screens/hud.hpp"
-
-#include "tilemap/tilemap.hpp"
-#include "debug/debug.hpp"
+#include "../entities/entities/player.hpp"
 
 #include <iostream>
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Color.hpp>
-
-const std::string WINDOW_TITLE = "Delicious Soup";
-const int WINDOW_WIDTH = 1280;
-const int WINDOW_HEGHT = 720;
+#include <SFML/Config.hpp>
+#include <SFML/System/Err.hpp>
 
 class Game {
 	public:
@@ -26,28 +20,32 @@ class Game {
 		void run();
 
 	private:
-		void processEvent();
-		void render();
-		void initilizeIcon();
+		const std::string WINDOW_TITLE = "Delicious Soup";
+		unsigned int WINDOW_WIDTH = 1280;
+		unsigned int WINDOW_HEGHT = 720;
 
 		sf::RenderWindow window;
 		sf::Color background = sf::Color(85, 110, 74);
 		sf::Event event;
 		sf::Clock clock;
 		sf::View gameView;
-		sf::View uiView;
+		sf::View UIView;
 
-		// Game icon
-		sf::Image icon;
-		const sf::Uint8* pixelData;
+		void processEvent();
+		void render();
+		void initilizeIcon();
 
-		UI uiManager;
-		Economy economyManager;
-		HUD hud{ uiManager };
-		Player player;
+		Logger& logger = Logger::Instance();
+		ResourceManager& resourceManager = ResourceManager::Instance();
+		UIManager& UIManager = UIManager::Instance();
+
 		Tilemap tilemap;
 		EntityManager entityManager;
+		HUD hud;
 
+		sf::Image icon;
+		const sf::Uint8* iconData;
+		
 		float rawDelta = clock.restart().asSeconds();
 		float deltaTime = std::min(rawDelta, 0.1f);
 };
