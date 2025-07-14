@@ -6,8 +6,14 @@ set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
 
 find_package(SFML COMPONENTS system window graphics REQUIRED)
 
+add_subdirectory(third_party/catch2)
+add_executable(tests tests/test.cpp)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+
 add_executable(Game 
 "src/main.cpp" 
+"src/core/game.hpp" 
 "src/core/game.cpp" 
 
 "src/economy/economy.hpp" 
@@ -37,6 +43,7 @@ add_executable(Game
 
 "src/ui/screens/hud.hpp"
 
+"tests/test.cpp"
 "src/core/debug/debug.hpp"
 "src/core/debug/logger.hpp"
 
