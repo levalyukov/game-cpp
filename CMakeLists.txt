@@ -6,17 +6,23 @@ set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
 
 find_package(SFML COMPONENTS system window graphics REQUIRED)
 
+add_subdirectory(third_party/catch2)
+add_executable(tests tests/test.cpp)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+
 add_executable(Game 
 "src/main.cpp" 
+"src/core/game.hpp" 
 "src/core/game.cpp" 
 
-"src/entities/player.cpp" 
 "src/economy/economy.hpp" 
 "src/economy/economy.cpp"
+
 "src/entities/entity-manager.hpp" 
-"src/entities/entity-manager.cpp" 
-"src/entities/entity.hpp" 
-"src/entities/entity.cpp" 
+"src/entities/entity.hpp"
+"src/entities/entities/player.cpp" 
+"src/entities/entities/player.hpp" 
 
 "src/core/tilemap/tilemap.cpp" 
 "src/core/tilemap/tilemap.hpp" 
@@ -27,25 +33,23 @@ add_executable(Game
 "src/core/audio/audio.cpp" 
 "src/core/audio/audio.hpp" 
 
-"src/ui/core/ui.cpp"
 "src/ui/core/ui.hpp"
-"src/ui/core/gui.cpp"
 "src/ui/core/gui.hpp"
 
 "src/ui/core/elements/ui-element.hpp"
-"src/ui/core/elements/label.cpp"
 "src/ui/core/elements/label.hpp"
 "src/ui/core/elements/button.cpp" 
 "src/ui/core/elements/button.hpp" 
 
-"src/ui/screens/hud.cpp"
 "src/ui/screens/hud.hpp"
 
-"src/core/debug/debug.cpp"
+"tests/test.cpp"
 "src/core/debug/debug.hpp"
+"src/core/debug/logger.hpp"
 
 "src/core/resources/resources.hpp"
-"src/core/resources/resources.cpp")
+"src/core/resources/resources.cpp"
+)
 target_include_directories(Game PRIVATE ${SFML_INCLUDE_DIRS})
 target_link_libraries(Game PRIVATE sfml-system sfml-window sfml-audio sfml-graphics)
 
