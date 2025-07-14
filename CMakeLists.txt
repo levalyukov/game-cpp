@@ -10,7 +10,6 @@ add_subdirectory(third_party/catch2)
 add_executable(tests tests/test.cpp)
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 
-
 add_executable(Game 
 "src/main.cpp" 
 "src/core/game.hpp" 
@@ -43,13 +42,11 @@ add_executable(Game
 
 "src/ui/screens/hud.hpp"
 
-"tests/test.cpp"
 "src/core/debug/debug.hpp"
 "src/core/debug/logger.hpp"
 
 "src/core/resources/resources.hpp"
-"src/core/resources/resources.cpp"
-)
+"src/core/resources/resources.cpp")
 target_include_directories(Game PRIVATE ${SFML_INCLUDE_DIRS})
 target_link_libraries(Game PRIVATE sfml-system sfml-window sfml-audio sfml-graphics)
 
