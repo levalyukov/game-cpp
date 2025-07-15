@@ -1,3 +1,6 @@
 [submodule "third_party/catch2"]
 	path = third_party/catch2
 	url = https://github.com/catchorg/Catch2
+[submodule "third_party/sfml"]
+	path = third_party/sfml
+	url = https://github.com/SFML/SFML.git
