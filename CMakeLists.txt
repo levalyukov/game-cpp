@@ -4,12 +4,14 @@ project(game)
 # .:: Libraries ::.
 add_subdirectory(third_party/sfml)
 add_subdirectory(third_party/catch2)
-add_executable(tests tests/test.cpp)
+
+file(GLOB_RECURSE TESTS "tests/*.cpp")
+add_executable(tests ${TESTS})
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 
-# Setup main
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.hpp")
-add_executable(main ${SOURCES})
+# .:: Setup main ::.
+file(GLOB_RECURSE GAME "src/*.cpp" "src/*.hpp")
+add_executable(main ${GAME})
 
 target_link_libraries(main PRIVATE 
     sfml-graphics 
@@ -17,7 +19,7 @@ target_link_libraries(main PRIVATE
     sfml-system
 )
 
-# Copying DLL
+# .:: Copying DLL ::.
 add_custom_command(TARGET main POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "$<TARGET_FILE:sfml-system>"
