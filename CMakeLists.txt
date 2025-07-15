@@ -1,66 +1,34 @@
 cmake_minimum_required(VERSION 3.15)
-project(Game-CPP)
+project(game)
 
-set(SFML_ROOT "C:/cpp-libs/SFML")
-set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
-
-find_package(SFML COMPONENTS system window graphics REQUIRED)
-
+# .:: Libraries ::.
+add_subdirectory(third_party/sfml)
 add_subdirectory(third_party/catch2)
 add_executable(tests tests/test.cpp)
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 
-add_executable(Game 
-"src/main.cpp" 
-"src/core/game.hpp" 
-"src/core/game.cpp" 
+# Setup main
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.hpp")
+add_executable(main ${SOURCES})
 
-"src/economy/economy.hpp" 
-"src/economy/economy.cpp"
+target_link_libraries(main PRIVATE 
+    sfml-graphics 
+    sfml-window 
+    sfml-system
+)
 
-"src/entities/entity-manager.hpp" 
-"src/entities/entity.hpp"
-"src/entities/entities/player.cpp" 
-"src/entities/entities/player.hpp" 
-
-"src/core/tilemap/tilemap.cpp" 
-"src/core/tilemap/tilemap.hpp" 
-"src/core/animations/animations.cpp"
-"src/core/animations/animations.hpp"
-"src/core/collisions/collisions.hpp" 
-"src/core/collisions/collisions.cpp"
-"src/core/audio/audio.cpp" 
-"src/core/audio/audio.hpp" 
-
-"src/ui/core/ui.hpp"
-"src/ui/core/gui.hpp"
-
-"src/ui/core/elements/ui-element.hpp"
-"src/ui/core/elements/label.hpp"
-"src/ui/core/elements/button.cpp" 
-"src/ui/core/elements/button.hpp" 
-
-"src/ui/screens/hud.hpp"
-
-"src/core/debug/debug.hpp"
-"src/core/debug/logger.hpp"
-
-"src/core/resources/resources.hpp"
-"src/core/resources/resources.cpp")
-target_include_directories(Game PRIVATE ${SFML_INCLUDE_DIRS})
-target_link_libraries(Game PRIVATE sfml-system sfml-window sfml-audio sfml-graphics)
-
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(SFML_DLL_SUFFIX "-d-2.dll")
-else()
-    set(SFML_DLL_SUFFIX "-2.dll")
-endif()
-
-add_custom_command(TARGET Game POST_BUILD
+# Copying DLL
+add_custom_command(TARGET main POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${SFML_ROOT}/bin/sfml-system${SFML_DLL_SUFFIX}"
-        "${SFML_ROOT}/bin/sfml-window${SFML_DLL_SUFFIX}"
-        "${SFML_ROOT}/bin/sfml-graphics${SFML_DLL_SUFFIX}"
-        "${SFML_ROOT}/bin/sfml-audio${SFML_DLL_SUFFIX}"
-        "$<TARGET_FILE_DIR:Game>"
+        "$<TARGET_FILE:sfml-system>"
+        "$<TARGET_FILE:sfml-window>"
+        "$<TARGET_FILE:sfml-graphics>"
+        $<TARGET_FILE_DIR:main>
+)
+
+add_custom_command(TARGET tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE:Catch2::Catch2>"
+        "$<TARGET_FILE:Catch2::Catch2WithMain>"
+        $<TARGET_FILE_DIR:tests>
 )
