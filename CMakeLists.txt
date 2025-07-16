@@ -9,6 +9,8 @@ add_subdirectory(third_party/catch2)
 # .:: Setup tests ::.
 file(GLOB_RECURSE TESTS 
     "tests/core/*.cpp"
+    "src/core/resources/resources.cpp" 
+    "src/core/resources/resources.hpp"
 )
 
 add_executable(tests ${TESTS})

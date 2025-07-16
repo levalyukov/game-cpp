@@ -51,13 +51,10 @@ class Logger {
             switch (level) {
                 case Info:
                     return "[I]";
-                    break;
                 case Warning:
                     return "[W]";
-                    break;
                 case Error:
                     return "[E]";
-                    break;
             }
         }
 };

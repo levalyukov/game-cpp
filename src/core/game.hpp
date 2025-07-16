@@ -45,7 +45,7 @@ class Game {
 
 		sf::Image icon;
 		const sf::Uint8* iconData;
-		
+
 		float rawDelta = clock.restart().asSeconds();
 		float deltaTime = std::min(rawDelta, 0.1f);
 };
