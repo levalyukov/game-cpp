@@ -6,6 +6,11 @@
 
 class EntityManager {
 	public:
+		inline static EntityManager& Instance() {
+			static EntityManager r;
+			return r;
+		}
+
 		inline void addEntity(std::string name, std::unique_ptr<Entity> entity) { 
 			entities.emplace(name, std::move(entity));
 		};
@@ -26,4 +31,9 @@ class EntityManager {
 
 	private:
 		std::map <std::string, std::unique_ptr<Entity>> entities;
-};
+
+		EntityManager() {};
+		~EntityManager() {};
+		EntityManager(EntityManager& const) = delete;
+		EntityManager& operator=(EntityManager& const) = delete;
+}; 
