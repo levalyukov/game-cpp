@@ -22,22 +22,12 @@ Game::Game() {
 			resourceManager.getTexture("character-walk-vertical")
 		)
 	);
-
-	logger.log(Logger::Error, "test");
 }
 
 void Game::run() {
 	while (window.isOpen()) {
 		processEvent();
 		render();
-	}
-}
-
-void Game::processEvent() {
-	while (window.pollEvent(event)) {
-		if (event.type == sf::Event::Closed) {
-			window.close();
-		}
 	}
 }
 
@@ -53,13 +43,4 @@ void Game::render() {
 	window.setView(UIView);
 	UIManager.render(event, window);
 	window.display();
-}
-
-void Game::initilizeIcon() {
-	if (!icon.loadFromFile("../../../assets/icon.png3")) {
-		logger.log(Logger::Error, "Unable to load game icon: incorrect path to file.");
-		return;
-	};
-	iconData = icon.getPixelsPtr();
-	window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
 }

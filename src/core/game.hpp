@@ -31,16 +31,34 @@ class Game {
 		sf::View gameView;
 		sf::View UIView;
 
-		void processEvent();
+		inline void processEvent() {
+			while (window.pollEvent(event)) {
+				if (event.type == sf::Event::Closed) {
+					window.close();
+				}
+			}
+		};
+
 		void render();
-		void initilizeIcon();
+
+		inline void initilizeIcon() {
+			if (!icon.loadFromFile("../../../assets/icon.png")) {
+				logger.log(
+					Logger::Error, 
+					"Unable to load game icon: incorrect path to file."
+				);
+				return;
+			};
+			iconData = icon.getPixelsPtr();
+			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
+		};
 
 		Logger& logger = Logger::Instance();
 		ResourceManager& resourceManager = ResourceManager::Instance();
 		UIManager& UIManager = UIManager::Instance();
+		EntityManager& entityManager = EntityManager::Instance();
 
 		Tilemap tilemap;
-		EntityManager entityManager;
 		HUD hud;
 
 		sf::Image icon;
