@@ -8,8 +8,8 @@ add_subdirectory(third_party/catch2)
 
 # .:: Setup tests ::.
 file(GLOB_RECURSE TESTS 
-    "tests/core/*.cpp"
-    "src/core/resources/resources.cpp" 
+    "tests/*.cpp"
+    "src/core/economy/economy.hpp"
     "src/core/resources/resources.hpp"
 )
 
