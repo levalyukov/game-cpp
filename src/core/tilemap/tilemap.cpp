@@ -16,6 +16,10 @@ void Tilemap::initilize() {
 	rock_sprite.setScale(4, 4);
 	water_sprite.setScale(4, 4);
 	grass_sprite.setScale(4, 4);
+
+	rock_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
+	water_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
+	grass_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
 }
 
 void Tilemap::render(sf::RenderWindow& window) {
