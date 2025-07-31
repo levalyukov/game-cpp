@@ -1,10 +1,10 @@
 #include <catch2/catch_all.hpp>
 
-#include "../../src/core/resources/resources.hpp"
+#include "../src/core/resources/resources.hpp"
 
 ResourceManager& resourceManager = ResourceManager::Instance();
 
-/* Fonts */
+// Fonts
 
 TEST_CASE("Uploading a font") {
 	resourceManager.loadFont("arial", "../../../assets/fonts/arial.ttf");
