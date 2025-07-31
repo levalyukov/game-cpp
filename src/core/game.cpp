@@ -13,13 +13,15 @@ Game::Game() {
 	resourceManager.loadTexture("character-idle", "../../../assets/textures/entity/player/character_idle.png");
 	resourceManager.loadTexture("character-walk-horizontal", "../../../assets/textures/entity/player/character_walk_horizontal.png");
 	resourceManager.loadTexture("character-walk-vertical", "../../../assets/textures/entity/player/character_walk_vertical.png");
+	resourceManager.loadTexture("character-shadow", "../../../assets/textures/entity/player/character_shadow.png");
 
 	entityManager.addEntity(
 		"player",
 		std::make_unique<Player>(
 			resourceManager.getTexture("character-idle"),
 			resourceManager.getTexture("character-walk-horizontal"),
-			resourceManager.getTexture("character-walk-vertical")
+			resourceManager.getTexture("character-walk-vertical"),
+			resourceManager.getTexture("character-shadow")
 		)
 	);
 }
@@ -28,6 +30,14 @@ void Game::run() {
 	while (window.isOpen()) {
 		processEvent();
 		render();
+	}
+}
+
+void Game::processEvent() {
+	while (window.pollEvent(event)) {
+		if (event.type == sf::Event::Closed) {
+			window.close();
+		}
 	}
 }
 

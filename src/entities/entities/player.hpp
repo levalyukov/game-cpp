@@ -10,18 +10,28 @@ class Player : public Entity {
 		Player(
 			sf::Texture* character_idle,
 			sf::Texture* character_walk_horizontal,
-			sf::Texture* character_walk_vertical
+			sf::Texture* character_walk_vertical,
+			sf::Texture* character_shadow
 		);
 
 		void movement(float deltaTime);
-		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera);
+		void render(
+			sf::RenderWindow& window, 
+			float deltaTime, 
+			sf::View& gameCamera
+		) override;
 
 	private:
 		sf::Sprite sprite;
+		sf::Sprite shadow_sprite;
+
 		sf::Texture idle;
 		sf::Texture walkHorizontal;
 		sf::Texture walkVertical;
+		sf::Texture shadow_texture;
+
 		sf::Vector2i spriteSizeX {16,16};
+
 		const float RUN_SPEED = 6.0f;
 		const float WALK_SPEED = 4.0f;
 

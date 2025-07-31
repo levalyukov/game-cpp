@@ -25,20 +25,13 @@ class Game {
 		unsigned int WINDOW_HEGHT = 720;
 
 		sf::RenderWindow window;
-		sf::Color background = sf::Color(85, 110, 74);
+		sf::Color background = sf::Color(0,0,0);
 		sf::Event event;
 		sf::Clock clock;
 		sf::View gameView;
 		sf::View UIView;
 
-		inline void processEvent() {
-			while (window.pollEvent(event)) {
-				if (event.type == sf::Event::Closed) {
-					window.close();
-				}
-			}
-		};
-
+		void processEvent();
 		void render();
 
 		inline void initilizeIcon() {

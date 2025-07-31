@@ -3,19 +3,27 @@
 Player::Player(
 	sf::Texture* character_idle,
 	sf::Texture* character_walk_horizontal,
-	sf::Texture* character_walk_vertical
+	sf::Texture* character_walk_vertical,
+	sf::Texture* character_shadow
 ) : idle(std::move(*character_idle)),
 	walkHorizontal(std::move(*character_walk_horizontal)),
-	walkVertical(std::move(*character_walk_vertical)) {
+	walkVertical(std::move(*character_walk_vertical)),
+	shadow_texture(std::move(*character_shadow)) {
+
 	sprite.setTexture(idle);
 	sprite.setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
 	sprite.setPosition((9 / 2) * 64, (9/2) * 64);
 	sprite.setScale(4, 4);
+
+	shadow_sprite.setTexture(shadow_texture);
+	shadow_sprite.setScale(4, 4);
 }
 
 void Player::render(sf::RenderWindow& window, float deltaTime, sf::View& gameView) {
+	window.draw(shadow_sprite);
 	window.draw(sprite);
 	movement(deltaTime);
+	shadow_sprite.setPosition(sprite.getPosition());
 	gameView.setCenter(sprite.getPosition());
 }
 
