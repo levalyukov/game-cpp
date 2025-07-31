@@ -7,7 +7,7 @@ Game::Game() {
 	window.setFramerateLimit(60);
 	initilizeIcon();
 
-	gameView = window.getDefaultView();
+	gameCamera = window.getDefaultView();
 	UIView = window.getDefaultView();
 
 	resourceManager.loadTexture("character-idle", "../../../assets/textures/entity/player/character_idle.png");
@@ -45,9 +45,9 @@ void Game::render() {
 	window.clear(background);
 
 	// Game
-	window.setView(gameView);
+	window.setView(gameCamera);
 	tilemap.render(window);
-	entityManager.render(window, deltaTime, gameView);
+	entityManager.render(window, deltaTime, gameCamera, event);
 
 	// User Interface
 	window.setView(UIView);

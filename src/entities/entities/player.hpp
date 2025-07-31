@@ -15,11 +15,8 @@ class Player : public Entity {
 		);
 
 		void movement(float deltaTime);
-		void render(
-			sf::RenderWindow& window, 
-			float deltaTime, 
-			sf::View& gameCamera
-		) override;
+		void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
+		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera) override;
 
 	private:
 		sf::Sprite sprite;

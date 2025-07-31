@@ -27,7 +27,7 @@ class Game {
 		sf::Color background = sf::Color(0,0,0);
 		sf::Event event;
 		sf::Clock clock;
-		sf::View gameView;
+		sf::View gameCamera;
 		sf::View UIView;
 
 		void processEvent();
