@@ -2,7 +2,6 @@
 
 #include "tilemap/tilemap.hpp"
 #include "resources/resources.hpp"
-#include "debug/logger.hpp"
 
 #include "../entities/entity-manager.hpp"
 #include "../ui/core/ui.hpp"
@@ -36,17 +35,12 @@ class Game {
 
 		inline void initilizeIcon() {
 			if (!icon.loadFromFile("../../../assets/icon.png")) {
-				logger.log(
-					Logger::Error, 
-					"Unable to load game icon: incorrect path to file."
-				);
 				return;
 			};
 			iconData = icon.getPixelsPtr();
 			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
 		};
 
-		Logger& logger = Logger::Instance();
 		ResourceManager& resourceManager = ResourceManager::Instance();
 		UIManager& UIManager = UIManager::Instance();
 		EntityManager& entityManager = EntityManager::Instance();
