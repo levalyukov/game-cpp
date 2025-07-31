@@ -9,25 +9,43 @@
 
 class ResourceManager {
 	public:
-		static ResourceManager& Instance() {
+		inline static ResourceManager& Instance() {
 			static ResourceManager r;
 			return r;
-		}
+		};
 
 		// Textures
-		void loadTexture(const std::string name, const std::string path);
-		sf::Texture* getTexture(const std::string name);
-		void removeTexture(const std::string name);
+		inline void loadTexture(const std::string name, const std::string path) {
+			auto texture = std::make_unique<sf::Texture>();
+			if (!texture->loadFromFile(path)) return;
+			textures.emplace(name, std::move(texture));
+		};
+		inline sf::Texture* getTexture(const std::string name) {
+			auto element = textures.find(name);
+			return (element != textures.end()) ? element->second.get() : nullptr;
+		};
+		inline void removeTexture(const std::string name) {
+			auto element = textures.find(name);
+			if (element != textures.end()) textures.erase(name);
+		};
 
 		// Fonts
-		void loadFont(std::string font_name, std::string path);
-		sf::Font* getFont(std::string font_name);
-		void removeFont(std::string font_name);
+		inline void loadFont(std::string font_name, std::string path) {
+			auto new_font = std::make_unique<sf::Font>();
+			if (!new_font->loadFromFile(path)) return;
+			fonts.emplace(std::move(font_name), std::move(new_font));
+		};
+		inline sf::Font* getFont(std::string font_name) {
+			auto current_font = fonts.find(font_name);
+			return (current_font != fonts.end()) ? current_font->second.get() : nullptr;
+		};
+		inline void removeFont(std::string font_name) {
+			if (fonts.find(font_name) != fonts.end()) fonts.erase(font_name);
+		}
 
 	private:
 		ResourceManager() {};
 		~ResourceManager() {};
-
 		ResourceManager(ResourceManager const&) = delete;
 		ResourceManager& operator=(ResourceManager const&) = delete;
 
