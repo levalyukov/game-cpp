@@ -1,30 +1,11 @@
 #include "player.hpp"
 
-Player::Player(
-	sf::Texture* character_idle,
-	sf::Texture* character_walk_horizontal,
-	sf::Texture* character_walk_vertical,
-	sf::Texture* character_shadow
-) : idle(std::move(*character_idle)),
-	walkHorizontal(std::move(*character_walk_horizontal)),
-	walkVertical(std::move(*character_walk_vertical)),
-	shadow_texture(std::move(*character_shadow)) {
-
-	sprite.setTexture(idle);
-	sprite.setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
-	sprite.setPosition((9 / 2) * 64, (9/2) * 64);
-	sprite.setScale(4, 4);
-
-	shadow_sprite.setTexture(shadow_texture);
-	shadow_sprite.setScale(4, 4);
-}
-
-void Player::render(sf::RenderWindow& window, float deltaTime, sf::View& gameView) {
+void Player::render(sf::RenderWindow& window, float deltaTime, sf::View& gameView, sf::Clock& clock) {
 	window.draw(shadow_sprite);
-	window.draw(sprite);
+	window.draw(player);
 	movement(deltaTime);
-	shadow_sprite.setPosition(sprite.getPosition());
-	gameView.setCenter(sprite.getPosition());
+	shadow_sprite.setPosition(player.getPosition());
+	gameView.setCenter(player.getPosition());
 }
 
 void Player::movement(float deltaTime) {
@@ -65,10 +46,10 @@ void Player::movement(float deltaTime) {
 
 	// Movement
 	float speed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_SPEED : WALK_SPEED;
-	if (movementUp && !movementDown) sprite.move(0.0, -speed);
-	if (movementDown && !movementUp) sprite.move(0.0, speed);
-	if (movementLeft && !movementRight) sprite.move(-speed, 0.0);
-	if (movementRight && !movementLeft) sprite.move(speed, 0.0);
+	if (movementUp && !movementDown) player.move(0.0, -speed);
+	if (movementDown && !movementUp) player.move(0.0, speed);
+	if (movementLeft && !movementRight) player.move(-speed, 0.0);
+	if (movementRight && !movementLeft) player.move(speed, 0.0);
 
 	bool isMoving = (movementUp || movementDown || movementLeft || movementRight);
 
@@ -79,7 +60,7 @@ void Player::movement(float deltaTime) {
 
 		if (currentDirection == "up") {
 			animations.setAnimation(
-				sprite,
+				player,
 				target_texture,
 				oldVectorUP,
 				4, 16, 16,
@@ -91,7 +72,7 @@ void Player::movement(float deltaTime) {
 
 		if (currentDirection == "down") {
 			animations.setAnimation(
-				sprite,
+				player,
 				target_texture,
 				oldVectorDOWN,
 				4, 16, 16,
@@ -103,7 +84,7 @@ void Player::movement(float deltaTime) {
 
 		if (currentDirection == "left") {
 			animations.setAnimation(
-				sprite,
+				player,
 				target_texture,
 				oldVectorLEFT,
 				4, 16, 16,
@@ -115,7 +96,7 @@ void Player::movement(float deltaTime) {
 
 		if (currentDirection == "right") {
 			animations.setAnimation(
-				sprite,
+				player,
 				target_texture,
 				oldVectorRIGHT,
 				4, 16, 16,
@@ -126,21 +107,21 @@ void Player::movement(float deltaTime) {
 		}
 	}
 	else {
-		sprite.setTexture(idle);
+		player.setTexture(idle);
 		if (currentDirection == "up") {
-			sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+			player.setTextureRect(sf::IntRect(0, 0, 16, 16));
 			oldVectorUP = vectorUP;
 		}
 		if (currentDirection == "down") {
-			sprite.setTextureRect(sf::IntRect(16, 0, 16, 16));
+			player.setTextureRect(sf::IntRect(16, 0, 16, 16));
 			oldVectorDOWN = vectorDOWN;
 		}
 		if (currentDirection == "left") {
-			sprite.setTextureRect(sf::IntRect(0, 16, 16, 16));
+			player.setTextureRect(sf::IntRect(0, 16, 16, 16));
 			oldVectorLEFT = vectorLEFT;
 		}
 		if (currentDirection == "right") {
-			sprite.setTextureRect(sf::IntRect(16, 16, 16, 16));
+			player.setTextureRect(sf::IntRect(16, 16, 16, 16));
 			oldVectorRIGHT = vectorRIGHT;
 		}
 	}

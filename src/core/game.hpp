@@ -3,10 +3,9 @@
 #include "tilemap/tilemap.hpp"
 #include "resources/resources.hpp"
 
-#include "../entities/entity-manager.hpp"
 #include "../ui/core/ui.hpp"
 #include "../ui/screens/hud.hpp"
-#include "../entities/entities/player.hpp"
+#include "../world/world.hpp"
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -32,7 +31,6 @@ class Game {
 
 		void processEvent();
 		void render();
-
 		inline void initilizeIcon() {
 			if (!icon.loadFromFile("../../../assets/icon.png")) {
 				return;
@@ -41,9 +39,8 @@ class Game {
 			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
 		};
 
-		ResourceManager& resourceManager = ResourceManager::Instance();
 		UIManager& UIManager = UIManager::Instance();
-		EntityManager& entityManager = EntityManager::Instance();
+		World world;
 
 		Tilemap tilemap;
 		HUD hud;

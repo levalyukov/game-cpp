@@ -12,14 +12,25 @@ class Player : public Entity {
 			sf::Texture* character_walk_horizontal,
 			sf::Texture* character_walk_vertical,
 			sf::Texture* character_shadow
-		);
+		) : idle(std::move(*character_idle)),
+			walkHorizontal(std::move(*character_walk_horizontal)),
+			walkVertical(std::move(*character_walk_vertical)),
+			shadow_texture(std::move(*character_shadow)) {
+			player.setTexture(idle);
+			player.setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
+			player.setPosition((9 / 2) * 64, (9 / 2) * 64);
+			player.setScale(4, 4);
+			shadow_sprite.setTexture(shadow_texture);
+			shadow_sprite.setScale(4, 4);
+			player.setPosition({ 51 * 16,52 * 16 });
+		};
 
 		void movement(float deltaTime);
 		void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
-		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera) override;
+		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
 
 	private:
-		sf::Sprite sprite;
+		sf::Sprite player;
 		sf::Sprite shadow_sprite;
 
 		sf::Texture idle;

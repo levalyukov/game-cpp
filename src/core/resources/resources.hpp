@@ -15,7 +15,7 @@ class ResourceManager {
 		};
 
 		// Textures
-		inline void loadTexture(const std::string name, const std::string path) {
+		inline void loadTexture(const std::string& name, const std::string& path) {
 			auto texture = std::make_unique<sf::Texture>();
 			if (!texture->loadFromFile(path)) return;
 			textures.emplace(name, std::move(texture));
