@@ -12,6 +12,7 @@ class Entity {
 		virtual void render(
 			sf::RenderWindow& window, 
 			float deltaTime, 
-			sf::View& gameCamera
+			sf::View& gameCamera,
+			sf::Clock& clock
 		) = 0;
 };

@@ -24,10 +24,10 @@ class EntityManager {
 			if (entities.find(enitityName) != entities.end()) entities.erase(enitityName);
 		};
 		
-		inline void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Event& event) {
+		inline void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Event& event, sf::Clock& clock) {
 			if (entities.empty()) return;
 			for (auto& object : entities) {
-				object.second->render(window, deltaTime, gameCamera);
+				object.second->render(window, deltaTime, gameCamera, clock);
 				object.second->handleEvent(window, event);
 			}
 		};
