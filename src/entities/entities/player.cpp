@@ -111,18 +111,22 @@ void Player::movement(float deltaTime) {
 		if (currentDirection == "up") {
 			player.setTextureRect(sf::IntRect(0, 0, 16, 16));
 			oldVectorUP = vectorUP;
+			animationTimer = 0.0;
 		}
 		if (currentDirection == "down") {
 			player.setTextureRect(sf::IntRect(16, 0, 16, 16));
 			oldVectorDOWN = vectorDOWN;
+			animationTimer = 0.0;
 		}
 		if (currentDirection == "left") {
 			player.setTextureRect(sf::IntRect(0, 16, 16, 16));
 			oldVectorLEFT = vectorLEFT;
+			animationTimer = 0.0;
 		}
 		if (currentDirection == "right") {
 			player.setTextureRect(sf::IntRect(16, 16, 16, 16));
 			oldVectorRIGHT = vectorRIGHT;
+			animationTimer = 0.0;
 		}
 	}
 }
