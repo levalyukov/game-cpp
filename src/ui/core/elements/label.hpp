@@ -2,10 +2,6 @@
 
 #include "ui-element.hpp"
 
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Color.hpp>
-
 class Label : public UIElement {
 	public:
 		Label(
@@ -28,12 +24,16 @@ class Label : public UIElement {
 			text.setPosition(coords_position);
 		};
 
+		using ElementAction = std::function<void()>;
+
 		inline void setText(std::string new_msg) { message = new_msg; text.setString(new_msg); };
 		inline void setColor(sf::Color new_color) { color = new_color; text.setColor(color); };
 		inline void setSize(unsigned __int8 new_size) { size = new_size; text.setCharacterSize(size); };
-
+		inline void setVisible() { isVisible = !isVisible; };
+		inline bool getVisible() override { return isVisible; };
+		inline void setHandleEvent(ElementAction new_func) { action = new_func; };
 		inline void handleEvent(sf::Event& event, sf::RenderWindow& window) override {};
-		inline void draw(sf::RenderWindow& window) const { window.draw(text); };
+		inline void render(sf::RenderWindow& window) const override { window.draw(text); };
 
 	private:
 		std::string message;
@@ -43,4 +43,6 @@ class Label : public UIElement {
 		sf::Color color;
 		sf::Vector2f coords_pos;
 		ElementPosition position;
+		ElementAction action;
+		bool isVisible = true;
 };

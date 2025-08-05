@@ -28,7 +28,7 @@ class NPC : public Entity {
 		}
 
 		void movement(float deltaTime);
-		void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
+		void handleEvent(sf::RenderWindow& window, sf::Event& event) override;
 		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
 	
 	private:
@@ -42,10 +42,11 @@ class NPC : public Entity {
 		sf::Vector2i coords = { 8,0 };
 		sf::Vector2f position = { 0,0 };
 
-		sf::Vector2i UpCoords = { 0,0 };
-		sf::Vector2i DownCoords = { 0,16 };
-		sf::Vector2i LeftCoords = { 0,0 };
-		sf::Vector2i RightCoords = { 0,16 };
+		sf::Vector2i UpSpriteCoords = { 0,0 };
+		sf::Vector2i DownSpriteCoords = { 0,16 };
+		sf::Vector2i LeftSpriteCoords = { 0,0 };
+		sf::Vector2i RightSpriteCoords = { 0,16 };
+
 		float animationTimer = 0.0f;
 		const float SPEED = 2.0f;
 		const float AnimSpeed = 0.15f;

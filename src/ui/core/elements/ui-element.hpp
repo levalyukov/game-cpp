@@ -1,8 +1,9 @@
 #pragma once
 
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
+
+#include <functional>
 
 class UIElement {
 	public:
@@ -12,6 +13,8 @@ class UIElement {
 			BottomLeft, BottomCenter, BottomRight
 		};
 
+		virtual bool getVisible() = 0;
+		virtual void setHandleEvent(std::function<void()> handle) = 0;
 		virtual void handleEvent(sf::Event& event, sf::RenderWindow& window) = 0;
-		virtual void draw(sf::RenderWindow& window) const = 0;
+		virtual void render(sf::RenderWindow& window) const = 0;
 };

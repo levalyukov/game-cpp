@@ -39,15 +39,16 @@ class Game {
 			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
 		};
 
-		UIManager& UIManager = UIManager::Instance();
 		World world;
-
 		Tilemap tilemap;
+
+		/*! UI */
+		UIManager& UIManager = UIManager::Instance();
 		HUD hud;
+		/* --- */
 
 		sf::Image icon;
 		const sf::Uint8* iconData;
-
 		float rawDelta = clock.restart().asSeconds();
 		float deltaTime = std::min(rawDelta, 0.1f);
 };

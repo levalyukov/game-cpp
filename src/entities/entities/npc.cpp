@@ -1,13 +1,25 @@
 #include "npc.hpp"
 
+// test func
+void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
+	if (npc.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
+		direction = 0;
+	}
+}
+
 void NPC::movement(float deltaTime) {
 	switch (direction) {
+		case 0:
+			npc.setTexture(idle);
+			npc.setTextureRect(sf::IntRect({ 16,0 }, { 16,16 }));
+			break;
+
 		case 1: 
 			npc.move(0, SPEED);
 			anim.setAnimation(
 				npc,
 				movementHorizontal,
-				UpCoords,
+				UpSpriteCoords,
 				4, 16, 16,
 				animationTimer,
 				AnimSpeed, deltaTime
@@ -19,7 +31,7 @@ void NPC::movement(float deltaTime) {
 			anim.setAnimation(
 				npc,
 				movementHorizontal,
-				DownCoords,
+				DownSpriteCoords,
 				4, 16, 16,
 				animationTimer,
 				AnimSpeed, deltaTime
@@ -31,7 +43,7 @@ void NPC::movement(float deltaTime) {
 			anim.setAnimation(
 				npc,
 				movementVertical,
-				LeftCoords,
+				LeftSpriteCoords,
 				4, 16, 16,
 				animationTimer,
 				AnimSpeed, deltaTime
@@ -43,7 +55,7 @@ void NPC::movement(float deltaTime) {
 			anim.setAnimation(
 				npc,
 				movementVertical,
-				RightCoords,
+				RightSpriteCoords,
 				4, 16, 16,
 				animationTimer,
 				AnimSpeed, deltaTime
