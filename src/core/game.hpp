@@ -5,6 +5,8 @@
 
 #include "../ui/core/ui.hpp"
 #include "../ui/screens/hud.hpp"
+#include "../ui/screens/pause.hpp"
+
 #include "../world/world.hpp"
 
 #include <iostream>
@@ -45,6 +47,7 @@ class Game {
 		/*! UI */
 		UIManager& UIManager = UIManager::Instance();
 		HUD hud;
+		Pause pause;
 		/* --- */
 
 		sf::Image icon;

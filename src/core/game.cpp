@@ -9,6 +9,8 @@ Game::Game() {
 
 	gameCamera = window.getDefaultView();
 	UIView = window.getDefaultView();
+
+	pause.pauseMenu();
 }
 
 void Game::run() {

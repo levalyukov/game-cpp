@@ -2,6 +2,7 @@
 
 #include "elements/label.hpp"
 #include "elements/button.hpp"
+#include "elements/panel.hpp"
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -27,4 +28,11 @@ class GUI {
 		) {
 			return std::make_unique<Button>(texture, coords_pos);
 		};
+
+		inline std::unique_ptr<Panel> createPanel(
+			sf::Texture* panel_texture,
+			sf::Vector2f position_coords
+		) {
+			return std::make_unique<Panel>(panel_texture, position_coords);
+		}
 };
