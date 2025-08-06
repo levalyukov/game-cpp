@@ -9,12 +9,10 @@ Game::Game() {
 
 	gameCamera = window.getDefaultView();
 	UIView = window.getDefaultView();
-
-	pause.pauseMenu();
 }
 
 void Game::run() {
-	while (window.isOpen()) {
+	while (gameState.getWindowStatus()) {
 		processEvent();
 		render();
 	}
@@ -23,7 +21,7 @@ void Game::run() {
 void Game::processEvent() {
 	while (window.pollEvent(event)) {
 		if (event.type == sf::Event::Closed) {
-			window.close();
+			gameState.setWindowStatus(false);
 		}
 	}
 }

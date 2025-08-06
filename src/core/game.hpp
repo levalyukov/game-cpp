@@ -2,11 +2,10 @@
 
 #include "tilemap/tilemap.hpp"
 #include "resources/resources.hpp"
+#include "states.hpp"
 
-#include "../ui/core/ui.hpp"
-#include "../ui/screens/hud.hpp"
-#include "../ui/screens/pause.hpp"
-
+#include "../ui/ui-manager.hpp"
+#include "../ui/screens/ui.hpp"
 #include "../world/world.hpp"
 
 #include <iostream>
@@ -43,11 +42,11 @@ class Game {
 
 		World world;
 		Tilemap tilemap;
+		GameState& gameState = GameState::instance();
 
 		/*! UI */
-		UIManager& UIManager = UIManager::Instance();
-		HUD hud;
-		Pause pause;
+		UIManager& UIManager = UIManager::instance();
+		UI ui;
 		/* --- */
 
 		sf::Image icon;
