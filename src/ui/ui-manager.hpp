@@ -10,7 +10,7 @@
 
 class UIManager {
 	public:
-		static UIManager& Instance() {
+		static UIManager& instance() {
 			static UIManager r;
 			return r;
 		};

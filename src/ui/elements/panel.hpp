@@ -18,18 +18,12 @@ class Panel : public UIElement {
 
 		std::function<void()> handler = []() {};
 
-		inline void setVisible() { isVisible = !isVisible; };
-		inline bool getVisible() override { return isVisible; };
-		inline void setHandleEvent(std::function<void()> new_handler) override { 
-			if (new_handler) { 
-				handler = new_handler; 
-			} 
-		};
-		inline void handleEvent(sf::Event& event, sf::RenderWindow& window) override {
-			if (handler) {
-				handler();
-			}
-		};
+		inline void setIndex(unsigned __int8 new_z_index) override { zIndex = new_z_index; };
+		inline unsigned __int8 getIndex() const override { return zIndex; };
+		inline void setVisible(bool state) override { isVisible = state; };
+		inline bool getVisible() const override { return isVisible; };
+		inline void setHandleEvent(std::function<void()> new_handler) override { if (new_handler) handler = new_handler; };
+		inline void handleEvent(sf::Event& event, sf::RenderWindow& window) override { if (handler) handler(); };
 		inline void render(sf::RenderWindow& window) const override { window.draw(panel); };
 
 	private:
@@ -37,4 +31,5 @@ class Panel : public UIElement {
 		sf::Texture& texture;
 		sf::Vector2f position;
 		bool isVisible = true;
+		unsigned __int8 zIndex;
 };
