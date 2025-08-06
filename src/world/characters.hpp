@@ -7,7 +7,7 @@
 
 class Characters {
 	public:
-		static Characters& Instance() {
+		static Characters& instance() {
 			static Characters c;
 			return c;
 		}

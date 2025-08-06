@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../core/resources/resources.hpp"
-#include "../core/ui.hpp"
+#include "../ui-manager.hpp"
 
 class HUD {
 	public:
@@ -21,6 +21,6 @@ class HUD {
 		};
 
 	private:
-		ResourceManager& resource = ResourceManager::Instance();
-		UIManager& ui = UIManager::Instance();
+		ResourceManager& resource = ResourceManager::instance();
+		UIManager& ui = UIManager::instance();
 };

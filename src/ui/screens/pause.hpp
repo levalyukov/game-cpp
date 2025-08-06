@@ -1,27 +1,19 @@
 #pragma once
 
 #include "../../core/resources/resources.hpp"
-#include "../core/ui.hpp"
-
-#include <iostream>
+#include "../../core/states.hpp"
+#include "../ui-manager.hpp"
 
 class Pause {
 	public:
-		inline void pauseMenu() {
-			resourseManager.loadTexture("panel", "../../../assets/textures/ui/panel.png");
+		Pause();
 
-			uiManager.addElement(
-				"Pause",
-				uiManager.gui.createPanel(
-					resourseManager.getTexture("panel"),
-					{250,260}
-				)
-			);
+		void createPauseUI();
 
-			if (uiManager.getElement("Pause")) uiManager.getElement("Pause")->setHandleEvent([] {std::cout << "hello c++!" << std::endl; });
-		}
-
-	private:
-		ResourceManager& resourseManager = ResourceManager::Instance();
-		UIManager& uiManager = UIManager::Instance();
+	protected:
+		void initResources();
+		void initElements();
+		ResourceManager& resourseManager = ResourceManager::instance();
+		UIManager& uiManager = UIManager::instance();
+		GameState& gameState = GameState::instance();
 };

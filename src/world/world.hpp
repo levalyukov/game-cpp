@@ -16,7 +16,7 @@ class World {
 		};
 
 	private:
-		ResourceManager& resourceManager = ResourceManager::Instance();
-		EntityManager& entityManager = EntityManager::Instance();
-		Characters& characters = Characters::Instance();
+		ResourceManager& resourceManager = ResourceManager::instance();
+		EntityManager& entityManager = EntityManager::instance();
+		Characters& characters = Characters::instance();
 };
