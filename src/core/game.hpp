@@ -23,10 +23,8 @@ class Game {
 		unsigned int WINDOW_WIDTH = 1280;
 		unsigned int WINDOW_HEGHT = 720;
 
-		sf::RenderWindow window;
 		sf::Color background = sf::Color(0,0,0);
 		sf::Event event;
-		sf::Clock clock;
 		sf::View gameCamera;
 		sf::View UIView;
 
@@ -43,6 +41,8 @@ class Game {
 		World world;
 		Tilemap tilemap;
 		GameState& gameState = GameState::instance();
+		sf::RenderWindow& window = gameState.getGameWindow();
+		sf::Clock& clock = *gameState.getGameClock();
 
 		/*! UI */
 		UIManager& UIManager = UIManager::instance();
@@ -51,6 +51,5 @@ class Game {
 
 		sf::Image icon;
 		const sf::Uint8* iconData;
-		float rawDelta = clock.restart().asSeconds();
-		float deltaTime = std::min(rawDelta, 0.1f);
+		float delta = std::min(clock.restart().asSeconds(), 0.1f);
 };

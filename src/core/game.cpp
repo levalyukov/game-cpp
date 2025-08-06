@@ -1,12 +1,8 @@
 #include "game.hpp";
 
 Game::Game() {
-	sf::err().setstate(std::ios_base::failbit);
-
-	window.create(sf::VideoMode({ WINDOW_WIDTH, WINDOW_HEGHT }), WINDOW_TITLE);
 	window.setFramerateLimit(60);
 	initilizeIcon();
-
 	gameCamera = window.getDefaultView();
 	UIView = window.getDefaultView();
 }
@@ -32,7 +28,7 @@ void Game::render() {
 	// Game
 	window.setView(gameCamera);
 	tilemap.render(window);
-	world.render(window, event, deltaTime, gameCamera, clock);
+	world.render(window, event, delta, gameCamera, clock);
 
 	// User Interface
 	window.setView(UIView);
