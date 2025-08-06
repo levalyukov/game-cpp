@@ -8,11 +8,13 @@ class Pause {
 	public:
 		Pause();
 
-		void createPauseUI();
-
 	protected:
 		void initResources();
 		void initElements();
+		void createBackground();
+		void createButtonContinue();
+		//void createButtonSettings();
+		void createButtonExit();
 		ResourceManager& resourseManager = ResourceManager::instance();
 		UIManager& uiManager = UIManager::instance();
 		GameState& gameState = GameState::instance();

@@ -12,6 +12,15 @@ class UIElement {
 			BottomLeft, BottomCenter, BottomRight
 		};
 
+		//virtual void setElementPosition(sf::RenderWindow& window, ElementPosition current_position) {
+		//	switch (current_position) {
+		//		case TopLeft:
+		//			break;
+		//		case TopCenter:
+
+		//	}
+		//};
+
 		virtual void setIndex(unsigned __int8 new_z_index) = 0;
 		virtual unsigned __int8 getIndex() const = 0;
 		virtual void setVisible(bool state) = 0;

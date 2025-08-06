@@ -3,6 +3,7 @@
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 #include "../../core/utils.hpp"
+#include "../../core/states.hpp"
 
 #include <iostream>
 #include <SFML/System.hpp>
@@ -49,7 +50,7 @@ class NPC : public Entity {
 
 		float animationTimer = 0.0f;
 		const float SPEED = 2.0f;
-		const float AnimSpeed = 0.15f;
+		const float AnimSpeed = 0.04f;
 		float timer = 0.0;
 		int direction = 0; // Stub
 		int vectorTimeValue = 0;

@@ -2,6 +2,7 @@
 
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
+#include "../../core/states.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -49,8 +50,8 @@ class Player : public Entity {
 		std::string currentDirection;
 		std::string oldDirection;
 
-		const float RUN_ANIM = 0.10f;
-		const float WALK_ANIM = 0.15f;
+		const float RUN_ANIM = 0.018f;
+		const float WALK_ANIM = 0.04f;
 
 		int currentFrame = 0;
 		float animationTimer = 0.0f;
