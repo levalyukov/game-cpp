@@ -21,7 +21,7 @@ class GameState {
 		std::unique_ptr<sf::Clock> clock;
 
 		GameState() {
-			window = std::make_unique<sf::RenderWindow>(sf::VideoMode({ 1280, 720 }), "WINDOW_TITLE");
+			window = std::make_unique<sf::RenderWindow>(sf::VideoMode({ 1280, 720 }), "Delicious Soup");
 			clock = std::make_unique<sf::Clock>();
 		};
 		~GameState() {};

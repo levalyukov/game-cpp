@@ -15,16 +15,18 @@ void Pause::initResources() {
 	resourseManager.loadFont("nunito", "../../../assets/fonts/nunito.ttf");
 }
 
-void Pause::initElements() {
+void Pause::initElements() {Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
 	uiManager.addElement("pause", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel"), { 250,260 }));
-	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-button-continue"), { 250,250 }));
-	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-button-quit"), { 250,375 }));
+	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-button-continue"), {0,0}));
+	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-button-quit"), {0,0}));
 }
 
 void Pause::createBackground() {
 	if (uiManager.getElement("pause")) {
-		uiManager.getElement("pause")->setVisible(false);
-		uiManager.getElement("pause")->setHandleEvent(
+		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
+		panel->setElementPosition(UIElement::MiddleCenter);
+		panel->setVisible(false);
+		panel->setHandleEvent(
 			[]() {
 				static bool escWasPressed = false;
 				bool escIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
@@ -54,18 +56,26 @@ void Pause::createBackground() {
 
 void Pause::createButtonContinue() {
 	if (uiManager.getElement("pause-button-continue")) {
-		Button* continueButton = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
+		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
+		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
+		
+		button->setElementPosition(
+			{
+				panel->getElementPosition().x + (panel->getButtonSprite().getGlobalBounds().width - button->getButtonSprite().getGlobalBounds().width) / 2.0f,
+				panel->getElementPosition().y + 25
+			}
+		);
 
 		if (resourseManager.getFont("nunito")) {
-			continueButton->setText(
+			button->setText(
 				resourseManager.getFont("nunito"),
 				"Continue",
 				24
 			);
 		}
 
-		continueButton->setVisible(false);
-		continueButton->setHandleEvent(
+		button->setVisible(false);
+		button->setHandleEvent(
 			[]() {
 				GameState& gameStates = GameState::instance();
 				UIManager& ui = UIManager::instance();
@@ -80,18 +90,26 @@ void Pause::createButtonContinue() {
 
 void Pause::createButtonExit() {
 	if (uiManager.getElement("pause-button-quit")) {
-		Button* quitButton = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
+		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
+		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
+
+		button->setElementPosition(
+			{
+				panel->getElementPosition().x + (panel->getButtonSprite().getGlobalBounds().width - button->getButtonSprite().getGlobalBounds().width) / 2.0f,
+				panel->getElementPosition().y + 100
+			}
+		);
 
 		if (resourseManager.getFont("nunito")) {
-			quitButton->setText(
+			button->setText(
 				resourseManager.getFont("nunito"),
 				"Exit the Game",
 				24
 			);
 		}
 
-		quitButton->setVisible(false);
-		quitButton->setHandleEvent(
+		button->setVisible(false);
+		button->setHandleEvent(
 			[]() {
 				GameState& game = GameState::instance();
 				game.setWindowStatus(false);

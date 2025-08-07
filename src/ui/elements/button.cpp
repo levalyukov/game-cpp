@@ -7,9 +7,9 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
             case sf::Event::MouseMoved:
                 if (!isPressed) state = isHovered ? Hovered : Normal;
                 if (state == Hovered) {
-                    sprite.setTextureRect(sf::IntRect({0,16}, {48,16}));
+                    sprite->setTextureRect(sf::IntRect({0,16}, {48,16}));
                 } else if (state == Normal) {
-                    sprite.setTextureRect(sf::IntRect({ 0,0 }, { 48,16 }));
+                    sprite->setTextureRect(sf::IntRect({ 0,0 }, { 48,16 }));
                 }
                 break;
 
@@ -17,7 +17,7 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
                 if (event.mouseButton.button == sf::Mouse::Left && isHovered) {
                     state = Pressed;
                     isPressed = true;
-                    sprite.setTextureRect(sf::IntRect({ 0,32 }, { 48,16 }));
+                    sprite->setTextureRect(sf::IntRect({ 0,32 }, { 48,16 }));
                 }
                 break;
 
@@ -26,7 +26,7 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
                     if (isHovered && state == Pressed) { if (handler) handler(); };
                     state = isHovered ? Hovered : Normal;
                     isPressed = false;
-                    sprite.setTextureRect(sf::IntRect({ 0,0 }, { 48,16 }));
+                    sprite->setTextureRect(sf::IntRect({ 0,0 }, { 48,16 }));
                 }
                 break;
         }
@@ -37,15 +37,29 @@ void Button::setText(sf::Font* font, std::string text, unsigned __int8 font_size
     label_font = *font;
     label_message = text;
     label_size = font_size;
-
     label_text.setFont(label_font);
     label_text.setString(label_message);
     label_text.setCharacterSize(label_size);
     label_text.setColor(sf::Color::White);
     label_text.setPosition(
         {
-            sprite.getPosition().x + (sprite.getGlobalBounds().width - label_text.getGlobalBounds().width) / 2,
-            sprite.getPosition().y + (sprite.getGlobalBounds().height - label_text.getGlobalBounds().height) / 4
+            sprite->getPosition().x + (sprite->getGlobalBounds().width - label_text.getGlobalBounds().width) / 2,
+            sprite->getPosition().y + (sprite->getGlobalBounds().height - label_text.getGlobalBounds().height) / 4
         }
     );
 }
+
+//void Button::setElementPosition(sf::Sprite& relative_sprite, ElementPosition element_position) {
+//    switch (element_position) {
+//        case MiddleCenter:
+//            sprite.setPosition(
+//                sf::Vector2f(
+//                    {
+//                        relative_sprite.getPosition().x + (relative_sprite.getGlobalBounds().width - sprite.getGlobalBounds().width) / 2,
+//                        relative_sprite.getPosition().y + (relative_sprite.getGlobalBounds().height - sprite.getGlobalBounds().height) / 4
+//                    }
+//                )
+//            );
+//            break;
+//    }
+//}
