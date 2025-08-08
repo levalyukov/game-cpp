@@ -3,7 +3,7 @@
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 #include "../../core/utils.hpp"
-#include "../../core/states.hpp"
+#include "../../core/globals.hpp"
 
 #include <iostream>
 #include <SFML/System.hpp>
@@ -49,8 +49,8 @@ class NPC : public Entity {
 		sf::Vector2i RightSpriteCoords = { 0,16 };
 
 		float animationTimer = 0.0f;
-		const float SPEED = 2.0f;
-		const float AnimSpeed = 0.04f;
+		const float SPEED = 1.75f;
+		const float AnimSpeed = 0.035f;
 		float timer = 0.0;
 		int direction = 0; // Stub
 		int vectorTimeValue = 0;

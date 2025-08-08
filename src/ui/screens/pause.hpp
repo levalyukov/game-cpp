@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../../core/globals.hpp"
 #include "../../core/resources/resources.hpp"
-#include "../../core/states.hpp"
 #include "../ui-manager.hpp"
 
 class Pause {
@@ -13,9 +13,7 @@ class Pause {
 		void initElements();
 		void createBackground();
 		void createButtonContinue();
-		//void createButtonSettings();
 		void createButtonExit();
 		ResourceManager& resourseManager = ResourceManager::instance();
 		UIManager& uiManager = UIManager::instance();
-		GameState& gameState = GameState::instance();
 };

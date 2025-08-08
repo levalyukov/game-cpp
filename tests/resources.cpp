@@ -2,7 +2,7 @@
 
 #include "../src/core/resources/resources.hpp"
 
-ResourceManager& resourceManager = ResourceManager::Instance();
+ResourceManager& resourceManager = ResourceManager::instance();
 
 // Fonts
 

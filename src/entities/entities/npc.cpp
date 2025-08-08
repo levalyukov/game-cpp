@@ -1,6 +1,5 @@
 #include "npc.hpp"
 
-// test func
 void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
 	if (npc.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
 		direction = 0;
@@ -8,7 +7,7 @@ void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
 }
 
 void NPC::movement(float deltaTime) {
-	if (!GameState::instance().getGamePause()) {
+	if (!Globals::instance().getGamePause()) {
 		switch (direction) {
 			case 0:
 				npc.setTexture(idle);
@@ -73,7 +72,7 @@ void NPC::render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera
 	shadow.setPosition(npc.getPosition());
 
 	// Random direction
-	if (!GameState::instance().getGamePause()) {
+	if (!Globals::instance().getGamePause()) {
 		if (clock.getElapsedTime().asSeconds() >= vectorTimeValue) {
 			vectorTimeValue = utils.randi_range(1,5);
 			direction = utils.randi_range(1,4);
@@ -82,5 +81,4 @@ void NPC::render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera
 	} else {
 		clock.restart();
 	}
-
 }

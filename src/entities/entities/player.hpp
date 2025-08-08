@@ -2,7 +2,7 @@
 
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
-#include "../../core/states.hpp"
+#include "../../core/globals.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -42,7 +42,7 @@ class Player : public Entity {
 		sf::Vector2i spriteSizeX {16,16};
 
 		const float RUN_SPEED = 6.0f;
-		const float WALK_SPEED = 4.0f;
+		const float WALK_SPEED = 3.5f;
 
 		Animations animations;
 
@@ -50,7 +50,7 @@ class Player : public Entity {
 		std::string currentDirection;
 		std::string oldDirection;
 
-		const float RUN_ANIM = 0.018f;
+		const float RUN_ANIM = 0.025f;
 		const float WALK_ANIM = 0.04f;
 
 		int currentFrame = 0;

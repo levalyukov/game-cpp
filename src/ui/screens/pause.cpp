@@ -32,16 +32,16 @@ void Pause::createBackground() {
 				bool escIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
 
 				if (escIsPressed && !escWasPressed) {
-					GameState& gameStates = GameState::instance();
+					Globals& globals = Globals::instance();
 					UIManager& ui = UIManager::instance();
-					if (!gameStates.getGamePause()) {
-						gameStates.setGamePause(true);
+					if (!globals.getGamePause()) {
+						globals.setGamePause(true);
 						ui.getElement("pause")->setVisible(true);
 						ui.getElement("pause-button-continue")->setVisible(true);
 						ui.getElement("pause-button-quit")->setVisible(true);
 					}
 					else {
-						gameStates.setGamePause(!true);
+						globals.setGamePause(!true);
 						ui.getElement("pause")->setVisible(!true);
 						ui.getElement("pause-button-continue")->setVisible(!true);
 						ui.getElement("pause-button-quit")->setVisible(!true);
@@ -77,9 +77,9 @@ void Pause::createButtonContinue() {
 		button->setVisible(false);
 		button->setHandleEvent(
 			[]() {
-				GameState& gameStates = GameState::instance();
+				Globals& globals = Globals::instance();
 				UIManager& ui = UIManager::instance();
-				gameStates.setGamePause(false);
+				globals.setGamePause(false);
 				ui.getElement("pause")->setVisible(false);
 				ui.getElement("pause-button-continue")->setVisible(false);
 				ui.getElement("pause-button-quit")->setVisible(false);
@@ -111,8 +111,8 @@ void Pause::createButtonExit() {
 		button->setVisible(false);
 		button->setHandleEvent(
 			[]() {
-				GameState& game = GameState::instance();
-				game.setWindowStatus(false);
+				Globals& globals = Globals::instance();
+				globals.getWindow().close();
 			}
 		);
 	}

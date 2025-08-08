@@ -1,55 +1,38 @@
 #pragma once
 
+#include "globals.hpp"
 #include "tilemap/tilemap.hpp"
-#include "resources/resources.hpp"
-#include "states.hpp"
-
+#include "../world/world.hpp"
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
-#include "../world/world.hpp"
-
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/Config.hpp>
-#include <SFML/System/Err.hpp>
 
 class Game {
 	public:
-		Game();
+		Game() {
+			window.setFramerateLimit(60);
+			if (!icon.loadFromFile("../../../assets/icon.png")) return;
+			iconData = icon.getPixelsPtr();
+			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
+		}
 		void run();
 
-	private:
-		const std::string WINDOW_TITLE = "Delicious Soup";
-		unsigned int WINDOW_WIDTH = 1280;
-		unsigned int WINDOW_HEGHT = 720;
-
-		sf::Color background = sf::Color(0,0,0);
-		sf::Event event;
-		sf::View gameCamera;
-		sf::View UIView;
+	protected:
+		Globals& globals = Globals::instance();
+		UIManager& UIManager = UIManager::instance();
+		sf::RenderWindow& window = globals.getWindow();
+		sf::Event& event = globals.getEvent();
+		sf::Clock& clock = globals.getClock();
+		sf::View main_camera = window.getDefaultView();
+		sf::View ui_camera = window.getDefaultView();
+		sf::Image icon;
+		const sf::Uint8* iconData;
 
 		void processEvent();
 		void render();
-		inline void initilizeIcon() {
-			if (!icon.loadFromFile("../../../assets/icon.png")) {
-				return;
-			};
-			iconData = icon.getPixelsPtr();
-			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
-		};
 
-		World world;
-		Tilemap tilemap;
-		GameState& gameState = GameState::instance();
-		sf::RenderWindow& window = gameState.getGameWindow();
-		sf::Clock& clock = *gameState.getGameClock();
-
-		/*! UI */
-		UIManager& UIManager = UIManager::instance();
 		UI ui;
-		/* --- */
+		Tilemap tilemap;
+		World world;
 
-		sf::Image icon;
-		const sf::Uint8* iconData;
-		float delta = std::min(clock.restart().asSeconds(), 0.1f);
+		float delta = std::min(clock.restart().asSeconds(), .1f);
 };

@@ -1,14 +1,7 @@
-#include "game.hpp";
-
-Game::Game() {
-	window.setFramerateLimit(60);
-	initilizeIcon();
-	gameCamera = window.getDefaultView();
-	UIView = window.getDefaultView();
-}
+#include "game.hpp"
 
 void Game::run() {
-	while (gameState.getWindowStatus()) {
+	while (window.isOpen()) {
 		processEvent();
 		render();
 	}
@@ -16,22 +9,16 @@ void Game::run() {
 
 void Game::processEvent() {
 	while (window.pollEvent(event)) {
-		if (event.type == sf::Event::Closed) {
-			gameState.setWindowStatus(false);
-		}
+		if (event.type == sf::Event::Closed) window.close();
 	}
 }
 
 void Game::render() {
-	window.clear(background);
-
-	// Game
-	window.setView(gameCamera);
+	window.clear(sf::Color::Black);
+	window.setView(main_camera);
 	tilemap.render(window);
-	world.render(window, event, delta, gameCamera, clock);
-
-	// User Interface
-	window.setView(UIView);
+	world.render(window, event, delta, main_camera, clock);
+	window.setView(ui_camera);
 	UIManager.render(event, window);
 	window.display();
 }

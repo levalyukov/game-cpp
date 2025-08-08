@@ -1,7 +1,6 @@
 #pragma once
 
 #include "characters.hpp"
-
 #include "../entities/entity-manager.hpp"
 #include "../core/resources/resources.hpp"
 

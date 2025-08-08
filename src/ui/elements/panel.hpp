@@ -20,7 +20,7 @@ class Panel : public UIElement {
 		std::function<void()> handler = []() {};
 		
 		inline void setElementPosition(ElementPosition element_position) {
-			sf::RenderWindow& window = GameState::instance().getGameWindow();
+			//sf::RenderWindow& window = Game::instance().getGameWindow();
 			switch (element_position) {
 				case MiddleCenter:
 					panel->setPosition(

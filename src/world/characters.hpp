@@ -18,11 +18,6 @@ class Characters {
 		}
 
 	private:
-		Characters() {};
-		~Characters() {};
-		Characters(Characters& const) = delete;
-		Characters& operator=(Characters& const) = delete;
-
 		inline void player(ResourceManager& resourceManager, EntityManager& entityManager) const {
 			resourceManager.loadTexture("character-idle", "../../../assets/textures/entity/player/character_idle.png");
 			resourceManager.loadTexture("character-walk-horizontal", "../../../assets/textures/entity/player/character_walk_horizontal.png");
@@ -56,4 +51,9 @@ class Characters {
 				)
 			);
 		};
+
+		Characters() {};
+		~Characters() {};
+		Characters(Characters& const) = delete;
+		Characters& operator=(Characters& const) = delete;
 };

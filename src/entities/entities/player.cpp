@@ -9,7 +9,7 @@ void Player::render(sf::RenderWindow& window, float deltaTime, sf::View& gameVie
 }
 
 void Player::movement(float deltaTime) {
-	if (!GameState::instance().getGamePause()) {
+	if (!Globals::instance().getGamePause()) {
 		bool movementUp = false;
 		bool movementDown = false;
 		bool movementLeft = false;
@@ -45,7 +45,6 @@ void Player::movement(float deltaTime) {
 			oldVectorRIGHT = vectorRIGHT;
 		}
 
-		// Movement
 		float speed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_SPEED : WALK_SPEED;
 		if (movementUp && !movementDown) player.move(0.0, -speed);
 		if (movementDown && !movementUp) player.move(0.0, speed);
@@ -54,7 +53,6 @@ void Player::movement(float deltaTime) {
 
 		bool isMoving = (movementUp || movementDown || movementLeft || movementRight);
 
-		// Animation play
 		if (isMoving) {
 			float animationSpeed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_ANIM : WALK_ANIM;
 			sf::Texture& target_texture = (currentDirection == "up" || currentDirection == "down") ? walkVertical : walkHorizontal;
