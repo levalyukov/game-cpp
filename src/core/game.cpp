@@ -16,9 +16,9 @@ void Game::processEvent() {
 void Game::render() {
 	window.clear(sf::Color::Black);
 	window.setView(main_camera);
-	tilemap.render(window);
-	world.render(window, event, delta, main_camera, clock);
+	tilemap.render();
+	world.render(delta, main_camera);
 	window.setView(ui_camera);
-	UIManager.render(event, window);
+	UIManager.render();
 	window.display();
 }

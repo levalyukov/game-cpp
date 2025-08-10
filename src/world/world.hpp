@@ -10,8 +10,8 @@ class World {
 			characters.spawn(resourceManager, entityManager);
 		};
 
-		inline void render(sf::RenderWindow& window, sf::Event& event, float delta, sf::View& game_camera, sf::Clock& clock) {
-			entityManager.render(window, delta, game_camera, event, clock);
+		inline void render(float delta, sf::View& game_camera) {
+			entityManager.render(delta, game_camera);
 		};
 
 	private:

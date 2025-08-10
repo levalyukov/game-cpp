@@ -9,6 +9,10 @@
 
 class EntityManager {
 	public:
+		EntityManager() {};
+		~EntityManager() {};
+		EntityManager(EntityManager& const) = delete;
+		EntityManager& operator=(EntityManager& const) = delete;
 		inline static EntityManager& instance() {
 			static EntityManager r;
 			return r;
@@ -30,19 +34,15 @@ class EntityManager {
 			if (entities.find(enitityName) != entities.end()) entities.erase(enitityName);
 		};
 		
-		inline void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Event& event, sf::Clock& clock) {
+		inline void render(float deltaTime, sf::View& game_camera) {
 			if (entities.empty()) return;
 			for (auto& object : entities) {
-				object.second->render(window, deltaTime, gameCamera, clock);
-				object.second->handleEvent(window, event);
+				object.second->render(globals.getWindow(), deltaTime, game_camera, globals.getClock());
+				object.second->handleEvent(globals.getWindow(), globals.getEvent());
 			}
 		};
 
-	private:
+	protected:
 		std::map <std::string, std::unique_ptr<Entity>> entities;
-
-		EntityManager() {};
-		~EntityManager() {};
-		EntityManager(EntityManager& const) = delete;
-		EntityManager& operator=(EntityManager& const) = delete;
+		Globals& globals = Globals::instance();
 }; 

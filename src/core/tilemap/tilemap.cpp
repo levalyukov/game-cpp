@@ -22,9 +22,9 @@ void Tilemap::initilize() {
 	grass_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
 }
 
-void Tilemap::render(sf::RenderWindow& window) {
-	for (int x = 0; x < 9; x++) {
-		for (int y = 0; y < 9; y++) {
+void Tilemap::render() {
+	for (int x = 0; x < 36; x++) {
+		for (int y = 0; y < 63; y++) {
 
 			if (x % 9 == 0) water_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
 			else if (y % 9 == 0) water_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);

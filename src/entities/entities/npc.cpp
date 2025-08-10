@@ -71,7 +71,7 @@ void NPC::render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera
 	movement(deltaTime);
 	shadow.setPosition(npc.getPosition());
 
-	// Random direction
+	// Random direction, change this in the future!
 	if (!Globals::instance().getGamePause()) {
 		if (clock.getElapsedTime().asSeconds() >= vectorTimeValue) {
 			vectorTimeValue = utils.randi_range(1,5);

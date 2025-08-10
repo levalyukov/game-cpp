@@ -13,8 +13,8 @@ class Game {
 			if (!icon.loadFromFile("../../../assets/icon.png")) return;
 			iconData = icon.getPixelsPtr();
 			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
+			run();
 		}
-		void run();
 
 	protected:
 		Globals& globals = Globals::instance();
@@ -29,6 +29,7 @@ class Game {
 
 		void processEvent();
 		void render();
+		void run();
 
 		UI ui;
 		Tilemap tilemap;

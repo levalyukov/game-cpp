@@ -10,6 +10,10 @@
 
 class UIManager {
 	public:
+		UIManager() {};
+		~UIManager() {};
+		UIManager(UIManager const&) = delete;
+		UIManager& operator=(UIManager const&) = delete;
 		static UIManager& instance() {
 			static UIManager r;
 			return r;
@@ -34,7 +38,7 @@ class UIManager {
 			}
 		};
 
-		inline void render(sf::Event& event, sf::RenderWindow& window) {
+		inline void render() {
 			for (const auto& element : ui_elements) {
 				element.second->handleEvent(event, window);
 				if (element.second->getVisible()) {
@@ -46,10 +50,9 @@ class UIManager {
 		GUI gui;
 
 	private:
-		UIManager() {};
-		~UIManager() {};
-		UIManager(UIManager const&) = delete;
-		UIManager& operator=(UIManager const&) = delete;
-
 		std::map<std::string, std::unique_ptr<UIElement>> ui_elements;
+
+		Globals& global = Globals::instance();
+		sf::RenderWindow& window = global.getWindow();
+		sf::Event& event = global.getEvent();
 };

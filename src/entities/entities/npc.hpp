@@ -50,7 +50,7 @@ class NPC : public Entity {
 
 		float animationTimer = 0.0f;
 		const float SPEED = 1.75f;
-		const float AnimSpeed = 0.035f;
+		const float AnimSpeed = 0.05f;
 		float timer = 0.0;
 		int direction = 0; // Stub
 		int vectorTimeValue = 0;

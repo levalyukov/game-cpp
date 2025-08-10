@@ -4,8 +4,6 @@
 #include "../../core/animations/animations.hpp"
 #include "../../core/globals.hpp"
 
-#include <SFML/Graphics.hpp>
-
 class Player : public Entity {
 	public:
 		Player(
@@ -19,7 +17,7 @@ class Player : public Entity {
 			shadow_texture(std::move(*character_shadow)) {
 			player.setTexture(idle);
 			player.setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
-			player.setPosition((9 / 2) * 64, (9 / 2) * 64);
+			player.setPosition((9 / 2) * 64, (9 / 2) * 64); // change this in the future
 			player.setScale(4, 4);
 			shadow_sprite.setTexture(shadow_texture);
 			shadow_sprite.setScale(4, 4);
@@ -38,20 +36,18 @@ class Player : public Entity {
 		sf::Texture walkHorizontal;
 		sf::Texture walkVertical;
 		sf::Texture shadow_texture;
-
 		sf::Vector2i spriteSizeX {16,16};
 
 		const float RUN_SPEED = 6.0f;
-		const float WALK_SPEED = 3.5f;
+		const float WALK_SPEED = 4.0f;
 
 		Animations animations;
-
 		std::string direction;
 		std::string currentDirection;
 		std::string oldDirection;
 
-		const float RUN_ANIM = 0.025f;
-		const float WALK_ANIM = 0.04f;
+		const float RUN_ANIM = 0.03f;
+		const float WALK_ANIM = 0.055f;
 
 		int currentFrame = 0;
 		float animationTimer = 0.0f;
