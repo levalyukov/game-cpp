@@ -1,4 +1,4 @@
-# Delicious Soup - SFML game
+# Delicious Soup - SFML Game
 
 ![screenshot](assets/preview.png)
 
