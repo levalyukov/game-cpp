@@ -27,8 +27,6 @@ class Button : public UIElement {
 		inline sf::Sprite& getButtonSprite() { return *sprite; };
 
 		inline bool checkHover(sf::RenderWindow& window) { return sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))); }
-		inline void setIndex(unsigned __int8 new_z_index) override { zIndex = new_z_index; };
-		inline unsigned __int8 getIndex() const override { return zIndex; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handle) override { if (new_handle) handler = new_handle; };

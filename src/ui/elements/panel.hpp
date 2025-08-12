@@ -18,31 +18,15 @@ class Panel : public UIElement {
 		};
 
 		std::function<void()> handler = []() {};
-		
-		inline void setElementPosition(ElementPosition element_position) {
-			//sf::RenderWindow& window = Game::instance().getGameWindow();
-			switch (element_position) {
-				case MiddleCenter:
-					panel->setPosition(
-						sf::Vector2f(
-							{
-								(1280 - panel->getGlobalBounds().width) / 2.0f,
-								(720 - panel->getGlobalBounds().height) / 2.0f,
-							}
-						)
-					);
-					break;
-			}
-		};
 
 		inline sf::Vector2f getElementPosition() const { return panel->getPosition(); };
 		inline sf::Sprite& getButtonSprite() const { return *panel; };
 
-		inline void setIndex(unsigned __int8 new_z_index) override { zIndex = new_z_index; };
-		inline unsigned __int8 getIndex() const override { return zIndex; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
-		inline void setHandleEvent(std::function<void()> new_handler) override { if (new_handler) handler = new_handler; };
+		inline sf::Sprite& getSprite() const { return *panel; };
+
+		inline void setHandleEvent(std::function<void()> handle) override { if (handle) handler = handle; };
 		inline void handleEvent(sf::Event& event, sf::RenderWindow& window) override { if (handler) handler(); };
 		inline void render(sf::RenderWindow& window) const override { window.draw(*panel); };
 

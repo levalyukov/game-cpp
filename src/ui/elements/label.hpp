@@ -30,8 +30,6 @@ class Label : public UIElement {
 		inline void setColor(sf::Color new_color) { color = new_color; text.setColor(color); };
 		inline void setSize(unsigned __int8 new_size) { size = new_size; text.setCharacterSize(size); };
 
-		inline void setIndex(unsigned __int8 new_z_index) override { zIndex = new_z_index; };
-		inline unsigned __int8 getIndex() const override { return zIndex; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(ElementAction new_func) { action = new_func; };
