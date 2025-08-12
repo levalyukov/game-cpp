@@ -7,7 +7,6 @@ class HUD {
 	public:
 		HUD() {
 			resource.loadFont("nunito", "../../../assets/fonts/nunito.ttf");
-			//resource.loadFont("arial", "../../../assets/fonts/arial.ttf");
 
 			ui.addElement(
 				"Label",
@@ -15,12 +14,13 @@ class HUD {
 					"Delicious Soup",
 					resource.getFont("nunito"),
 					24, sf::Color::White,
-					{ 25,25 }, UIElement::BottomCenter
+					UIElement::BottomCenter,
+					{ 25,25 }
 				)
 			);
 		};
 
-	private:
+	protected:
 		ResourceManager& resource = ResourceManager::instance();
 		UIManager& ui = UIManager::instance();
 };

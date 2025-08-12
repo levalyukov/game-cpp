@@ -15,16 +15,17 @@ void Pause::initResources() {
 	resourseManager.loadFont("nunito", "../../../assets/fonts/nunito.ttf");
 }
 
-void Pause::initElements() {Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
-	uiManager.addElement("pause", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel"), { 250,260 }));
-	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-button-continue"), {0,0}));
-	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-button-quit"), {0,0}));
+void Pause::initElements() {
+	uiManager.addElement("pause-background", uiManager.gui.createColorRect(sf::Color(0,0,0,100), {static_cast<float>(globals.getWindow().getSize().x),static_cast<float>(globals.getWindow().getSize().y)}));
+	uiManager.addElement("pause", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel")));
+	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-button-continue")));
+	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-button-quit")));
 }
 
 void Pause::createBackground() {
 	if (uiManager.getElement("pause")) {
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
-		panel->setElementPosition(UIElement::MiddleCenter);
+		uiManager.getElement("pause")->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 		panel->setVisible(false);
 		panel->setHandleEvent(
 			[]() {
@@ -36,12 +37,14 @@ void Pause::createBackground() {
 					UIManager& ui = UIManager::instance();
 					if (!globals.getGamePause()) {
 						globals.setGamePause(true);
+						ui.getElement("pause-background")->setVisible(true);
 						ui.getElement("pause")->setVisible(true);
 						ui.getElement("pause-button-continue")->setVisible(true);
 						ui.getElement("pause-button-quit")->setVisible(true);
 					}
 					else {
 						globals.setGamePause(!true);
+						ui.getElement("pause-background")->setVisible(!true);
 						ui.getElement("pause")->setVisible(!true);
 						ui.getElement("pause-button-continue")->setVisible(!true);
 						ui.getElement("pause-button-quit")->setVisible(!true);
@@ -80,6 +83,7 @@ void Pause::createButtonContinue() {
 				Globals& globals = Globals::instance();
 				UIManager& ui = UIManager::instance();
 				globals.setGamePause(false);
+				ui.getElement("pause-background")->setVisible(!true);
 				ui.getElement("pause")->setVisible(false);
 				ui.getElement("pause-button-continue")->setVisible(false);
 				ui.getElement("pause-button-quit")->setVisible(false);

@@ -14,6 +14,8 @@ class Pause {
 		void createBackground();
 		void createButtonContinue();
 		void createButtonExit();
+
+		Globals& globals = Globals::instance();
 		ResourceManager& resourseManager = ResourceManager::instance();
 		UIManager& uiManager = UIManager::instance();
 };
