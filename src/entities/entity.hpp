@@ -4,15 +4,7 @@
 
 class Entity {
 	public:
-		virtual void handleEvent(
-			sf::RenderWindow& window, 
-			sf::Event& event
-		) = 0;
-
-		virtual void render(
-			sf::RenderWindow& window, 
-			float deltaTime, 
-			sf::View& gameCamera,
-			sf::Clock& clock
-		) = 0;
+		virtual float getDepth() const = 0;
+		virtual void handleEvent(sf::RenderWindow& window, sf::Event& event) = 0;
+		virtual void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) = 0;
 };

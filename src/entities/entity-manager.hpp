@@ -20,7 +20,10 @@ class EntityManager {
 
 		inline void addEntity(std::string name, std::unique_ptr<Entity> entity) { 
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
-			entities.emplace(name, std::move(entity));
+			auto result = entities.emplace(name, std::move(entity));
+			if (result.second) {
+				renderEntities.push_back(result.first->second.get());
+			}
 		};
 
 		inline Entity* getEntity(std::string enitityName) {
@@ -31,18 +34,27 @@ class EntityManager {
 
 		inline void removeEntity(std::string enitityName) { 
 			std::transform(enitityName.begin(), enitityName.end(), enitityName.begin(), [](unsigned char c) {return std::tolower(c); });
-			if (entities.find(enitityName) != entities.end()) entities.erase(enitityName);
+			auto entity = entities.find(enitityName);
+			auto it = std::find(renderEntities.begin(), renderEntities.end(), entity->second.get());
+			if (it != renderEntities.end()) renderEntities.erase(it);
+			if (entity != entities.end()) entities.erase(enitityName);
 		};
 		
 		inline void render(float deltaTime, sf::View& game_camera) {
 			if (entities.empty()) return;
-			for (auto& object : entities) {
-				object.second->render(globals.getWindow(), deltaTime, game_camera, globals.getClock());
-				object.second->handleEvent(globals.getWindow(), globals.getEvent());
+
+			std::sort(renderEntities.begin(), renderEntities.end(), [](Entity* a, Entity* b) {
+				return a->getDepth() < b->getDepth();
+			});
+
+			for (auto& object : renderEntities) {
+				object->render(globals.getWindow(), deltaTime, game_camera, globals.getClock());
+				object->handleEvent(globals.getWindow(), globals.getEvent());
 			}
 		};
 
 	protected:
+		std::vector <Entity*> renderEntities;
 		std::map <std::string, std::unique_ptr<Entity>> entities;
 		Globals& globals = Globals::instance();
 }; 
