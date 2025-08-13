@@ -48,18 +48,3 @@ void Button::setText(sf::Font* font, std::string text, unsigned __int8 font_size
         }
     );
 }
-
-//void Button::setElementPosition(sf::Sprite& relative_sprite, ElementPosition element_position) {
-//    switch (element_position) {
-//        case MiddleCenter:
-//            sprite.setPosition(
-//                sf::Vector2f(
-//                    {
-//                        relative_sprite.getPosition().x + (relative_sprite.getGlobalBounds().width - sprite.getGlobalBounds().width) / 2,
-//                        relative_sprite.getPosition().y + (relative_sprite.getGlobalBounds().height - sprite.getGlobalBounds().height) / 4
-//                    }
-//                )
-//            );
-//            break;
-//    }
-//}

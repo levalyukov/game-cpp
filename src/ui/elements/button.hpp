@@ -26,6 +26,8 @@ class Button : public UIElement {
 		inline void setElementPosition(sf::Vector2f new_position) { sprite->setPosition(new_position); };
 		inline sf::Sprite& getButtonSprite() { return *sprite; };
 
+		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
+		unsigned __int8 getSortIndex() const override { return ZIndex; };
 		inline bool checkHover(sf::RenderWindow& window) { return sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))); }
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
@@ -42,13 +44,12 @@ class Button : public UIElement {
 		State state = Normal;
 		bool isPressed = false;
 		bool isVisible = true;
-		unsigned __int8 zIndex = 0;
 
 		sf::Font label_font;
 		sf::Text label_text;
 		sf::String label_message;
 		unsigned __int8 label_size = 24;
-		//ElementPosition label_position;
+		unsigned __int8 ZIndex = 0;
 
 		inline void setState(State new_state) { state = new_state; };
 };

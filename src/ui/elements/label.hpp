@@ -30,6 +30,8 @@ class Label : public UIElement {
 		inline void setColor(sf::Color new_color) { color = new_color; text.setColor(color); };
 		inline void setSize(unsigned __int8 new_size) { size = new_size; text.setCharacterSize(size); };
 
+		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
+		unsigned __int8 getSortIndex() const override { return ZIndex; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(ElementAction new_func) { action = new_func; };
@@ -46,5 +48,5 @@ class Label : public UIElement {
 		ElementPosition position;
 		ElementAction action;
 		bool isVisible = true;
-		unsigned __int8 zIndex;
+		unsigned __int8 ZIndex = 0;
 };

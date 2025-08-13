@@ -22,6 +22,8 @@ class Panel : public UIElement {
 		inline sf::Vector2f getElementPosition() const { return panel->getPosition(); };
 		inline sf::Sprite& getButtonSprite() const { return *panel; };
 
+		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
+		unsigned __int8 getSortIndex() const override { return ZIndex; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline sf::Sprite& getSprite() const { return *panel; };
@@ -35,5 +37,5 @@ class Panel : public UIElement {
 		sf::Texture& texture;
 		sf::Vector2f position;
 		bool isVisible = true;
-		unsigned __int8 zIndex;
+		unsigned __int8 ZIndex = 0;
 };

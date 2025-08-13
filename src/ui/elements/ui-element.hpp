@@ -56,6 +56,8 @@ class UIElement {
 			}
 		};
 
+		virtual void setSortIndex(unsigned __int8 new_z_index) = 0;
+		virtual unsigned __int8 getSortIndex() const = 0;
 		virtual void setVisible(bool state) = 0;
 		virtual bool getVisible() const = 0;
 		virtual void setHandleEvent(std::function<void()> handle) = 0;
