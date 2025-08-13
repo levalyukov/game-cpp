@@ -7,6 +7,7 @@
 #include <string>
 #include <algorithm>
 #include <cctype>
+#include <vector>
 
 class UIManager {
 	public:
@@ -21,7 +22,10 @@ class UIManager {
 
 		inline void addElement(std::string name_element, std::unique_ptr<UIElement> element) {
 			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
-			ui_elements.emplace(name_element, std::move(element));
+			auto result = ui_elements.emplace(name_element, std::move(element));
+			if (result.second) {
+				renderUI.push_back(result.first->second.get());
+			}
 		};
 
 		inline UIElement* getElement(std::string name_element) {
@@ -33,16 +37,24 @@ class UIManager {
 		inline void removeElement(std::string name_element) {
 			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
 			auto element = ui_elements.find(name_element);
+			auto it = std::find(renderUI.begin(), renderUI.end(), element->second.get());
 			if (element != ui_elements.end()) {
+				renderUI.erase(it);
 				ui_elements.erase(name_element);
 			}
 		};
 
 		inline void render() {
-			for (const auto& element : ui_elements) {
-				element.second->handleEvent(event, window);
-				if (element.second->getVisible()) {
-					element.second->render(window);
+			if (ui_elements.empty() && renderUI.empty()) return;
+
+			std::sort(renderUI.begin(), renderUI.end(), [](UIElement* a, UIElement* b) {
+				return a->getSortIndex() < b->getSortIndex();
+			});
+
+			for (auto& element : renderUI) {
+				element->handleEvent(event, window);
+				if (element->getVisible()) {
+					element->render(window);
 				}
 			}
 		};
@@ -50,6 +62,7 @@ class UIManager {
 		GUI gui;
 
 	private:
+		std::vector<UIElement*> renderUI;
 		std::map<std::string, std::unique_ptr<UIElement>> ui_elements;
 
 		Globals& global = Globals::instance();
