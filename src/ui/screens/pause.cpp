@@ -3,23 +3,30 @@
 Pause::Pause() {
 	initResources();
 	initElements();
+	initLayers();
 	createBackground();
 	createButtonContinue();
 	createButtonExit();
 }
 
 void Pause::initResources() {
-	resourseManager.loadTexture("pause-panel", "../../../assets/textures/ui/panel.png");
-	resourseManager.loadTexture("pause-button-continue", "../../../assets/textures/ui/button.png");
-	resourseManager.loadTexture("pause-button-quit", "../../../assets/textures/ui/button.png");
+	resourseManager.loadTexture("pause-panel", "../../../assets/textures/ui/pause/panel.png");
+	resourseManager.loadTexture("pause-buttons", "../../../assets/textures/ui/pause/button.png");
 	resourseManager.loadFont("nunito", "../../../assets/fonts/nunito.ttf");
 }
 
 void Pause::initElements() {
 	uiManager.addElement("pause-background", uiManager.gui.createColorRect(sf::Color(0,0,0,100), {static_cast<float>(globals.getWindow().getSize().x),static_cast<float>(globals.getWindow().getSize().y)}));
 	uiManager.addElement("pause", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel")));
-	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-button-continue")));
-	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-button-quit")));
+	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
+	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
+}
+
+void Pause::initLayers() {
+	uiManager.getElement("pause-background")->setSortIndex(0);
+	uiManager.getElement("pause")->setSortIndex(1);
+	uiManager.getElement("pause-button-continue")->setSortIndex(2);
+	uiManager.getElement("pause-button-quit")->setSortIndex(2);
 }
 
 void Pause::createBackground() {

@@ -11,6 +11,7 @@ class Pause {
 	protected:
 		void initResources();
 		void initElements();
+		void initLayers();
 		void createBackground();
 		void createButtonContinue();
 		void createButtonExit();

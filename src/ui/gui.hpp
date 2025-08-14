@@ -25,9 +25,10 @@ class GUI {
 
 		inline std::unique_ptr<Button> createButton(
 			sf::Texture* texture,
+			sf::Vector2i button_size,
 			sf::Vector2f coords_pos = { 0,0 }
 		) {
-			return std::make_unique<Button>(texture, coords_pos);
+			return std::make_unique<Button>(texture, button_size, coords_pos);
 		};
 
 		inline std::unique_ptr<Panel> createPanel(
