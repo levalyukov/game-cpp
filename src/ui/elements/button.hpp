@@ -9,12 +9,14 @@ class Button : public UIElement {
 	public:
 		Button(
 			sf::Texture* button_texture,
+			sf::Vector2i sprite_size,
 			sf::Vector2f coords_pos
 		) : texture(std::move(*button_texture)),
-			position(coords_pos) {
+			position(coords_pos),
+			sprite_coords(sprite_size) {
 			sprite = std::make_unique<sf::Sprite>();
 			sprite->setTexture(texture);
-			sprite->setTextureRect(sf::IntRect({ 0,0 }, { 48,16 }));
+			sprite->setTextureRect(sf::IntRect({ 0,0 }, sprite_size));
 			sprite->setPosition(position);
 			sprite->scale(4, 4);
 		};
@@ -39,6 +41,7 @@ class Button : public UIElement {
 		enum State {Normal, Hovered, Pressed};
 
 		std::unique_ptr<sf::Sprite> sprite;
+		sf::Vector2i sprite_coords;
 		sf::Texture& texture;
 		sf::Vector2f position;
 		State state = Normal;
