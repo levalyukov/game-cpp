@@ -53,7 +53,7 @@ class EntityManager {
 			}
 		};
 
-	protected:
+	private:
 		std::vector <Entity*> renderEntities;
 		std::map <std::string, std::unique_ptr<Entity>> entities;
 		Globals& globals = Globals::instance();
