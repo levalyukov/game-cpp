@@ -2,7 +2,7 @@
 
 void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
 	if (npc.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-		direction = 0;
+		if (handler) handler();
 	}
 }
 
@@ -75,7 +75,7 @@ void NPC::render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera
 	if (!Globals::instance().getGamePause()) {
 		if (clock.getElapsedTime().asSeconds() >= vectorTimeValue) {
 			vectorTimeValue = utils.randi_range(1,5);
-			direction = utils.randi_range(1,4);
+			direction = utils.randi_range(0,4);
 			clock.restart();
 		}
 	} else {

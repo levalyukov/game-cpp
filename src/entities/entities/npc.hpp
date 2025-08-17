@@ -25,15 +25,21 @@ class NPC : public Entity {
 			npc.setScale({ 4,4 });
 			shadow.setScale({ 4,4 });
 			npc.setPosition({52*16,52*16});
-			direction = 1;
+			direction = 0;
 		}
+
+		std::function<void()> handler;
 
 		void movement(float deltaTime);
 		float getDepth() const override { return npc.getPosition().y + 4; };
+		void setHandleEvent(std::function<void()> new_handler) override { handler = new_handler; };
 		void handleEvent(sf::RenderWindow& window, sf::Event& event) override;
 		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
 	
 	private:
+		enum State {IDLE, WALK};
+		enum Movement {UP, DOWN, LEFT, RIGHT, ZERO};
+
 		sf::Sprite npc;
 		sf::Sprite shadow;
 		sf::Texture idle;

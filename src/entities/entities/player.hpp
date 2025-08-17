@@ -26,6 +26,7 @@ class Player : public Entity {
 
 		void movement(float deltaTime);
 		float getDepth() const override { return player.getPosition().y + 4; };
+		void setHandleEvent(std::function<void()> new_handler) override {};
 		void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
 		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
 
