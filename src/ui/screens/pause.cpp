@@ -1,6 +1,6 @@
 #include "pause.hpp"
 
-Pause::Pause() {
+void Pause::setup() {
 	initResources();
 	initElements();
 	initLayers();

@@ -5,7 +5,7 @@
 
 class HUD {
 	public:
-		HUD();
+		HUD() {};
 		~HUD() {};
 		HUD(HUD& const) = delete;
 		HUD& operator=(HUD& const) = delete;
@@ -14,13 +14,9 @@ class HUD {
 			return h;
 		};
 
-		inline void setVisible(bool _state) { 
-			visible = _state;
-			changeElementVisible(); 
-		};
-		
+		void setup();
+		inline void setVisible(bool _state) { visible = _state; changeElementVisible(); };
 		inline bool getVisible() const { return visible; };
-
 		inline void changeElementVisible() {
 			if (uiManager.getElement("hud-button")) {
 				uiManager.getElement("hud-button")->setVisible(visible);

@@ -1,12 +1,13 @@
 #include "kitchen.hpp"
 
-KitchenMenu::KitchenMenu() {
+void KitchenMenu::setup() {
 	initResources();
 	initElements();
 	initElementsPosition();
 	initVisible();
 	initLambdas();
-};
+	initRecipes();
+}
 
 void KitchenMenu::initResources() {
 	resourceManager.loadTexture("kitchen-ui-panel", "../../../assets/textures/ui/kitchen/menu.png");
@@ -43,4 +44,10 @@ void KitchenMenu::initLambdas() {
 			hud.setVisible(true);
 		}
 	);
+}
+
+void KitchenMenu::initRecipes() {
+	cooking.addRecipe("bread", { "Bread",100 });
+	cooking.addRecipe("bread-2", { "Bread 2",25 });
+	cooking.addRecipe("bread-3", { "Bread 3",55 });
 }

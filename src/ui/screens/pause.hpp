@@ -6,7 +6,7 @@
 
 class Pause {
 	public:
-		Pause();
+		Pause() {};
 		~Pause() {};
 		Pause(Pause& const) = delete;
 		Pause& operator=(Pause& const) = delete;
@@ -15,7 +15,7 @@ class Pause {
 			return p;
 		};
 
-
+		void setup();
 
 	private:
 		void initResources();

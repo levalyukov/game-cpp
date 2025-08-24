@@ -1,6 +1,6 @@
 #include "hud.hpp"
 
-HUD::HUD() {
+void HUD::setup() {
 	initResources();
 	initElements();
 	initLayers();

@@ -7,6 +7,19 @@
 
 class UI {
 	/* for init only */
+	public:
+		UI() { allSetup(); };
+		~UI() {};
+		UI(UI& const) = delete;
+		UI& operator=(UI& const) = delete;
+
+		inline void allSetup() {
+			pause.setup();
+			hud.setup();
+			kitchen_ui.setup();
+			orders.setup();
+		}
+
 	private:
 		Pause pause;
 		HUD hud;
