@@ -5,6 +5,7 @@ Pause::Pause() {
 	initElements();
 	initLayers();
 	createBackground();
+	createPanel();
 	createButtonContinue();
 	createButtonExit();
 }
@@ -17,22 +18,28 @@ void Pause::initResources() {
 
 void Pause::initElements() {
 	uiManager.addElement("pause-background", uiManager.gui.createColorRect(sf::Color(0,0,0,100), {static_cast<float>(globals.getWindow().getSize().x),static_cast<float>(globals.getWindow().getSize().y)}));
-	uiManager.addElement("pause", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel")));
+	uiManager.addElement("pause-panel", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel")));
 	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
 	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
 }
 
 void Pause::initLayers() {
 	uiManager.getElement("pause-background")->setSortIndex(0);
-	uiManager.getElement("pause")->setSortIndex(1);
+	uiManager.getElement("pause-panel")->setSortIndex(1);
 	uiManager.getElement("pause-button-continue")->setSortIndex(2);
 	uiManager.getElement("pause-button-quit")->setSortIndex(2);
 }
 
 void Pause::createBackground() {
-	if (uiManager.getElement("pause")) {
-		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
-		uiManager.getElement("pause")->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
+	if (uiManager.getElement("pause-background")) {
+		uiManager.getElement("pause-background")->setVisible(false);
+	}
+}
+
+void Pause::createPanel() {
+	if (uiManager.getElement("pause-panel")) {
+		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
+		uiManager.getElement("pause-panel")->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 		panel->setVisible(false);
 		panel->setHandleEvent(
 			[]() {
@@ -45,14 +52,14 @@ void Pause::createBackground() {
 					if (!globals.getGamePause()) {
 						globals.setGamePause(true);
 						ui.getElement("pause-background")->setVisible(true);
-						ui.getElement("pause")->setVisible(true);
+						ui.getElement("pause-panel")->setVisible(true);
 						ui.getElement("pause-button-continue")->setVisible(true);
 						ui.getElement("pause-button-quit")->setVisible(true);
 					}
 					else {
 						globals.setGamePause(!true);
 						ui.getElement("pause-background")->setVisible(!true);
-						ui.getElement("pause")->setVisible(!true);
+						ui.getElement("pause-panel")->setVisible(!true);
 						ui.getElement("pause-button-continue")->setVisible(!true);
 						ui.getElement("pause-button-quit")->setVisible(!true);
 					}
@@ -67,11 +74,11 @@ void Pause::createBackground() {
 void Pause::createButtonContinue() {
 	if (uiManager.getElement("pause-button-continue")) {
 		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
-		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
+		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 		
 		button->setElementPosition(
 			{
-				panel->getElementPosition().x + (panel->getButtonSprite().getGlobalBounds().width - button->getButtonSprite().getGlobalBounds().width) / 2.0f,
+				panel->getElementPosition().x + (panel->getSprite().getGlobalBounds().width - button->getSprite().getGlobalBounds().width) / 2.0f,
 				panel->getElementPosition().y + 25
 			}
 		);
@@ -91,7 +98,7 @@ void Pause::createButtonContinue() {
 				UIManager& ui = UIManager::instance();
 				globals.setGamePause(false);
 				ui.getElement("pause-background")->setVisible(!true);
-				ui.getElement("pause")->setVisible(false);
+				ui.getElement("pause-panel")->setVisible(false);
 				ui.getElement("pause-button-continue")->setVisible(false);
 				ui.getElement("pause-button-quit")->setVisible(false);
 			}
@@ -102,11 +109,11 @@ void Pause::createButtonContinue() {
 void Pause::createButtonExit() {
 	if (uiManager.getElement("pause-button-quit")) {
 		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
-		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause"));
+		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 
 		button->setElementPosition(
 			{
-				panel->getElementPosition().x + (panel->getButtonSprite().getGlobalBounds().width - button->getButtonSprite().getGlobalBounds().width) / 2.0f,
+				panel->getElementPosition().x + (panel->getSprite().getGlobalBounds().width - button->getSprite().getGlobalBounds().width) / 2.0f,
 				panel->getElementPosition().y + 100
 			}
 		);

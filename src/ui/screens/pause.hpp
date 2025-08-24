@@ -7,12 +7,22 @@
 class Pause {
 	public:
 		Pause();
+		~Pause() {};
+		Pause(Pause& const) = delete;
+		Pause& operator=(Pause& const) = delete;
+		inline static Pause& instance() {
+			static Pause p;
+			return p;
+		};
 
-	protected:
+
+
+	private:
 		void initResources();
 		void initElements();
 		void initLayers();
 		void createBackground();
+		void createPanel();
 		void createButtonContinue();
 		void createButtonExit();
 
