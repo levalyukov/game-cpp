@@ -16,7 +16,7 @@ class Game {
 			run();
 		}
 
-	protected:
+	private:
 		Globals& globals = Globals::instance();
 		UIManager& UIManager = UIManager::instance();
 		sf::RenderWindow& window = globals.getWindow();

@@ -2,9 +2,11 @@
 
 #include "../entity.hpp"
 
+#include <iostream>
+
 class Build : public Entity {
 	public:
-		Build(
+		inline Build(
 			sf::Texture* texture,
 			sf::Vector2f position,
 			sf::Vector2i frame_size
@@ -28,4 +30,7 @@ class Build : public Entity {
 		sf::Texture& build_texture;
 		sf::Vector2f build_position;
 		sf::Vector2i build_size;
+
+		enum MouseState {Normal, Hovered, Pressed};
+		MouseState s_mouse = Normal;
 };

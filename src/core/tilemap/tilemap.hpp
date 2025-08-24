@@ -9,7 +9,7 @@ class Tilemap {
 		Tilemap();
 		void render();
 
-	protected:
+	private:
 		const int TILE_SIZE = 64;
 		const int WIDHT_MAX = 32;
 		const int HEIGH_MAX = 32;

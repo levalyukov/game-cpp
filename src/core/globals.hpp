@@ -24,7 +24,7 @@ class Globals {
 		inline void setGamePause(bool new_state) { paused = new_state; };
 		inline bool getGamePause() const { return paused; };
 
-	protected:
+	private:
 		std::unique_ptr<sf::RenderWindow> window;
 		std::unique_ptr<sf::Event> event;
 		std::unique_ptr<sf::Clock> clock;
