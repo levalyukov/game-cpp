@@ -17,10 +17,9 @@ class GUI {
 			sf::Font* font,
 			unsigned __int8 size,
 			sf::Color color,
-			UIElement::ElementPosition position,
 			sf::Vector2f coords_pos = { 0,0 }
 		) {
-			return std::make_unique<Label>(message, font, size, color, coords_pos, position);
+			return std::make_unique<Label>(message, font, size, color, coords_pos);
 		};
 
 		inline std::unique_ptr<Button> createButton(

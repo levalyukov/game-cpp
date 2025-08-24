@@ -9,7 +9,7 @@ void Player::render(sf::RenderWindow& window, float deltaTime, sf::View& gameVie
 }
 
 void Player::movement(float deltaTime) {
-	if (!Globals::instance().getGamePause()) {
+	if (!stopped_flag) {
 		bool movementUp = false;
 		bool movementDown = false;
 		bool movementLeft = false;

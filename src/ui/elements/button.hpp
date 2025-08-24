@@ -7,13 +7,13 @@
 
 class Button : public UIElement {
 	public:
-		Button(
+		inline Button(
 			sf::Texture* button_texture,
-			sf::Vector2i sprite_size,
+			sf::Vector2i size,
 			sf::Vector2f coords_pos
 		) : texture(std::move(*button_texture)),
 			position(coords_pos),
-			sprite_coords(sprite_size) {
+			sprite_size(size) {
 			sprite = std::make_unique<sf::Sprite>();
 			sprite->setTexture(texture);
 			sprite->setTextureRect(sf::IntRect({ 0,0 }, sprite_size));
@@ -26,7 +26,7 @@ class Button : public UIElement {
 		void setText(sf::Font* font, std::string text, unsigned __int8 font_size);
 		inline void changeText(std::string new_text) { label_message = new_text; };
 		inline void setElementPosition(sf::Vector2f new_position) { sprite->setPosition(new_position); };
-		inline sf::Sprite& getButtonSprite() { return *sprite; };
+		inline sf::Sprite& getSprite() { return *sprite; };
 
 		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
 		unsigned __int8 getSortIndex() const override { return ZIndex; };
@@ -41,7 +41,7 @@ class Button : public UIElement {
 		enum State {Normal, Hovered, Pressed};
 
 		std::unique_ptr<sf::Sprite> sprite;
-		sf::Vector2i sprite_coords;
+		sf::Vector2i sprite_size;
 		sf::Texture& texture;
 		sf::Vector2f position;
 		State state = Normal;

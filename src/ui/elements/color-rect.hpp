@@ -5,7 +5,7 @@
 
 class ColorRect : public UIElement {
 	public:
-		ColorRect(
+		inline ColorRect(
 			sf::Color color,
 			sf::Vector2f size
 		) : color_rect(color),
@@ -18,6 +18,7 @@ class ColorRect : public UIElement {
 
 		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
 		unsigned __int8 getSortIndex() const override { return ZIndex; };
+
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handle) override { handler = new_handle; };
@@ -28,6 +29,6 @@ class ColorRect : public UIElement {
 		sf::RectangleShape rect;
 		sf::Color color_rect;
 		sf::Vector2f size_rect;
-		bool isVisible = false;
+		bool isVisible = true;
 		unsigned __int8 ZIndex = 0;
 };

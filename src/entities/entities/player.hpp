@@ -25,11 +25,14 @@ class Player : public Entity {
 		};
 
 		void movement(float deltaTime);
-		float getDepth() const override { return player.getPosition().y + 4; };
-		void setHandleEvent(std::function<void()> new_handler) override {};
-		void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
-		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
+		inline void setStoppedFlag(bool _state) { stopped_flag = _state; };
+		inline bool getStoppedFlag() const { return stopped_flag; };
 
+		inline float getDepth() const override { return player.getPosition().y + 4; };
+		inline void setHandleEvent(std::function<void()> new_handler) override {};
+		inline void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
+		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
+	
 	private:
 		sf::Sprite player;
 		sf::Sprite shadow_sprite;
@@ -63,4 +66,6 @@ class Player : public Entity {
 		sf::Vector2i oldVectorDOWN;
 		sf::Vector2i oldVectorLEFT;
 		sf::Vector2i oldVectorRIGHT;
+
+		bool stopped_flag = false;
 };

@@ -7,7 +7,7 @@
 
 class Panel : public UIElement {
 	public:
-		Panel(
+		inline Panel(
 			sf::Texture* panel_texture,
 			sf::Vector2f position_coords
 		) : texture(std::move(*panel_texture)), position(position_coords) {
