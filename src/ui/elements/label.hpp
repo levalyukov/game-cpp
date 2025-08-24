@@ -4,19 +4,16 @@
 
 class Label : public UIElement {
 	public:
-		Label(
+		inline Label(
 			std::string message,
 			sf::Font* font,
 			unsigned __int8 size,
 			sf::Color color,
-			sf::Vector2f coords_position,
-			ElementPosition position
+			sf::Vector2f coords_position
 		) : message(message),
 			font(*font),
 			size(size),
-			color(color),
-			coords_pos(coords_position),
-			position(position) {
+			color(color) {
 			text.setFont(*font);
 			text.setCharacterSize(size);
 			text.setColor(color);
@@ -24,7 +21,7 @@ class Label : public UIElement {
 			text.setPosition(coords_position);
 		};
 
-		using ElementAction = std::function<void()>;
+		std::function<void()> handler;
 
 		inline void setText(std::string new_msg) { message = new_msg; text.setString(new_msg); };
 		inline void setColor(sf::Color new_color) { color = new_color; text.setColor(color); };
@@ -34,7 +31,7 @@ class Label : public UIElement {
 		unsigned __int8 getSortIndex() const override { return ZIndex; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
-		inline void setHandleEvent(ElementAction new_func) { action = new_func; };
+		inline void setHandleEvent(std::function<void()> new_handler) {};
 		inline void handleEvent(sf::Event& event, sf::RenderWindow& window) override {};
 		inline void render(sf::RenderWindow& window) const override { window.draw(text); };
 
@@ -44,9 +41,6 @@ class Label : public UIElement {
 		unsigned __int8 size;
 		sf::Text text;
 		sf::Color color;
-		sf::Vector2f coords_pos;
-		ElementPosition position;
-		ElementAction action;
 		bool isVisible = true;
 		unsigned __int8 ZIndex = 0;
 };
