@@ -1,6 +1,9 @@
 #include "ui-element.hpp"
 
-void UIElement::setGlobalPosition(enum ElementPosition current_position, sf::Sprite& sprite) {
+void UIElement::setGlobalPosition(
+	enum ElementPosition current_position, 
+	sf::Sprite& sprite
+) {
 	sf::RenderWindow& window = Globals::instance().getWindow();
 	float windowSizeX = static_cast<float>(window.getSize().x);
 	float windowSizeY = static_cast<float>(window.getSize().y);
@@ -39,3 +42,7 @@ void UIElement::setGlobalPosition(enum ElementPosition current_position, sf::Spr
 			break;
 	}
 }
+void UIElement::setMargins(sf::Vector2i vector, sf::Sprite& sprite) {
+	sf::Vector2f _sprite_position = sprite.getPosition();
+	sprite.setPosition(_sprite_position.x + vector.x, _sprite_position.y + vector.y);
+};
