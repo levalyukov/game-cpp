@@ -16,8 +16,7 @@ class UIElement {
 		};
 
 		void setGlobalPosition(enum ElementPosition current_position, sf::Sprite& sprite);
-		void setRelativePosition(enum ElementPosition current_position, sf::Sprite& parent_sprite, sf::Sprite& child_sprite);
-		void setMargins(sf::Vector2i vector, sf::Sprite& sprite);
+		void setRelativePosition(enum ElementPosition current_position, sf::Sprite& parent_sprite, sf::Sprite& child_sprite, sf::Vector2f margins = { 0.f,0.f });
 
 		virtual void setSortIndex(unsigned __int8 new_z_index) = 0;
 		virtual unsigned __int8 getSortIndex() const = 0;

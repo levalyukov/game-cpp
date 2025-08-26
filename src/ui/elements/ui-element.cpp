@@ -42,7 +42,24 @@ void UIElement::setGlobalPosition(
 			break;
 	}
 }
-void UIElement::setMargins(sf::Vector2i vector, sf::Sprite& sprite) {
-	sf::Vector2f _sprite_position = sprite.getPosition();
-	sprite.setPosition(_sprite_position.x + vector.x, _sprite_position.y + vector.y);
-};
+
+void UIElement::setRelativePosition(
+	enum ElementPosition current_position, 
+	sf::Sprite& parent_sprite,
+	sf::Sprite& child_sprite,
+	sf::Vector2f margins
+) {
+	float parentX = static_cast<float>(parent_sprite.getPosition().x);
+	float parentY = static_cast<float>(parent_sprite.getPosition().y);
+	float childX = static_cast<float>(child_sprite.getGlobalBounds().width);
+	float childY = static_cast<float>(child_sprite.getGlobalBounds().height);
+
+	switch (current_position) {
+		case TopLeft: 
+			child_sprite.setPosition(parentX + margins.x, parentY + margins.y);
+			break;
+		case TopCenter:
+			child_sprite.setPosition(parentX - (parentX + childX) / 2.f, parentY);
+			break;
+	}
+}
