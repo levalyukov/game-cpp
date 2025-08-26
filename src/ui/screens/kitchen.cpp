@@ -3,10 +3,8 @@
 void KitchenMenu::setup() {
 	initResources();
 	initElements();
-	initElementsPosition();
 	initVisible();
 	initLambdas();
-	initRecipes();
 }
 
 void KitchenMenu::initResources() {
@@ -19,14 +17,38 @@ void KitchenMenu::initElements() {
 	uiManager.addElement("kitchen-ui-background", uiManager.gui.createColorRect(sf::Color(0, 0, 0, 100), { static_cast<float>(window.getSize().x),static_cast<float>(window.getSize().y) }));
 	uiManager.addElement("kitchen-ui-panel", uiManager.gui.createPanel(resourceManager.getTexture("kitchen-ui-panel"), { 0,0 }));
 	uiManager.addElement("kitchen-ui-close-button", uiManager.gui.createButton(resourceManager.getTexture("kitchen-ui-close-button"), { 16,16 }));
-};
 
-void KitchenMenu::initElementsPosition() {
 	auto panel = static_cast<Panel*>(uiManager.getElement("kitchen-ui-panel"));
 	auto close_button = static_cast<Button*>(uiManager.getElement("kitchen-ui-close-button"));
+	sf::Sprite& close_button_sprite = close_button->getSprite();
 	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
-	close_button->setGlobalPosition(UIElement::TopRight, close_button->getSprite());
-	close_button->setMargins({-240, 128}, close_button->getSprite());
+	close_button->setGlobalPosition(UIElement::TopRight, close_button_sprite);
+	close_button_sprite.setPosition(close_button_sprite.getPosition().x + -240, close_button_sprite.getPosition().y + 128);
+
+	float button_pos_y = 0.f;
+	unsigned int new_id = 0;
+
+	for (const auto& pair : cooking.recipes) {
+		button_pos_y += 8;
+		std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(new_id);
+		std::string buttonRecipeName = pair.second.title;
+
+		uiManager.addElement(buttonName, uiManager.gui.createButton(resourceManager.getTexture("kitchen-ui-buttons"), { 73,18 }, { 0,24 }));
+		
+		auto buttonRecipe = static_cast<Button*>(uiManager.getElement(buttonName));
+		auto panel = static_cast<Panel*>(uiManager.getElement("kitchen-ui-panel"));
+		sf::Sprite& buttonSprite = buttonRecipe->getSprite();
+
+		buttonRecipe->setVisible(false);
+		buttonRecipe->setRelativePosition(UIElement::TopLeft, panel->getSprite(), buttonRecipe->getSprite(), { 16,button_pos_y + (buttonSprite.getGlobalBounds().height * new_id + 1)+15 });
+		buttonRecipe->setText(resourceManager.getFont("nunito"), pair.second.title, 22);
+		buttonRecipe->setHandleEvent(
+			[new_id, buttonRecipeName]() {
+				std::cout << buttonRecipeName << std::endl;
+			}
+		);
+		new_id++;
+	}
 };
 
 void KitchenMenu::initVisible() {
@@ -36,7 +58,6 @@ void KitchenMenu::initVisible() {
 }
 
 void KitchenMenu::initLambdas() {
-	/* Close button */
 	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent([]() {
 			KitchenMenu& kitchen = KitchenMenu::instance();
 			HUD& hud = HUD::instance();
@@ -44,10 +65,4 @@ void KitchenMenu::initLambdas() {
 			hud.setVisible(true);
 		}
 	);
-}
-
-void KitchenMenu::initRecipes() {
-	cooking.addRecipe("bread", { "Bread",100 });
-	cooking.addRecipe("bread-2", { "Bread 2",25 });
-	cooking.addRecipe("bread-3", { "Bread 3",55 });
 }
