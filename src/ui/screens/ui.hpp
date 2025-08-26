@@ -7,7 +7,7 @@
 
 class UI {
 	/* for init only */
-	public:
+	public: 
 		UI() { allSetup(); };
 		~UI() {};
 		UI(UI& const) = delete;
@@ -18,7 +18,7 @@ class UI {
 			hud.setup();
 			kitchen_ui.setup();
 			orders.setup();
-		}
+		};
 
 	private:
 		Pause pause;

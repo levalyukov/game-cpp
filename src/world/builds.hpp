@@ -38,7 +38,7 @@ class Builds {
 				"kitchen",
 				std::make_unique<Build>(
 					resourceManager.getTexture("kitchen"),
-					sf::Vector2f({ 256.f,256.f }),
+					sf::Vector2f({ 512.f,512.f }),
 					sf::Vector2i({ 16,16 })
 				));
 			initKitchen(entityManager);
