@@ -51,15 +51,20 @@ void UIElement::setRelativePosition(
 ) {
 	float parentX = static_cast<float>(parent_sprite.getPosition().x);
 	float parentY = static_cast<float>(parent_sprite.getPosition().y);
-	float childX = static_cast<float>(child_sprite.getGlobalBounds().width);
-	float childY = static_cast<float>(child_sprite.getGlobalBounds().height);
+	float parentBoundsWidth = static_cast<float>(parent_sprite.getGlobalBounds().width);
+	float parentBoundsHeight = static_cast<float>(parent_sprite.getGlobalBounds().height);
+	float childBoundsWidth = static_cast<float>(child_sprite.getGlobalBounds().width);
+	float childBoundsHeight = static_cast<float>(child_sprite.getGlobalBounds().height);
 
 	switch (current_position) {
 		case TopLeft: 
 			child_sprite.setPosition(parentX + margins.x, parentY + margins.y);
 			break;
 		case TopCenter:
-			child_sprite.setPosition(parentX - (parentX + childX) / 2.f, parentY);
+			child_sprite.setPosition(parentX + (parentBoundsWidth - childBoundsWidth) / 2.f, parentY);
+			break;
+		case TopRight:
+			child_sprite.setPosition({0,0});
 			break;
 	}
 }
