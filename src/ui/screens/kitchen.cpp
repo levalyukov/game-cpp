@@ -60,8 +60,15 @@ void KitchenMenu::initVisible() {
 void KitchenMenu::initLambdas() {
 	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent(
 		[&]() {
-			setVisible(false);
-			//hud.setVisible(true);
+			uiManager.getElement("kitchen-ui-background")->setVisible(false);
+			uiManager.getElement("kitchen-ui-panel")->setVisible(false);
+			uiManager.getElement("kitchen-ui-close-button")->setVisible(false);
+			for (int y = 0; y < cooking.recipes.size(); y++) {
+				std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(y);
+				if (uiManager.getElement(buttonName)) {
+					uiManager.getElement(buttonName)->setVisible(false);
+				}
+			}
 		}
 	);
 }

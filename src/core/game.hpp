@@ -34,7 +34,7 @@ class Game {
 		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
 
 		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager);
-		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager);
+		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager);
 		std::unique_ptr<Tilemap> tilemap = std::make_unique<Tilemap>();
 
 		Globals& globals = Globals::instance();

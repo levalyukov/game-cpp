@@ -3,15 +3,16 @@
 #include "../ui/ui-manager.hpp"
 #include "../core/resources/resources.hpp"
 #include "../entities/entity-manager.hpp"
+#include "../mechanics/cooking.hpp"
 #include "../entities/entities/build.hpp"
 
 class Builds {
 	public:
 		Builds() {};
 
-		inline void create(ResourceManager& resourceManager, EntityManager& entityManager, UIManager& uiManager) {
+		inline void create(ResourceManager& resourceManager, EntityManager& entityManager, UIManager& uiManager, CookingManager& cookingManager) {
 			initResources(resourceManager);
-			initBuilds(entityManager, resourceManager, uiManager);
+			initBuilds(entityManager, resourceManager, uiManager, cookingManager);
 		};
 
 	private:
@@ -19,7 +20,7 @@ class Builds {
 			resourceManager.loadTexture("kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
 		};
 
-		inline void initBuilds(EntityManager& entityManager, ResourceManager& resourceManager, UIManager& uiManager) {
+		inline void initBuilds(EntityManager& entityManager, ResourceManager& resourceManager, UIManager& uiManager, CookingManager& cookingManager) {
 			entityManager.addEntity(
 				"kitchen",
 				std::make_unique<Build>(
@@ -27,14 +28,22 @@ class Builds {
 					sf::Vector2f({ 512.f,512.f }),
 					sf::Vector2i({ 16,16 })
 				));
-			initKitchen(entityManager, uiManager);
+			initKitchen(entityManager, uiManager, cookingManager);
 		};
 
-		inline void initKitchen(EntityManager& entityManager, UIManager& uiManager) {
+		inline void initKitchen(EntityManager& entityManager, UIManager& uiManager, CookingManager& cookingManager) {
 			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
 			kitchen->setHandleEvent(
 				[&]() {
-					
+					uiManager.getElement("kitchen-ui-background")->setVisible(true);
+					uiManager.getElement("kitchen-ui-panel")->setVisible(true);
+					uiManager.getElement("kitchen-ui-close-button")->setVisible(true);
+					for (int y = 0; y < cookingManager.recipes.size(); y++) {
+						std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(y);
+						if (uiManager.getElement(buttonName)) {
+							uiManager.getElement(buttonName)->setVisible(true);
+						}
+					}
 				}
 			);
 		};
