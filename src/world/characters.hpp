@@ -7,11 +7,6 @@
 
 class Characters {
 	public:
-		static Characters& instance() {
-			static Characters c;
-			return c;
-		}
-
 		inline void spawn(ResourceManager& resourceManager, EntityManager& entityManager) {
 			player(resourceManager, entityManager);
 			npcs(resourceManager, entityManager);
@@ -51,9 +46,4 @@ class Characters {
 				)
 			);
 		};
-
-		Characters() {};
-		~Characters() {};
-		Characters(Characters& const) = delete;
-		Characters& operator=(Characters& const) = delete;
 };

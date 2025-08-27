@@ -5,6 +5,7 @@
 #include "../world/world.hpp"
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
+#include "resources/resources.hpp"
 
 class Game {
 	public:
@@ -16,9 +17,27 @@ class Game {
 			run();
 		}
 
+		~Game() {
+			resourceManager = nullptr;
+			entityManager = nullptr;
+			cookingManager = nullptr;
+			uiManager = nullptr;
+			ui = nullptr;
+			world = nullptr;
+			tilemap = nullptr;
+		};
+
 	private:
+		std::unique_ptr<ResourceManager> resourceManager = std::make_unique<ResourceManager>();
+		std::unique_ptr<EntityManager> entityManager = std::make_unique<EntityManager>();
+		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>();
+		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
+
+		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager);
+		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager);
+		std::unique_ptr<Tilemap> tilemap = std::make_unique<Tilemap>();
+
 		Globals& globals = Globals::instance();
-		UIManager& UIManager = UIManager::instance();
 		sf::RenderWindow& window = globals.getWindow();
 		sf::Event& event = globals.getEvent();
 		sf::Clock& clock = globals.getClock();
@@ -30,10 +49,6 @@ class Game {
 		void processEvent();
 		void render();
 		void run();
-
-		UI ui;
-		Tilemap tilemap;
-		World world;
 
 		float delta = std::min(clock.restart().asSeconds(), .1f);
 };

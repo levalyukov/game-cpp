@@ -2,11 +2,6 @@
 
 class Economy {
 	public:
-		static Economy& Instance() {
-			static Economy e;
-			return e;
-		};
-
 		inline void setMoney(int value) { if (value >= 0) money = value; };
 		inline void addMoney(int value) { if (value >= 0) money += value; };
 		inline void removeMoney(int value) { 
@@ -22,9 +17,4 @@ class Economy {
 
 	private:
 		unsigned int money = 0;
-		
-		Economy() {};
-		~Economy() {}
-		Economy(Economy& const) = delete;
-		Economy& operator=(Economy& const) = delete;
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../globals.hpp"
-
 #include <SFML/Graphics.hpp>
 
 class Tilemap {

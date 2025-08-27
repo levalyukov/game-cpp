@@ -5,14 +5,11 @@
 
 class HUD {
 	public:
-		HUD() {};
-		~HUD() {};
-		HUD(HUD& const) = delete;
-		HUD& operator=(HUD& const) = delete;
-		inline static HUD& instance() {
-			static HUD h;
-			return h;
-		};
+		HUD(
+			UIManager& ui_manager,
+			ResourceManager& resource_manager
+		) : uiManager(ui_manager), 
+			resourceManager(resource_manager) {};
 
 		void setup();
 		inline void setVisible(bool _state) { visible = _state; changeElementVisible(); };
@@ -24,12 +21,12 @@ class HUD {
 		};
 
 	private:
+		UIManager& uiManager;
+		ResourceManager& resourceManager;
+
 		bool visible = true;
 
 		void initResources();
 		void initElements();
 		void initLayers();
-
-		UIManager& uiManager = UIManager::instance();
-		ResourceManager& resourceManager = ResourceManager::instance();
 };

@@ -42,26 +42,24 @@ void Pause::createPanel() {
 		uiManager.getElement("pause-panel")->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 		panel->setVisible(false);
 		panel->setHandleEvent(
-			[]() {
+			[&]() {
 				static bool escWasPressed = false;
 				bool escIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
 
 				if (escIsPressed && !escWasPressed) {
-					Globals& globals = Globals::instance();
-					UIManager& ui = UIManager::instance();
 					if (!globals.getGamePause()) {
 						globals.setGamePause(true);
-						ui.getElement("pause-background")->setVisible(true);
-						ui.getElement("pause-panel")->setVisible(true);
-						ui.getElement("pause-button-continue")->setVisible(true);
-						ui.getElement("pause-button-quit")->setVisible(true);
+						uiManager.getElement("pause-background")->setVisible(true);
+						uiManager.getElement("pause-panel")->setVisible(true);
+						uiManager.getElement("pause-button-continue")->setVisible(true);
+						uiManager.getElement("pause-button-quit")->setVisible(true);
 					}
 					else {
 						globals.setGamePause(!true);
-						ui.getElement("pause-background")->setVisible(!true);
-						ui.getElement("pause-panel")->setVisible(!true);
-						ui.getElement("pause-button-continue")->setVisible(!true);
-						ui.getElement("pause-button-quit")->setVisible(!true);
+						uiManager.getElement("pause-background")->setVisible(!true);
+						uiManager.getElement("pause-panel")->setVisible(!true);
+						uiManager.getElement("pause-button-continue")->setVisible(!true);
+						uiManager.getElement("pause-button-quit")->setVisible(!true);
 					}
 				}
 
@@ -76,31 +74,23 @@ void Pause::createButtonContinue() {
 		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 		
-		button->setElementPosition(
-			{
-				panel->getElementPosition().x + (panel->getSprite().getGlobalBounds().width - button->getSprite().getGlobalBounds().width) / 2.0f,
-				panel->getElementPosition().y + 25
-			}
-		);
+		sf::Vector2f panelPosition = panel->getElementPosition();
+		sf::FloatRect panelBounds = panel->getSprite().getGlobalBounds();
+		sf::FloatRect buttonBounds = button->getSprite().getGlobalBounds();
+		button->setElementPosition({ panelPosition.x + (panelBounds.width - buttonBounds.width) / 2.f,panelPosition.y + 25 });
 
 		if (resourseManager.getFont("nunito")) {
-			button->setText(
-				resourseManager.getFont("nunito"),
-				"Continue",
-				24
-			);
+			button->setText(resourseManager.getFont("nunito"), "Continue", 24);
 		}
 
 		button->setVisible(false);
 		button->setHandleEvent(
-			[]() {
-				Globals& globals = Globals::instance();
-				UIManager& ui = UIManager::instance();
+			[&]() {
 				globals.setGamePause(false);
-				ui.getElement("pause-background")->setVisible(!true);
-				ui.getElement("pause-panel")->setVisible(false);
-				ui.getElement("pause-button-continue")->setVisible(false);
-				ui.getElement("pause-button-quit")->setVisible(false);
+				uiManager.getElement("pause-background")->setVisible(!true);
+				uiManager.getElement("pause-panel")->setVisible(false);
+				uiManager.getElement("pause-button-continue")->setVisible(false);
+				uiManager.getElement("pause-button-quit")->setVisible(false);
 			}
 		);
 	}
@@ -111,25 +101,18 @@ void Pause::createButtonExit() {
 		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 
-		button->setElementPosition(
-			{
-				panel->getElementPosition().x + (panel->getSprite().getGlobalBounds().width - button->getSprite().getGlobalBounds().width) / 2.0f,
-				panel->getElementPosition().y + 100
-			}
-		);
+		sf::Vector2f panelPosition = panel->getElementPosition();
+		sf::FloatRect panelBounds = panel->getSprite().getGlobalBounds();
+		sf::FloatRect buttonBounds = button->getSprite().getGlobalBounds();
+		button->setElementPosition({ panelPosition.x + (panelBounds.width - buttonBounds.width) / 2.0f,panelPosition.y + 100 });
 
 		if (resourseManager.getFont("nunito")) {
-			button->setText(
-				resourseManager.getFont("nunito"),
-				"Exit the Game",
-				24
-			);
+			button->setText(resourseManager.getFont("nunito"), "Exit the Game", 24);
 		}
 
 		button->setVisible(false);
 		button->setHandleEvent(
-			[]() {
-				Globals& globals = Globals::instance();
+			[&]() {
 				globals.getWindow().close();
 			}
 		);

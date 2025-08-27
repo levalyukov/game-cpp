@@ -58,11 +58,10 @@ void KitchenMenu::initVisible() {
 }
 
 void KitchenMenu::initLambdas() {
-	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent([]() {
-			KitchenMenu& kitchen = KitchenMenu::instance();
-			HUD& hud = HUD::instance();
-			kitchen.setVisible(false);
-			hud.setVisible(true);
+	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent(
+		[&]() {
+			setVisible(false);
+			//hud.setVisible(true);
 		}
 	);
 }

@@ -9,15 +9,6 @@
 
 class EntityManager {
 	public:
-		EntityManager() {};
-		~EntityManager() {};
-		EntityManager(EntityManager& const) = delete;
-		EntityManager& operator=(EntityManager& const) = delete;
-		inline static EntityManager& instance() {
-			static EntityManager r;
-			return r;
-		}
-
 		inline void addEntity(std::string name, std::unique_ptr<Entity> entity) { 
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
 			auto result = entities.emplace(name, std::move(entity));

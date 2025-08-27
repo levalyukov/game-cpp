@@ -9,19 +9,33 @@
 
 class World {
 	public:
-		World() {
-			characters.spawn(resourceManager, entityManager);
-			builds.create(resourceManager, entityManager);
+		World(
+			UIManager& ui_manager,
+			EntityManager& entity_manager,
+			ResourceManager& resource_manager
+		) : uiManager(ui_manager),
+			entityManager(entity_manager),
+			resourceManager(resource_manager) {
+			characters->spawn(resourceManager, entityManager);
+			builds->create(resourceManager, entityManager, uiManager);
 		};
+		
+		~World() {
+			characters = nullptr;
+			nature = nullptr;
+			builds = nullptr;
+		}
 
 		inline void render(float delta, sf::View& game_camera) {
 			entityManager.render(delta, game_camera);
 		};
 
 	private:
-		ResourceManager& resourceManager = ResourceManager::instance();
-		EntityManager& entityManager = EntityManager::instance();
-		Characters& characters = Characters::instance();
-		Nature& nature = Nature::instance();
-		Builds& builds = Builds::instance();
+		ResourceManager& resourceManager;
+		EntityManager& entityManager;
+		UIManager& uiManager;
+
+		std::unique_ptr<Characters> characters = std::make_unique<Characters>();
+		std::unique_ptr<Nature> nature = std::make_unique<Nature>();
+		std::unique_ptr<Builds> builds = std::make_unique<Builds>();
 };

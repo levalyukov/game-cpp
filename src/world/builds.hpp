@@ -5,35 +5,21 @@
 #include "../entities/entity-manager.hpp"
 #include "../entities/entities/build.hpp"
 
-#include "../ui/screens/hud.hpp"
-#include "../ui/screens/kitchen.hpp"
-
-#include <iostream>
-
 class Builds {
 	public:
-		inline static Builds& instance() {
-			static Builds b;
-			return b;
-		};
+		Builds() {};
 
-		inline void create(ResourceManager& resourceManager, EntityManager& entityManager) {
+		inline void create(ResourceManager& resourceManager, EntityManager& entityManager, UIManager& uiManager) {
 			initResources(resourceManager);
-			initBuilds(entityManager, resourceManager);
+			initBuilds(entityManager, resourceManager, uiManager);
 		};
 
 	private:
-		Builds() {};
-		~Builds() {};
-		Builds(Builds& const) = delete;
-		Builds& operator=(Builds& const) = delete;
-		UIManager& uiManager = UIManager::instance();
-
 		inline void initResources(ResourceManager& resourceManager) {
 			resourceManager.loadTexture("kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
 		};
 
-		inline void initBuilds(EntityManager& entityManager, ResourceManager& resourceManager) {
+		inline void initBuilds(EntityManager& entityManager, ResourceManager& resourceManager, UIManager& uiManager) {
 			entityManager.addEntity(
 				"kitchen",
 				std::make_unique<Build>(
@@ -41,19 +27,15 @@ class Builds {
 					sf::Vector2f({ 512.f,512.f }),
 					sf::Vector2i({ 16,16 })
 				));
-			initKitchen(entityManager);
+			initKitchen(entityManager, uiManager);
 		};
 
-		inline void initKitchen(EntityManager& entityManager) {
+		inline void initKitchen(EntityManager& entityManager, UIManager& uiManager) {
 			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
-			kitchen->setHandleEvent([]() {
-				KitchenMenu& kitchen = KitchenMenu::instance();
-				UIManager& uiManager = UIManager::instance();
-				HUD& hud = HUD::instance();
-				if (!kitchen.getVisible()) {
-					kitchen.setVisible(true);
-					hud.setVisible(false);
+			kitchen->setHandleEvent(
+				[&]() {
+					
 				}
-			});
+			);
 		};
 };

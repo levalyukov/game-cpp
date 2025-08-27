@@ -2,7 +2,7 @@
 
 #include "../src/economy/economy.hpp"
 
-Economy& economyManager = Economy::Instance();
+Economy economyManager;
 
 /*! checking addMoney() func */
 TEST_CASE("Adding positive value", "[economy]") {

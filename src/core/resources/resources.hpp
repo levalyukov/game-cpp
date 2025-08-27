@@ -11,11 +11,6 @@
 
 class ResourceManager {
 	public:
-		inline static ResourceManager& instance() {
-			static ResourceManager r;
-			return r;
-		};
-
 		// Textures
 		inline void loadTexture(std::string name, std::string path) {
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
@@ -52,11 +47,6 @@ class ResourceManager {
 		}
 
 	private:
-		ResourceManager() {};
-		~ResourceManager() {};
-		ResourceManager(ResourceManager const&) = delete;
-		ResourceManager& operator=(ResourceManager const&) = delete;
-
 		std::map<std::string, std::unique_ptr<sf::Texture>> textures;
 		std::map<std::string, std::unique_ptr<sf::Font>> fonts;
 };

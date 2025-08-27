@@ -6,18 +6,19 @@
 
 class Pause {
 	public:
-		Pause() {};
-		~Pause() {};
-		Pause(Pause& const) = delete;
-		Pause& operator=(Pause& const) = delete;
-		inline static Pause& instance() {
-			static Pause p;
-			return p;
-		};
+		Pause(
+			UIManager& ui_manager,
+			ResourceManager& resourse_manager
+		) : uiManager(ui_manager),
+			resourseManager(resourse_manager) {};
 
 		void setup();
 
 	private:
+		Globals& globals = Globals::instance();
+		ResourceManager& resourseManager;
+		UIManager& uiManager;
+
 		void initResources();
 		void initElements();
 		void initLayers();
@@ -25,8 +26,4 @@ class Pause {
 		void createPanel();
 		void createButtonContinue();
 		void createButtonExit();
-
-		Globals& globals = Globals::instance();
-		ResourceManager& resourseManager = ResourceManager::instance();
-		UIManager& uiManager = UIManager::instance();
 };

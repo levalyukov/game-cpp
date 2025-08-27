@@ -10,14 +10,13 @@
 
 class KitchenMenu {
 	public:
-		KitchenMenu() {};
-		~KitchenMenu() {};
-		KitchenMenu(KitchenMenu& const) = delete;
-		KitchenMenu& operator=(KitchenMenu& const) = delete;
-		inline static KitchenMenu& instance() {
-			static KitchenMenu km;
-			return km;
-		}
+		KitchenMenu(
+			UIManager& ui_manager,
+			ResourceManager& resource_manager, 
+			CookingManager& cooking_manager
+		) : uiManager(ui_manager), 
+			resourceManager(resource_manager),
+			cooking(cooking_manager) {};
 
 		void setup();
 		inline bool getVisible() const { return visible; };
@@ -36,6 +35,12 @@ class KitchenMenu {
 		};
 
 	private:
+		Globals& globals = Globals::instance();
+		sf::RenderWindow& window = globals.getWindow();
+		ResourceManager& resourceManager;
+		UIManager& uiManager;
+		CookingManager& cooking;
+
 		bool visible = false;
 		unsigned int button_cout = 0;
 
@@ -43,10 +48,4 @@ class KitchenMenu {
 		void initElements();
 		void initVisible();
 		void initLambdas();
-
-		Globals& globals = Globals::instance();
-		sf::RenderWindow& window = globals.getWindow();
-		ResourceManager& resourceManager = ResourceManager::instance();
-		UIManager& uiManager = UIManager::instance();
-		Cooking& cooking = Cooking::instance();
 };

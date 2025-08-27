@@ -11,15 +11,6 @@
 
 class UIManager {
 	public:
-		UIManager() {};
-		~UIManager() {};
-		UIManager(UIManager const&) = delete;
-		UIManager& operator=(UIManager const&) = delete;
-		static UIManager& instance() {
-			static UIManager r;
-			return r;
-		};
-
 		inline void addElement(std::string name_element, std::unique_ptr<UIElement> element) {
 			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
 			auto result = ui_elements.emplace(name_element, std::move(element));
