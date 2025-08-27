@@ -61,10 +61,30 @@ void UIElement::setRelativePosition(
 			child_sprite.setPosition(parentX + margins.x, parentY + margins.y);
 			break;
 		case TopCenter:
-			child_sprite.setPosition(parentX + (parentBoundsWidth - childBoundsWidth) / 2.f, parentY);
+			child_sprite.setPosition(parentX + (parentBoundsWidth - childBoundsWidth) / 2.f + margins.x, parentY + margins.y);
 			break;
 		case TopRight:
-			child_sprite.setPosition({0,0});
+			child_sprite.setPosition({ parentX + (parentBoundsWidth - childBoundsWidth) + margins.x,parentY + margins.y });
+			break;
+		
+		case MiddleLeft:
+			child_sprite.setPosition({ parentX + margins.x, parentY + (parentBoundsHeight - childBoundsHeight) / 2.f + margins.y });
+			break;
+		case MiddleCenter:
+			child_sprite.setPosition({ parentX + (parentBoundsWidth - childBoundsWidth) / 2.f + margins.x, parentY + (parentBoundsHeight - childBoundsHeight) / 2.f + margins.y });
+			break;
+		case MiddleRight:
+			child_sprite.setPosition({ parentX + (parentBoundsWidth - childBoundsWidth) + margins.x, parentY + (parentBoundsHeight - childBoundsHeight) / 2.f + margins.y });
+			break;
+
+		case BottomLeft:
+			child_sprite.setPosition({ parentX + margins.x, parentY + (parentBoundsHeight - childBoundsHeight) + margins.y });
+			break;
+		case BottomCenter:
+			child_sprite.setPosition({ parentX + (parentBoundsWidth - childBoundsWidth) / 2.f + margins.x, parentY + (parentBoundsHeight - childBoundsHeight) + margins.y });
+			break;
+		case BottomRight:
+			child_sprite.setPosition({ parentX + (parentBoundsWidth - childBoundsWidth) + margins.x, parentY + (parentBoundsHeight - childBoundsHeight) + margins.y });
 			break;
 	}
 }
