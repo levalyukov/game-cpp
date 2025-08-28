@@ -1,5 +1,4 @@
 #include <catch2/catch_all.hpp>
-
 #include "../src/economy/economy.hpp"
 
 Economy economyManager;
