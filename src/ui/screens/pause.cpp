@@ -45,7 +45,6 @@ void Pause::createPanel() {
 			[&]() {
 				static bool escWasPressed = false;
 				bool escIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
-
 				if (escIsPressed && !escWasPressed) {
 					if (!globals.getGamePause()) {
 						globals.setGamePause(true);
@@ -55,15 +54,13 @@ void Pause::createPanel() {
 						uiManager.getElement("pause-button-quit")->setVisible(true);
 					}
 					else {
-						globals.setGamePause(!true);
-						uiManager.getElement("pause-background")->setVisible(!true);
-						uiManager.getElement("pause-panel")->setVisible(!true);
-						uiManager.getElement("pause-button-continue")->setVisible(!true);
-						uiManager.getElement("pause-button-quit")->setVisible(!true);
+						globals.setGamePause(false);
+						uiManager.getElement("pause-background")->setVisible(false);
+						uiManager.getElement("pause-panel")->setVisible(false);
+						uiManager.getElement("pause-button-continue")->setVisible(false);
+						uiManager.getElement("pause-button-quit")->setVisible(false);
 					}
-				}
-
-				escWasPressed = escIsPressed;
+				}; escWasPressed = escIsPressed;
 			}
 		);
 	};
@@ -75,14 +72,7 @@ void Pause::createButtonContinue() {
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 		
 		sf::Vector2f panelPosition = panel->getElementPosition();
-		sf::FloatRect panelBounds = panel->getSprite().getGlobalBounds();
-		sf::FloatRect buttonBounds = button->getSprite().getGlobalBounds();
-		button->setElementPosition({ panelPosition.x + (panelBounds.width - buttonBounds.width) / 2.f,panelPosition.y + 25 });
-
-		if (resourseManager.getFont("nunito")) {
-			button->setText(resourseManager.getFont("nunito"), "Continue", 24);
-		}
-
+		button->setRelativePosition(UIElement::TopCenter, panel->getSprite(), button->getSprite(), {0.f, 25});
 		button->setVisible(false);
 		button->setHandleEvent(
 			[&]() {
@@ -100,16 +90,7 @@ void Pause::createButtonExit() {
 	if (uiManager.getElement("pause-button-quit")) {
 		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
-
-		sf::Vector2f panelPosition = panel->getElementPosition();
-		sf::FloatRect panelBounds = panel->getSprite().getGlobalBounds();
-		sf::FloatRect buttonBounds = button->getSprite().getGlobalBounds();
-		button->setElementPosition({ panelPosition.x + (panelBounds.width - buttonBounds.width) / 2.0f,panelPosition.y + 100 });
-
-		if (resourseManager.getFont("nunito")) {
-			button->setText(resourseManager.getFont("nunito"), "Exit the Game", 24);
-		}
-
+		button->setRelativePosition(UIElement::TopCenter, panel->getSprite(), button->getSprite(), { 0.f, 100 });
 		button->setVisible(false);
 		button->setHandleEvent(
 			[&]() {

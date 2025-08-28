@@ -11,7 +11,6 @@ class Panel : public UIElement {
 			sf::Texture* panel_texture,
 			sf::Vector2f position_coords
 		) : texture(std::move(*panel_texture)), position(position_coords) {
-			panel = std::make_unique<sf::Sprite>();
 			panel->setTexture(texture);
 			panel->setScale({ 4,4 });
 			panel->setPosition(position);
@@ -32,7 +31,7 @@ class Panel : public UIElement {
 		inline void render(sf::RenderWindow& window) const override { window.draw(*panel); };
 
 	private:
-		std::unique_ptr<sf::Sprite> panel;
+		std::unique_ptr<sf::Sprite> panel = std::make_unique<sf::Sprite>();
 		sf::Texture& texture;
 		sf::Vector2f position;
 		bool isVisible = true;
