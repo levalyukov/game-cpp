@@ -22,8 +22,11 @@ class Pause {
 		void initResources();
 		void initElements();
 		void initLayers();
-		void createBackground();
-		void createPanel();
-		void createButtonContinue();
-		void createButtonExit();
+
+		void initParameters();
+		void initBackground();
+		void initPanel();
+		void initButtonContinue();
+		void initButtonExit();
+		void initLabels();
 };

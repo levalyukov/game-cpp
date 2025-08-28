@@ -4,10 +4,7 @@ void Pause::setup() {
 	initResources();
 	initElements();
 	initLayers();
-	createBackground();
-	createPanel();
-	createButtonContinue();
-	createButtonExit();
+	initParameters();
 }
 
 void Pause::initResources() {
@@ -21,6 +18,10 @@ void Pause::initElements() {
 	uiManager.addElement("pause-panel", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel")));
 	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
 	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
+	
+	// labels
+	uiManager.addElement("pause-button-continue-label", uiManager.gui.createLabel("Continue", resourseManager.getFont("nunito"), 24, sf::Color::White));
+	uiManager.addElement("pause-button-quit-label", uiManager.gui.createLabel("Exit & Save", resourseManager.getFont("nunito"), 24, sf::Color::White));
 }
 
 void Pause::initLayers() {
@@ -28,15 +29,26 @@ void Pause::initLayers() {
 	uiManager.getElement("pause-panel")->setSortIndex(1);
 	uiManager.getElement("pause-button-continue")->setSortIndex(2);
 	uiManager.getElement("pause-button-quit")->setSortIndex(2);
+
+	uiManager.getElement("pause-button-continue-label")->setSortIndex(3);
+	uiManager.getElement("pause-button-quit-label")->setSortIndex(3);
 }
 
-void Pause::createBackground() {
+void Pause::initParameters() {
+	initBackground();
+	initPanel();
+	initButtonContinue();
+	initButtonExit();
+	initLabels();
+}
+
+void Pause::initBackground() {
 	if (uiManager.getElement("pause-background")) {
 		uiManager.getElement("pause-background")->setVisible(false);
 	}
 }
 
-void Pause::createPanel() {
+void Pause::initPanel() {
 	if (uiManager.getElement("pause-panel")) {
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 		uiManager.getElement("pause-panel")->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
@@ -52,6 +64,9 @@ void Pause::createPanel() {
 						uiManager.getElement("pause-panel")->setVisible(true);
 						uiManager.getElement("pause-button-continue")->setVisible(true);
 						uiManager.getElement("pause-button-quit")->setVisible(true);
+
+						uiManager.getElement("pause-button-continue-label")->setVisible(true);
+						uiManager.getElement("pause-button-quit-label")->setVisible(true);
 					}
 					else {
 						globals.setGamePause(false);
@@ -59,6 +74,9 @@ void Pause::createPanel() {
 						uiManager.getElement("pause-panel")->setVisible(false);
 						uiManager.getElement("pause-button-continue")->setVisible(false);
 						uiManager.getElement("pause-button-quit")->setVisible(false);
+
+						uiManager.getElement("pause-button-continue-label")->setVisible(false);
+						uiManager.getElement("pause-button-quit-label")->setVisible(false);
 					}
 				}; escWasPressed = escIsPressed;
 			}
@@ -66,7 +84,7 @@ void Pause::createPanel() {
 	};
 }
 
-void Pause::createButtonContinue() {
+void Pause::initButtonContinue() {
 	if (uiManager.getElement("pause-button-continue")) {
 		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
 		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
@@ -81,15 +99,18 @@ void Pause::createButtonContinue() {
 				uiManager.getElement("pause-panel")->setVisible(false);
 				uiManager.getElement("pause-button-continue")->setVisible(false);
 				uiManager.getElement("pause-button-quit")->setVisible(false);
+
+				uiManager.getElement("pause-button-continue-label")->setVisible(false);
+				uiManager.getElement("pause-button-quit-label")->setVisible(false);
 			}
 		);
 	}
 }
 
-void Pause::createButtonExit() {
+void Pause::initButtonExit() {
 	if (uiManager.getElement("pause-button-quit")) {
-		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
-		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
+		auto button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
+		auto panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
 		button->setRelativePosition(UIElement::TopCenter, panel->getSprite(), button->getSprite(), { 0.f, 100 });
 		button->setVisible(false);
 		button->setHandleEvent(
@@ -98,4 +119,15 @@ void Pause::createButtonExit() {
 			}
 		);
 	}
+}
+
+void Pause::initLabels() {
+	auto buttonContinue = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
+	auto buttonQuit = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
+	auto labelContinue = static_cast<Label*>(uiManager.getElement("pause-button-continue-label"));
+	auto labelQuit = static_cast<Label*>(uiManager.getElement("pause-button-quit-label"));
+	labelContinue->setRelativePositionText(UIElement::MiddleCenter, buttonContinue->getSprite(), labelContinue->getText(), { 0,-9 });
+	labelQuit->setRelativePositionText(UIElement::MiddleCenter, buttonQuit->getSprite(), labelQuit->getText(), { 0,-9 });
+	labelContinue->setVisible(false);
+	labelQuit->setVisible(false);
 }
