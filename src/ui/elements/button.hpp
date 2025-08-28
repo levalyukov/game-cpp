@@ -23,9 +23,6 @@ class Button : public UIElement {
 
 		std::function<void()> handler = []() {};
 
-		void setText(sf::Font* font, std::string text, unsigned __int8 font_size);
-		inline void changeText(std::string new_text) { label_message = new_text; };
-		inline void setElementPosition(sf::Vector2f new_position) { sprite->setPosition(new_position); };
 		inline sf::Sprite& getSprite() { return *sprite; };
 
 		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
@@ -35,7 +32,7 @@ class Button : public UIElement {
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handle) override { if (new_handle) handler = new_handle; };
 		void handleEvent(sf::Event& event, sf::RenderWindow& window) override;
-		inline void render(sf::RenderWindow& window) const override { window.draw(*sprite); window.draw(label_text); };
+		inline void render(sf::RenderWindow& window) const override { window.draw(*sprite); };
 
 	private:
 		enum State {Normal, Hovered, Pressed};
@@ -47,11 +44,6 @@ class Button : public UIElement {
 		State state = Normal;
 		bool isPressed = false;
 		bool isVisible = true;
-
-		sf::Font label_font;
-		sf::Text label_text;
-		sf::String label_message;
-		unsigned __int8 label_size = 24;
 		unsigned __int8 ZIndex = 0;
 
 		inline void setState(State new_state) { state = new_state; };

@@ -32,19 +32,3 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         }
 	}
 }
-
-void Button::setText(sf::Font* font, std::string text, unsigned __int8 font_size) {
-    label_font = *font;
-    label_message = text;
-    label_size = font_size;
-    label_text.setFont(label_font);
-    label_text.setString(label_message);
-    label_text.setCharacterSize(label_size);
-    label_text.setColor(sf::Color::White);
-    label_text.setPosition(
-        {
-            sprite->getPosition().x + (sprite->getGlobalBounds().width - label_text.getGlobalBounds().width) / 2,
-            sprite->getPosition().y + (sprite->getGlobalBounds().height - label_text.getGlobalBounds().height) / 4
-        }
-    );
-}
