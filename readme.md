@@ -1,4 +1,4 @@
-﻿# 🍲👨‍🍳 Delicious Soup - SFML Game
+﻿# 🍲 Delicious Soup - SFML Game 👨‍🍳
 
 ![screenshot](assets/preview.png)
 <p align="center" style="font-size:12px">Unfinished work, the screenshot does not represent the final game</p>
