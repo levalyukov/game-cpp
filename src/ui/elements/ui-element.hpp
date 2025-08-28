@@ -1,10 +1,7 @@
 #pragma once
 
 #include "../../core/globals.hpp"
-
 #include <SFML/Graphics.hpp>
-
-#include <iostream>
 #include <functional>
 
 class UIElement {
@@ -15,8 +12,9 @@ class UIElement {
 			BottomLeft, BottomCenter, BottomRight
 		};
 
-		void setGlobalPosition(enum ElementPosition current_position, sf::Sprite& sprite);
-		void setRelativePosition(enum ElementPosition current_position, sf::Sprite& parent_sprite, sf::Sprite& child_sprite, sf::Vector2f margins = { 0.f,0.f });
+		void setGlobalPosition(enum ElementPosition position, sf::Sprite& sprite);
+		void setRelativePosition(enum ElementPosition position, sf::Sprite& parent, sf::Sprite& child, sf::Vector2f margins = { 0.f,0.f });
+		void setRelativePositionText(enum ElementPosition position, sf::Sprite& parent, sf::Text& child, sf::Vector2f margins = { 0.f,0.f });
 
 		virtual void setSortIndex(unsigned __int8 new_z_index) = 0;
 		virtual unsigned __int8 getSortIndex() const = 0;
