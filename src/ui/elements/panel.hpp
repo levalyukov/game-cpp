@@ -20,7 +20,6 @@ class Panel : public UIElement {
 		std::function<void()> handler = []() {};
 
 		inline sf::Vector2f getElementPosition() const { return panel->getPosition(); };
-		inline sf::Sprite& getButtonSprite() const { return *panel; };
 
 		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
 		unsigned __int8 getSortIndex() const override { return ZIndex; };
