@@ -20,7 +20,8 @@ class Label : public UIElement {
 
 		std::function<void()> handler;
 
-		inline void setText(std::string new_msg) { text->setString(new_msg); };
+		inline sf::Text& getText() const { return *text; };
+		inline void setMessage(std::string new_msg) { text->setString(new_msg); };
 		inline void setColor(sf::Color new_color) { text->setColor(new_color); };
 		inline void setSize(unsigned __int8 new_size) { text->setCharacterSize(new_size); };
 		inline void setPosition(sf::Vector2f new_position) { text->setPosition(new_position); };
