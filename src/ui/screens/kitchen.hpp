@@ -29,6 +29,12 @@ class KitchenMenu {
 
 		void initResources();
 		void initElements();
+		void initParameters();
 		void initVisible();
-		void initLambdas();
+		
+		void initPanel();
+		void initCloseButton();
+		void initRecipeButtons();
+		void initRecipeInfo();
+
 };

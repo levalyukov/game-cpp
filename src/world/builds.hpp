@@ -39,9 +39,11 @@ class Builds {
 					uiManager.getElement("kitchen-ui-panel")->setVisible(true);
 					uiManager.getElement("kitchen-ui-close-button")->setVisible(true);
 					for (int y = 0; y < cookingManager.recipes.size(); y++) {
-						std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(y);
-						if (uiManager.getElement(buttonName)) {
-							uiManager.getElement(buttonName)->setVisible(true);
+						std::string buttonRecipe = "kitchen-ui-recipe-button-" + std::to_string(y);
+						std::string buttonLabelRecipe = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
+						if (uiManager.getElement(buttonRecipe) && uiManager.getElement(buttonLabelRecipe)) {
+							uiManager.getElement(buttonRecipe)->setVisible(true);
+							uiManager.getElement(buttonLabelRecipe)->setVisible(true);
 						}
 					}
 				}
