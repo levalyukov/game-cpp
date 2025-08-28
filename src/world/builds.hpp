@@ -8,8 +8,6 @@
 
 class Builds {
 	public:
-		Builds() {};
-
 		inline void create(ResourceManager& resourceManager, EntityManager& entityManager, UIManager& uiManager, CookingManager& cookingManager) {
 			initResources(resourceManager);
 			initBuilds(entityManager, resourceManager, uiManager, cookingManager);
