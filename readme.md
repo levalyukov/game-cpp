@@ -57,4 +57,4 @@ cmake --build . --config release
 
 ## 📜 License
 
-The repository is licensed by [MIT](license).
+The repository is licensed by **[MIT](license)**.
