@@ -1,7 +1,8 @@
 # Delicious Soup - SFML Game
 
 ![screenshot](assets/preview.png)
-
+<p align="center" style="font-size:12px">Unfinished work, the screenshot does not represent the final game</p>
+<br>
 Delicious Soup is a simple 2D simulation game owner of a street restaurant. You need to cook and fulfill customer orders.
 
 **Project Status**: in active development.
