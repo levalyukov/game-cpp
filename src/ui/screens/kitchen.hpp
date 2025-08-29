@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../core/globals.hpp"
+#include "../../core/utils.hpp"
 #include "../../ui/ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
 #include "../screens/hud.hpp"
@@ -21,20 +22,23 @@ class KitchenMenu {
 		void setup();
 
 	private:
+		Utils& utils = Utils::instance();
 		Globals& globals = Globals::instance();
 		sf::RenderWindow& window = globals.getWindow();
 		ResourceManager& resourceManager;
 		UIManager& uiManager;
 		CookingManager& cooking;
+		bool visibleState = false;
 
 		void initResources();
 		void initElements();
 		void initParameters();
-		void initVisible();
-		
+
 		void initPanel();
 		void initCloseButton();
 		void initRecipeButtons();
 		void initRecipeInfo();
 
+		void setVisible(bool _state);
+		void getRecipeInfo(std::string recipe_name);
 };
