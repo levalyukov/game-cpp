@@ -4,14 +4,13 @@
 <p align="center" style="font-size:12px">Unfinished work, the screenshot does not represent the final game <br> (screenshot by 08/03/2025)</p>
 <br>
 
-> [!NOTE]  
-> This application is a learning exercise. Consequently, some implementation choices may reflect that learning process rather than production-grade best practices.
-
-
 Delicious Soup is a simple 2D simulation game owner of a street restaurant. You need to cook and fulfill customer orders.
 \
 \
 **Project Status**: in active development.
+
+> [!NOTE]  
+> This application is a learning exercise. Consequently, some implementation choices may reflect that learning process rather than production-grade best practices.
 
 ## 🎮 Game mechanics
 
