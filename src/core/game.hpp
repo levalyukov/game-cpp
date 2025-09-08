@@ -1,11 +1,12 @@
 #pragma once
 
 #include "globals.hpp"
+#include "resources/resources.hpp"
 #include "tilemap/tilemap.hpp"
 #include "../world/world.hpp"
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
-#include "resources/resources.hpp"
+#include "../mechanics/inventory.hpp"
 
 class Game {
 	public:
@@ -32,6 +33,7 @@ class Game {
 		std::unique_ptr<EntityManager> entityManager = std::make_unique<EntityManager>();
 		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>();
 		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
+		//std::unique_ptr<InventoryManager> inventory = std::make_unique<InventoryManager>();
 
 		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager);
 		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager);
