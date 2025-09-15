@@ -12,7 +12,7 @@ class HUD {
 			resourceManager(resource_manager) {};
 
 		void setup();
-		inline void setVisible(bool _state) { visible = _state; changeElementVisible(); };
+		inline void setVisible(bool state) { visible = state; changeElementVisible(); };
 		inline bool getVisible() const { return visible; };
 		inline void changeElementVisible() {
 			if (uiManager.getElement("hud-button")) {
