@@ -7,15 +7,14 @@
 class Animations {
 	public:
 		void setAnimation(
-			sf::Sprite& sprite,
-			sf::Texture& texture,
-			sf::Vector2i& animStart,
-			int frameCount,
-			int frameX,
-			int frameY,
-			float& animationTimer,
-			float frameDuration,
-			float deltaTime
+            sf::Sprite& sprite,
+            sf::Texture& texture,
+            sf::Vector2i& anim_start,
+            int frame_count,
+            sf::Vector2i frames,
+            float& timer,
+            float frame_duration,
+            float delta
 		);
 };
 
