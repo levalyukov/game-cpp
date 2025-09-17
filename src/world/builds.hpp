@@ -5,43 +5,82 @@
 #include "../entities/entity-manager.hpp"
 #include "../mechanics/cooking.hpp"
 #include "../entities/entities/build.hpp"
+#include "../mechanics/inventory.hpp"
 
 class Builds {
 	public:
-		inline void create(ResourceManager& resourceManager, EntityManager& entityManager, UIManager& uiManager, CookingManager& cookingManager) {
-			initResources(resourceManager);
-			initBuilds(entityManager, resourceManager, uiManager, cookingManager);
+		inline void create(
+			ResourceManager& resource_manager,
+			EntityManager& entity_manager,
+			UIManager& ui_manager,
+			CookingManager& cooking_manager,
+			InventoryManager& inventory_manager
+		) {
+			initResources(resource_manager);
+			initBuilds(
+				entity_manager, 
+				resource_manager, 
+				ui_manager, 
+				cooking_manager,
+				inventory_manager
+			);
 		};
 
 	private:
-		inline void initResources(ResourceManager& resourceManager) {
-			resourceManager.loadTexture("kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
+		inline void initResources(ResourceManager& resource_manager) {
+			resource_manager.loadTexture("kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
 		};
 
-		inline void initBuilds(EntityManager& entityManager, ResourceManager& resourceManager, UIManager& uiManager, CookingManager& cookingManager) {
-			entityManager.addEntity(
+		inline void initBuilds(
+			EntityManager& entity_manager, 
+			ResourceManager& resource_manager, 
+			UIManager& ui_manager, 
+			CookingManager& cooking_manager,
+			InventoryManager& inventory_manager
+		) {
+			entity_manager.addEntity(
 				"kitchen",
 				std::make_unique<Build>(
-					resourceManager.getTexture("kitchen"),
+					resource_manager.getTexture("kitchen"),
 					sf::Vector2f({ 512.f,512.f }),
 					sf::Vector2i({ 16,16 })
-				));
-			initKitchen(entityManager, uiManager, cookingManager);
+				)
+			);
+			initKitchen(
+				entity_manager, 
+				ui_manager, 
+				cooking_manager,
+				inventory_manager
+			);
 		};
 
-		inline void initKitchen(EntityManager& entityManager, UIManager& uiManager, CookingManager& cookingManager) {
-			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
+		inline void initKitchen(
+			EntityManager& entity_manager,
+			UIManager& ui_manager, 
+			CookingManager& cooking_manager,
+			InventoryManager& inventory_manager
+		) {
+			auto kitchen = static_cast<Build*>(entity_manager.getEntity("kitchen"));
 			kitchen->setHandleEvent(
 				[&]() {
-					uiManager.getElement("kitchen-ui-background")->setVisible(true);
-					uiManager.getElement("kitchen-ui-panel")->setVisible(true);
-					uiManager.getElement("kitchen-ui-close-button")->setVisible(true);
-					for (int y = 0; y < cookingManager.recipes.size(); y++) {
-						std::string buttonRecipe = "kitchen-ui-recipe-button-" + std::to_string(y);
-						std::string buttonLabelRecipe = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
-						if (uiManager.getElement(buttonRecipe) && uiManager.getElement(buttonLabelRecipe)) {
-							uiManager.getElement(buttonRecipe)->setVisible(true);
-							uiManager.getElement(buttonLabelRecipe)->setVisible(true);
+					if (!cooking_manager.getCookeedFlag() && !cooking_manager.getCookingFlag()) {
+						ui_manager.getElement("kitchen-ui-background")->setVisible(true);
+						ui_manager.getElement("kitchen-ui-panel")->setVisible(true);
+						ui_manager.getElement("kitchen-ui-close-button")->setVisible(true);
+						for (int y = 0; y < cooking_manager.recipes.size(); y++) {
+							std::string buttonRecipe = "kitchen-ui-recipe-button-" + std::to_string(y);
+							std::string buttonLabelRecipe = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
+							if (ui_manager.getElement(buttonRecipe) && ui_manager.getElement(buttonLabelRecipe)) {
+								ui_manager.getElement(buttonRecipe)->setVisible(true);
+								ui_manager.getElement(buttonLabelRecipe)->setVisible(true);
+							}
+						}
+					}
+					else {
+						if (inventory_manager.inventory.size() < inventory_manager.MAX_SLOTS) {
+							cooking_manager.resetCookeedFlag();
+						} else {
+							std::cout << "debug string for kitchen: Max items in inventory\n";
 						}
 					}
 				}
