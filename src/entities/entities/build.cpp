@@ -1,23 +1,33 @@
 #include "build.hpp"
 
 void Build::handleEvent(sf::RenderWindow& window, sf::Event& event) {
-	if (build_sprite.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
-		if (s_mouse == Normal) {
-			s_mouse = Hovered;
-			build_sprite.setTextureRect(sf::IntRect({ 0,s_mouse * 16 }, { 16,16 }));
-		}
-
-		if (sf::Event::MouseButtonPressed) {
-			if (event.mouseButton.button == sf::Mouse::Left && s_mouse == Hovered) {
-				s_mouse = Pressed;
-				if (handler) {
-					handler();
-				}
+	bool isHovered = sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+	switch (event.type) {
+		case sf::Event::MouseMoved:
+			if (!isPressed) m_state = isHovered ? Hovered : Normal;
+			if (m_state == Hovered) {
+				sprite->setTextureRect(sf::IntRect({ 0,build_size.y * Hovered }, build_size));
 			}
-		}
-	}
-	else {
-		s_mouse = Normal;
-		build_sprite.setTextureRect(sf::IntRect({ 0,s_mouse * 16 }, { 16,16 }));
+			else if (m_state == Normal) {
+				sprite->setTextureRect(sf::IntRect({ 0,build_size.y * Normal }, build_size));
+			}
+			break;
+
+		case sf::Event::MouseButtonPressed:
+			if (event.mouseButton.button == sf::Mouse::Left && isHovered) {
+				m_state = Pressed;
+				isPressed = true;
+				sprite->setTextureRect(sf::IntRect({ 0,build_size.y * Pressed }, build_size));
+			}
+			break;
+
+		case sf::Event::MouseButtonReleased:
+			if (event.mouseButton.button == sf::Mouse::Left && isPressed) {
+				if (isHovered && m_state == Pressed) { if (handler) handler(); };
+				m_state = isHovered ? Hovered : Normal;
+				isPressed = false;
+				sprite->setTextureRect(sf::IntRect({ 0,build_size.y * Normal }, build_size));
+			}
+			break;
 	}
 }
