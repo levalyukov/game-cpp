@@ -1,4 +1,4 @@
-﻿# 🍲 Delicious Soup - SFML Game 👨‍🍳
+﻿# 🍲 Delicious Soup
 
 ![screenshot](assets/preview.png)
 <p align="center" style="font-size:12px">Unfinished work, the screenshot does not represent the final game <br> (screenshot by 08/03/2025)</p>
