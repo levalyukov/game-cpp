@@ -39,4 +39,39 @@ class CookingManager {
 				recipes.erase(nameRecipe);
 			}
 		};
+
+		// 
+		inline void startCookProcess(const std::string nameRecipe) {
+			cookingFlag = true;
+			cookedFlag = false;
+			recipeName = nameRecipe;
+			cookTimer = 0.f;
+			recipeTime = getRecipe(nameRecipe).cookTime;
+		};
+
+		inline void cookingProcess(const float delta) {
+			if (cookingFlag) {
+				// debug string
+				std::cout << "cookTimer: " << cookTimer << "| recipeTime: " << recipeTime << std::endl;
+				cookTimer += delta;
+				if (cookTimer > recipeTime) {
+					cookingFlag = false;
+					cookedFlag = true;
+					cookTimer = 0.f;
+					recipeTime = 0.f;
+				}
+			} else return;
+		};
+
+		inline void resetCookeedFlag() { cookedFlag = false; };
+		inline bool getCookingFlag() const { return cookingFlag; };
+		inline bool getCookeedFlag() const { return cookedFlag; };
+		inline std::string getCookedRecipe() const { return recipeName; };
+
+	private:
+		bool cookingFlag = false;
+		bool cookedFlag = false;
+		float cookTimer = 0.f;
+		float recipeTime = 0.f;
+		std::string recipeName;
 };
