@@ -13,34 +13,34 @@
 class GUI {
 	public:
 		inline std::unique_ptr<Label> createLabel(
-			std::string message,
-			sf::Font* font,
-			unsigned __int8 size,
-			sf::Color color,
-			sf::Vector2f coords_pos = { 0,0 }
+			std::string label_text,
+			sf::Font* label_font,
+			unsigned __int8 label_size,
+			sf::Color label_color,
+			sf::Vector2f label_position = { 0.f,0.f }
 		) {
-			return std::make_unique<Label>(message, font, size, color, coords_pos);
+			return std::make_unique<Label>(label_text, label_font, label_size, label_color, label_position);
 		};
 
 		inline std::unique_ptr<Button> createButton(
-			sf::Texture* texture,
+			sf::Texture* button_texture,
 			sf::Vector2i button_size,
-			sf::Vector2f coords_pos = { 0,0 }
+			sf::Vector2f button_position = { 0.f,0.f }
 		) {
-			return std::make_unique<Button>(texture, button_size, coords_pos);
+			return std::make_unique<Button>(button_texture, button_size, button_position);
 		};
 
 		inline std::unique_ptr<Panel> createPanel(
 			sf::Texture* panel_texture,
-			sf::Vector2f position_coords = { 0,0 }
+			sf::Vector2f panel_position = { 0.f,0.f }
 		) {
-			return std::make_unique<Panel>(panel_texture, position_coords);
+			return std::make_unique<Panel>(panel_texture, panel_position);
 		}
 
 		inline std::unique_ptr<ColorRect> createColorRect(
-			sf::Color color,
-			sf::Vector2f size = { 0.f,0.f }
+			sf::Color rect_color,
+			sf::Vector2f rect_position = { 0.f,0.f }
 		) {
-			return std::make_unique<ColorRect>(color, size);
+			return std::make_unique<ColorRect>(rect_color, rect_position);
 		}
 };

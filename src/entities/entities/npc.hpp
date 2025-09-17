@@ -34,7 +34,7 @@ class NPC : public Entity {
 		float getDepth() const override { return npc.getPosition().y + 4; };
 		void setHandleEvent(std::function<void()> new_handler) override { handler = new_handler; };
 		void handleEvent(sf::RenderWindow& window, sf::Event& event) override;
-		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
+		void render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) override;
 	
 	private:
 		enum State {IDLE, WALK};
@@ -55,6 +55,7 @@ class NPC : public Entity {
 		sf::Vector2i LeftSpriteCoords = { 0,0 };
 		sf::Vector2i RightSpriteCoords = { 0,16 };
 
+		bool stopped_flag = false;
 		float animationTimer = 0.0f;
 		const float SPEED = 1.75f;
 		const float AnimSpeed = 0.05f;

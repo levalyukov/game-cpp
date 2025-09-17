@@ -29,7 +29,7 @@ class Player : public Entity {
 		inline bool getStoppedFlag() const { return stopped_flag; };
 
 		inline float getDepth() const override { return player.getPosition().y + 4; };
-		inline void setHandleEvent(std::function<void()> new_handler) override {};
+		inline void setHandleEvent(std::function<void()> newHandler) override {};
 		inline void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
 		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
 	
@@ -51,8 +51,8 @@ class Player : public Entity {
 		std::string currentDirection;
 		std::string oldDirection;
 
-		const float RUN_ANIM = 0.03f;
-		const float WALK_ANIM = 0.055f;
+		const float RUN_ANIM = 0.04f;
+		const float WALK_ANIM = 0.08f;
 
 		int currentFrame = 0;
 		float animationTimer = 0.0f;

@@ -12,13 +12,6 @@ class HUD {
 			resourceManager(resource_manager) {};
 
 		void setup();
-		inline void setVisible(bool state) { visible = state; changeElementVisible(); };
-		inline bool getVisible() const { return visible; };
-		inline void changeElementVisible() {
-			if (uiManager.getElement("hud-button")) {
-				uiManager.getElement("hud-button")->setVisible(visible);
-			}
-		};
 
 	private:
 		UIManager& uiManager;

@@ -18,14 +18,12 @@ class Panel : public UIElement {
 
 		std::function<void()> handler = []() {};
 
-		inline sf::Vector2f getElementPosition() const { return panel->getPosition(); };
-
-		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
-		unsigned __int8 getSortIndex() const override { return ZIndex; };
+		inline sf::Vector2f getElementPosition() const override { return panel->getPosition(); }
+		inline void setSortIndex(unsigned __int8 new_z_index) override { depth = new_z_index; };
+		inline unsigned __int8 getSortIndex() const override { return depth; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
-		inline sf::Sprite& getSprite() const { return *panel; };
-
+		inline sf::Sprite& getSprite() const { return *panel; }
 		inline void setHandleEvent(std::function<void()> handle) override { if (handle) handler = handle; };
 		inline void handleEvent(sf::Event& event, sf::RenderWindow& window) override { if (handler) handler(); };
 		inline void render(sf::RenderWindow& window) const override { window.draw(*panel); };
@@ -35,5 +33,5 @@ class Panel : public UIElement {
 		sf::Texture& texture;
 		sf::Vector2f position;
 		bool isVisible = true;
-		unsigned __int8 ZIndex = 0;
+		unsigned __int8 depth = 0;
 };

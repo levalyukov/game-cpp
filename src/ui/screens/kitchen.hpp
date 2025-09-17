@@ -28,7 +28,9 @@ class KitchenMenu {
 		ResourceManager& resourceManager;
 		UIManager& uiManager;
 		CookingManager& cooking;
+
 		bool visibleState = false;
+		std::string currentRecipe;
 
 		void initResources();
 		void initElements();

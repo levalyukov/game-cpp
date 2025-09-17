@@ -6,14 +6,8 @@ void HUD::setup() {
 	initLayers();
 }
 
-void HUD::initResources() {
-	resourceManager.loadTexture("hud-recipe-button", "../../../assets/textures/ui/hud/recipe-button.png");
-}
+void HUD::initResources() {};
 
-void HUD::initElements() {
-	uiManager.addElement("hud-button", uiManager.gui.createButton(resourceManager.getTexture("hud-recipe-button"), { 32,32 }));
-}
+void HUD::initElements() {};
 
-void HUD::initLayers() {
-	
-}
+void HUD::initLayers() {};

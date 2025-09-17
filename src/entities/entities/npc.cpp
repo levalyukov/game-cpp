@@ -7,7 +7,7 @@ void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
 }
 
 void NPC::movement(float deltaTime) {
-	if (!Globals::instance().getGamePause()) {
+	if (!stopped_flag) {
 		switch (direction) {
 			case 0:
 				npc.setTexture(idle);
@@ -20,7 +20,7 @@ void NPC::movement(float deltaTime) {
 					npc,
 					movementHorizontal,
 					UpSpriteCoords,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					AnimSpeed, deltaTime
 				);
@@ -32,7 +32,7 @@ void NPC::movement(float deltaTime) {
 					npc,
 					movementHorizontal,
 					DownSpriteCoords,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					AnimSpeed, deltaTime
 				);
@@ -44,7 +44,7 @@ void NPC::movement(float deltaTime) {
 					npc,
 					movementVertical,
 					LeftSpriteCoords,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					AnimSpeed, deltaTime
 				);
@@ -56,7 +56,7 @@ void NPC::movement(float deltaTime) {
 					npc,
 					movementVertical,
 					RightSpriteCoords,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					AnimSpeed, deltaTime
 				);
@@ -65,10 +65,10 @@ void NPC::movement(float deltaTime) {
 	}
 }
 
-void NPC::render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) {
+void NPC::render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) {
 	window.draw(npc);
 	window.draw(shadow);
-	movement(deltaTime);
+	movement(delta_time);
 	shadow.setPosition(npc.getPosition());
 
 	// Random direction, change this in the future!

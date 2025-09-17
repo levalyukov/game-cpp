@@ -5,7 +5,7 @@ void KitchenMenu::setup() {
 	initElements();
 	initParameters();
 	setVisible(false);
-}
+};
 
 void KitchenMenu::initResources() {
 	resourceManager.loadTexture("kitchen-ui-panel", "../../../assets/textures/ui/kitchen/menu.png");
@@ -41,7 +41,12 @@ void KitchenMenu::initCloseButton() {
 	sf::Sprite& closeButtonSprite = closeButton->getSprite();
 	closeButton->setGlobalPosition(UIElement::TopRight, closeButtonSprite);
 	closeButtonSprite.setPosition(closeButtonSprite.getPosition().x + -240, closeButtonSprite.getPosition().y + 128);
-	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent([&]() { setVisible(false); });
+	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent(
+		[&]() { 
+			setVisible(false); 
+			currentRecipe.clear();
+		}
+	);
 };
 
 void KitchenMenu::initRecipeButtons() {
@@ -65,7 +70,7 @@ void KitchenMenu::initRecipeButtons() {
 
 		buttonRecipe->setVisible(false);
 		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,button_pos_y + (buttonSprite.getGlobalBounds().height * new_id + 1) + 15 });
-		buttonRecipe->setHandleEvent([&]() { getRecipeInfo(pair.first); });
+		buttonRecipe->setHandleEvent([&]() { getRecipeInfo(pair.first); currentRecipe = pair.first; });
 		labelRecipe->setRelativePositionText(UIElement::TopLeft, buttonSprite, labelText, { 18.f,18.f });
 		labelRecipe->setVisible(false);
 		new_id++;
@@ -79,7 +84,13 @@ void KitchenMenu::initRecipeInfo() {
 
 	/* Cooking button */
 	cookingButton->setRelativePosition(UIElement::BottomRight, panel->getSprite(), cookingButton->getSprite(), { -16, -16 });
-	cookingButton->setHandleEvent([&]() { setVisible(false); });
+	cookingButton->setHandleEvent(
+		[&]() {
+			setVisible(false);
+			cooking.startCookProcess(currentRecipe);
+			currentRecipe.clear();
+		}
+	);
 	cookingButtonLabel->setPosition(
 		{
 			cookingButton->getSprite().getPosition().x - (cookingButtonLabel->getText().getGlobalBounds().width - cookingButton->getSprite().getGlobalBounds().width) / 2.f,
@@ -125,17 +136,14 @@ void KitchenMenu::getRecipeInfo(std::string recipe_name) {
 	};
 
 	labelHeader->setMessage(cooking.recipes[recipe_name].title);
-	if (utils.remove_spaces(cooking.recipes[recipe_name].description).size() % 64 == 0) {
-		cooking.recipes[recipe_name].description.substr(0, 64);
-	}
 	labelDescription->setMessage(cooking.recipes[recipe_name].description);
 	labelHeader->setPosition(
-		{ 
+		{
 			cookingButton->getSprite().getPosition().x - (labelHeader->getText().getGlobalBounds().width - cookingButton->getSprite().getGlobalBounds().width) / 2.f,
-			panel->getSprite().getPosition().y + 32 
+			panel->getSprite().getPosition().y + 32
 		}
 	);
-}
+};
 
 void KitchenMenu::setVisible(bool _state) {
 	visibleState = _state;
@@ -153,6 +161,6 @@ void KitchenMenu::setVisible(bool _state) {
 		if (uiManager.getElement(buttonRecipe) && uiManager.getElement(buttonLabelRecipe)) {
 			uiManager.getElement(buttonRecipe)->setVisible(_state);
 			uiManager.getElement(buttonLabelRecipe)->setVisible(_state);
-		}
-	}
-}
+		};
+	};
+};

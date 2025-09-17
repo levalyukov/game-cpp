@@ -6,19 +6,20 @@
 class ColorRect : public UIElement {
 	public:
 		inline ColorRect(
-			sf::Color color,
-			sf::Vector2f size
-		) : color_rect(color),
-			size_rect(size) {
-			rect.setFillColor(color_rect);
-			rect.setSize(size_rect);
+			sf::Color _color,
+			sf::Vector2f _size
+		) : color(_color),
+			size(_size) {
+			rect.setFillColor(color);
+			rect.setSize(size);
 		};
 
 		std::function<void()> handler;
 
-		void setSortIndex(unsigned __int8 new_z_index) override { ZIndex = new_z_index; };
-		unsigned __int8 getSortIndex() const override { return ZIndex; };
-
+		inline void setNewRectSize(sf::Vector2f new_size) { size = new_size; };
+		inline void setSortIndex(unsigned __int8 new_z_index) override { depth = new_z_index; };
+		inline sf::Vector2f getElementPosition() const override { return rect.getPosition(); };
+		inline unsigned __int8 getSortIndex() const override { return depth; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handle) override { handler = new_handle; };
@@ -27,8 +28,8 @@ class ColorRect : public UIElement {
 
 	protected:
 		sf::RectangleShape rect;
-		sf::Color color_rect;
-		sf::Vector2f size_rect;
+		sf::Color color;
+		sf::Vector2f size;
 		bool isVisible = true;
-		unsigned __int8 ZIndex = 0;
+		unsigned __int8 depth = 0;
 };

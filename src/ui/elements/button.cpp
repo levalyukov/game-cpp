@@ -7,9 +7,9 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
             case sf::Event::MouseMoved:
                 if (!isPressed) state = isHovered ? Hovered : Normal;
                 if (state == Hovered) {
-                    sprite->setTextureRect(sf::IntRect({ 0,sprite_size.y * Hovered }, sprite_size));
+                    sprite->setTextureRect(sf::IntRect({ 0,size.y * Hovered }, size));
                 } else if (state == Normal) {
-                    sprite->setTextureRect(sf::IntRect({ 0,sprite_size.y * Normal }, sprite_size));
+                    sprite->setTextureRect(sf::IntRect({ 0,size.y * Normal }, size));
                 }
                 break;
 
@@ -17,7 +17,7 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
                 if (event.mouseButton.button == sf::Mouse::Left && isHovered) {
                     state = Pressed;
                     isPressed = true;
-                    sprite->setTextureRect(sf::IntRect({ 0,sprite_size.y * Pressed }, sprite_size));
+                    sprite->setTextureRect(sf::IntRect({ 0,size.y * Pressed }, size));
                 }
                 break;
 
@@ -26,9 +26,9 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
                     if (isHovered && state == Pressed) { if (handler) handler(); };
                     state = isHovered ? Hovered : Normal;
                     isPressed = false;
-                    sprite->setTextureRect(sf::IntRect({ 0,sprite_size.y * Normal }, sprite_size));
+                    sprite->setTextureRect(sf::IntRect({ 0,size.y * Normal }, size));
                 }
                 break;
-        }
-	}
-}
+        };
+	};
+};

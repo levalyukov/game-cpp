@@ -1,14 +1,14 @@
 #include "player.hpp"
 
-void Player::render(sf::RenderWindow& window, float deltaTime, sf::View& gameView, sf::Clock& clock) {
+void Player::render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) {
 	window.draw(shadow_sprite);
 	window.draw(player);
-	movement(deltaTime);
+	movement(delta_time);
 	shadow_sprite.setPosition(player.getPosition());
-	gameView.setCenter(player.getPosition());
+	game_camera.setCenter(player.getPosition());
 }
 
-void Player::movement(float deltaTime) {
+void Player::movement(float delta_time) {
 	if (!stopped_flag) {
 		bool movementUp = false;
 		bool movementDown = false;
@@ -62,10 +62,10 @@ void Player::movement(float deltaTime) {
 					player,
 					target_texture,
 					oldVectorUP,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					deltaTime
+					delta_time
 				);
 			}
 
@@ -74,10 +74,10 @@ void Player::movement(float deltaTime) {
 					player,
 					target_texture,
 					oldVectorDOWN,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					deltaTime
+					delta_time
 				);
 			}
 
@@ -86,10 +86,10 @@ void Player::movement(float deltaTime) {
 					player,
 					target_texture,
 					oldVectorLEFT,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					deltaTime
+					delta_time
 				);
 			}
 
@@ -98,10 +98,10 @@ void Player::movement(float deltaTime) {
 					player,
 					target_texture,
 					oldVectorRIGHT,
-					4, 16, 16,
+					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					deltaTime
+					delta_time
 				);
 			}
 		}
