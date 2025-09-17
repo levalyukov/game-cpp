@@ -8,31 +8,35 @@
 
 class CookingManager {
 	public:
-		CookingManager() {
-			addRecipe("ramen", { "Ramen", 50 });
-			addRecipe("solyanka", { "Solyanka", 100 });
-			addRecipe("borsch", { "Borsch", 150 });
-			addRecipe("miso-soup", { "Miso soup", 1350 });
+		struct Recipe {
+			std::string title;
+			std::string description;
+			unsigned __int16 price = 0;
+			float cookTime = 0.f;
 		};
-
-		struct Recipe { std::string title; int price; };
 		std::map<std::string, Recipe> recipes;
 
-		inline void addRecipe(std::string name_recipe, Recipe new_recipe) {
-			std::transform(name_recipe.begin(), name_recipe.end(), name_recipe.begin(), [](unsigned char c) {return std::tolower(c); });
-			recipes.emplace(name_recipe, new_recipe);
+		CookingManager() {
+			addRecipe("ramen", { "Ramen","Description for ramen",50,5.f });
 		};
 
-		inline Recipe getRecipe(std::string name_recipe) {
-			std::transform(name_recipe.begin(), name_recipe.end(), name_recipe.begin(), [](unsigned char c) {return std::tolower(c); });
-			auto recipe = recipes.find(name_recipe);
+		inline void addRecipe(std::string nameRecipe, const Recipe newRecipe) {
+			if (recipes.size() <= 4 ) {
+				std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
+				recipes.emplace(nameRecipe, newRecipe);
+			}
+		};
+
+		inline Recipe getRecipe(std::string nameRecipe) {
+			std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
+			auto recipe = recipes.find(nameRecipe);
 			if (recipe != recipes.end()) return recipe->second;
 		};
 
-		inline void removeRecipe(std::string name_recipe) {
-			std::transform(name_recipe.begin(), name_recipe.end(), name_recipe.begin(), [](unsigned char c) {return std::tolower(c); });
-			if (recipes.find(name_recipe) != recipes.end()) {
-				recipes.erase(name_recipe);
+		inline void removeRecipe(std::string nameRecipe) {
+			std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
+			if (recipes.find(nameRecipe) != recipes.end()) {
+				recipes.erase(nameRecipe);
 			}
 		};
 };
