@@ -28,6 +28,13 @@ Delicious Soup is a simple 2D simulation game owner of a street restaurant. You 
 - **[SFML v2.6.2](https://github.com/SFML/SFML/tree/2.6.2)**: window, graphic, audio
 - **[Catch2 v3.5.0](https://github.com/catchorg/Catch2/tree/v3.5.0)**: unit tests
 
+## 🛠️ Used tools
+
+- **[Visual Studio 2022](https://visualstudio.microsoft.com/ru/vs/)**: code, debugging
+- **[CMake](https://cmake.org/)**: building a project
+- **[Aseprite](https://aseprite.org/)**: drawing a game graphic
+- **[Fl Studio 12](https://www.image-line.com/)**: sampling, music, sfx
+
 ## 📦 Install
 
 Clone this repository on your system via **[GIT](https://git-scm.com/downloads)**.
