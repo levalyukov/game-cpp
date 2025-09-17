@@ -11,12 +11,14 @@
 
 class UIManager {
 	public:
+		std::vector<UIElement*> renderUI;
+		std::map<std::string, std::unique_ptr<UIElement>> ui_elements;
+		GUI gui;
+
 		inline void addElement(std::string name_element, std::unique_ptr<UIElement> element) {
 			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
 			auto result = ui_elements.emplace(name_element, std::move(element));
-			if (result.second) {
-				renderUI.push_back(result.first->second.get());
-			}
+			if (result.second) renderUI.push_back(result.first->second.get());
 		};
 
 		inline UIElement* getElement(std::string name_element) {
@@ -50,12 +52,7 @@ class UIManager {
 			}
 		};
 
-		GUI gui;
-
 	private:
-		std::vector<UIElement*> renderUI;
-		std::map<std::string, std::unique_ptr<UIElement>> ui_elements;
-
 		Globals& global = Globals::instance();
 		sf::RenderWindow& window = global.getWindow();
 		sf::Event& event = global.getEvent();
