@@ -13,13 +13,15 @@ class World {
 			UIManager& ui_manager,
 			EntityManager& entity_manager,
 			ResourceManager& resource_manager,
-			CookingManager& cooking_manager
+			CookingManager& cooking_manager,
+			InventoryManager& inventory_manager
 		) : uiManager(ui_manager),
 			entityManager(entity_manager),
 			resourceManager(resource_manager),
-			cookingManager(cooking_manager) {
+			cookingManager(cooking_manager),
+			inventoryManager(inventory_manager) {
 			characters->spawn(resourceManager, entityManager);
-			builds->create(resourceManager, entityManager, uiManager, cookingManager);
+			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager);
 		};
 		
 		~World() {
@@ -30,6 +32,7 @@ class World {
 
 		inline void render(float delta, sf::View& game_camera) {
 			entityManager.render(delta, game_camera);
+			cookingManager.cookingProcess(delta);
 		};
 
 	private:
@@ -37,6 +40,7 @@ class World {
 		EntityManager& entityManager;
 		ResourceManager& resourceManager;
 		CookingManager& cookingManager;
+		InventoryManager& inventoryManager;
 
 		std::unique_ptr<Characters> characters = std::make_unique<Characters>();
 		std::unique_ptr<Nature> nature = std::make_unique<Nature>();
