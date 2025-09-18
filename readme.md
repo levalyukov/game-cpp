@@ -30,7 +30,7 @@ Delicious Soup is a simple 2D simulation game owner of a street restaurant. You 
 
 ## 🛠️ Used tools
 
-- **[Visual Studio 2022](https://visualstudio.microsoft.com/ru/vs/)**: code, debugging
+- **[Visual Studio 2022](https://visualstudio.microsoft.com/vs/)**: code, debugging
 - **[CMake](https://cmake.org/)**: building a project
 - **[Aseprite](https://aseprite.org/)**: drawing a game graphic
 - **[Fl Studio 12](https://www.image-line.com/)**: sampling, music, sfx
