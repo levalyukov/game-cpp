@@ -25,6 +25,8 @@ class UI {
 			inventory->setup();
 		};
 
+		inline Inventory* getInventory() const { return inventory.get(); };
+
 		~UI() {
 			pause = nullptr;
 			hud = nullptr;

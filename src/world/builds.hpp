@@ -15,7 +15,8 @@ class Builds {
 			EntityManager& entity_manager,
 			UIManager& ui_manager,
 			CookingManager& cooking_manager,
-			InventoryManager& inventory_manager
+			InventoryManager& inventory_manager,
+			Inventory& inventory_ui
 		) {
 			initResources(resource_manager);
 			initBuilds(
@@ -23,7 +24,8 @@ class Builds {
 				resource_manager, 
 				ui_manager, 
 				cooking_manager,
-				inventory_manager
+				inventory_manager,
+				inventory_ui
 			);
 		};
 
@@ -37,7 +39,8 @@ class Builds {
 			ResourceManager& resource_manager, 
 			UIManager& ui_manager, 
 			CookingManager& cooking_manager,
-			InventoryManager& inventory_manager
+			InventoryManager& inventory_manager,
+			Inventory& inventory_ui
 		) {
 			entity_manager.addEntity(
 				"kitchen",
@@ -51,7 +54,8 @@ class Builds {
 				entity_manager, 
 				ui_manager, 
 				cooking_manager,
-				inventory_manager
+				inventory_manager,
+				inventory_ui
 			);
 		};
 
@@ -59,7 +63,8 @@ class Builds {
 			EntityManager& entity_manager,
 			UIManager& ui_manager, 
 			CookingManager& cooking_manager,
-			InventoryManager& inventory_manager
+			InventoryManager& inventory_manager,
+			Inventory& inventory_ui
 		) {
 			auto kitchen = static_cast<Build*>(entity_manager.getEntity("kitchen"));
 			kitchen->setHandleEvent(
@@ -80,8 +85,8 @@ class Builds {
 					else {
 						if (inventory_manager.inventory.size() < inventory_manager.MAX_SLOTS) {
 							cooking_manager.resetCookeedFlag();
-						} else {
-							std::cout << "debug string for kitchen: Max items in inventory\n";
+							inventory_manager.addItem("bread", { "Bread", "../../../assets/textures/ui/inventory/items/item_0.png" });
+							inventory_ui.update();
 						}
 					}
 				}
