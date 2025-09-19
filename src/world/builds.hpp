@@ -5,7 +5,8 @@
 #include "../entities/entity-manager.hpp"
 #include "../mechanics/cooking.hpp"
 #include "../entities/entities/build.hpp"
-#include "../mechanics/inventory.hpp"
+#include "../mechanics/inventory-manager.hpp"
+#include "../ui/screens/inventory.hpp"
 
 class Builds {
 	public:

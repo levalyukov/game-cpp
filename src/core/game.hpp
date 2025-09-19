@@ -6,7 +6,7 @@
 #include "../world/world.hpp"
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
-#include "../mechanics/inventory.hpp"
+#include "../mechanics/inventory-manager.hpp"
 
 class Game {
 	public:

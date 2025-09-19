@@ -2,7 +2,7 @@
 
 #include "../../ui/ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
-#include "../../mechanics/inventory.hpp"
+#include "../../mechanics/inventory-manager.hpp"
 
 class Inventory {
 	public:

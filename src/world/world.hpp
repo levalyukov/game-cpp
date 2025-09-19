@@ -2,6 +2,8 @@
 
 #include "../entities/entity-manager.hpp"
 #include "../core/resources/resources.hpp"
+#include "../mechanics/inventory-manager.hpp"
+#include "../ui/screens/inventory.hpp"
 
 #include "characters.hpp"
 #include "nature.hpp"
