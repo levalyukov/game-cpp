@@ -83,7 +83,7 @@ class Builds {
 						}
 					}
 					else {
-						if (inventory_manager.inventory.size() < inventory_manager.MAX_SLOTS) {
+						if (inventory_manager.inventory.size() < MAX_SLOTS) {
 							cooking_manager.resetCookeedFlag();
 							inventory_manager.addItem("bread", { "Bread", "../../../assets/textures/ui/inventory/items/item_0.png" });
 							inventory_ui.update();

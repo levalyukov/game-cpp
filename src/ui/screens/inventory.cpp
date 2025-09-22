@@ -20,7 +20,7 @@ void Inventory::initParameters() {};
 
 void Inventory::update() {
 	if (inventoryManager.inventory.size() > 0) {
-		if (inventoryManager.inventory.size() <= inventoryManager.MAX_SLOTS) {
+		if (inventoryManager.inventory.size() <= MAX_SLOTS) {
 			for (int y = 0; y < inventoryManager.inventory.size(); y++) {
 				if (!uiManager.getElement("inventory-slot-" + std::to_string(y))) {
 					uiManager.addElement(
