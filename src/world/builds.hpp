@@ -79,16 +79,16 @@ class Builds {
 							if (ui_manager.getElement(buttonRecipe) && ui_manager.getElement(buttonLabelRecipe)) {
 								ui_manager.getElement(buttonRecipe)->setVisible(true);
 								ui_manager.getElement(buttonLabelRecipe)->setVisible(true);
-							}
-						}
+							};
+						};
 					}
 					else {
 						if (inventory_manager.inventory.size() < MAX_SLOTS) {
 							cooking_manager.resetCookeedFlag();
 							inventory_manager.addItem("bread", { "Bread", "../../../assets/textures/ui/inventory/items/item_0.png" });
 							inventory_ui.update();
-						}
-					}
+						};
+					};
 				}
 			);
 		};
