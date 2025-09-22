@@ -18,10 +18,10 @@ class InventoryManager {
 			}
 		};
 
-		inline Item getItem(std::string name) {
+		inline Item* getItem(std::string name) {
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
 			auto item = inventory.find(name);
-			return (item != inventory.end()) ? item->second : Item{};
+			return (item != inventory.end()) ? &item->second : nullptr;
 		};
 
 		inline void removeItem(std::string name) {
