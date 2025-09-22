@@ -5,17 +5,23 @@
 #include <algorithm>
 #include <cctype>
 
+#define MAX_SLOTS 10
+
 class InventoryManager {
 	public:
-		const int MAX_SLOTS = 4;
-		struct Item { std::string caption; std::string icon_path; };
+		struct Item { 
+			std::string caption = "";
+			std::string icon_path = ""; 
+			unsigned __int8 value = 1;
+		};
 		std::unordered_map<std::string, Item> inventory;
 
 		inline void addItem(std::string name, struct Item item) {
-			if (inventory.size() < MAX_SLOTS) {
-				std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
-				inventory.emplace(name, item);
-			}
+			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
+			if (getItem(name) == nullptr) {
+				if (inventory.size() < MAX_SLOTS)
+					inventory.emplace(name, item);
+			};
 		};
 
 		inline Item* getItem(std::string name) {
@@ -28,5 +34,26 @@ class InventoryManager {
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
 			auto item = inventory.find(name);
 			if (item != inventory.end()) inventory.erase(name);
+		};
+
+		inline void setItemValue(std::string name, unsigned __int8 value = 0) {
+			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
+			if (getItem(name) != nullptr) {
+				getItem(name)->value = value;
+			};
+		};
+
+		inline void addItemValue(std::string name, unsigned __int8 value = 0) {
+			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
+			if (getItem(name) != nullptr) {
+				getItem(name)->value += value;
+			};
+		};
+
+		inline void subtractItemValue(std::string name, unsigned __int8 value = 0) {
+			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
+			if (getItem(name) != nullptr) {
+				getItem(name)->value -= value;
+			};
 		};
 };
