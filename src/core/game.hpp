@@ -16,7 +16,7 @@ class Game {
 			iconData = icon.getPixelsPtr();
 			window.setIcon(icon.getSize().x, icon.getSize().y, iconData);
 			run();
-		}
+		};
 
 		~Game() {
 			resourceManager = nullptr;
@@ -46,7 +46,7 @@ class Game {
 		sf::View main_camera = window.getDefaultView();
 		sf::View ui_camera = window.getDefaultView();
 		sf::Image icon;
-		const sf::Uint8* iconData;
+		const sf::Uint8* iconData = {};
 
 		void processEvent();
 		void render();

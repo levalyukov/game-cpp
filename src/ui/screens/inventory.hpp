@@ -4,6 +4,10 @@
 #include "../../core/resources/resources.hpp"
 #include "../../mechanics/inventory-manager.hpp"
 
+#include <string>
+#include <cctype>
+#include <algorithm>
+
 class Inventory {
 	public:
 		Inventory(

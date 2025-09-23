@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../ui/ui-manager.hpp"
 #include "../core/resources/resources.hpp"
-#include "../entities/entity-manager.hpp"
-#include "../mechanics/cooking.hpp"
-#include "../entities/entities/build.hpp"
-#include "../mechanics/inventory-manager.hpp"
+#include "../ui/ui-manager.hpp"
 #include "../ui/screens/inventory.hpp"
+#include "../entities/entity-manager.hpp"
+#include "../entities/entities/build.hpp"
+#include "../mechanics/cooking-manager.hpp"
+#include "../mechanics/inventory-manager.hpp"
 
 class Builds {
 	public:
@@ -81,8 +81,7 @@ class Builds {
 								ui_manager.getElement(buttonLabelRecipe)->setVisible(true);
 							};
 						};
-					}
-					else {
+					} else if (cooking_manager.getCookeedFlag()) {
 						if (inventory_manager.inventory.size() < MAX_SLOTS) {
 							cooking_manager.resetCookeedFlag();
 							inventory_manager.addItem("bread", { "Bread", "../../../assets/textures/ui/inventory/items/item_0.png" });

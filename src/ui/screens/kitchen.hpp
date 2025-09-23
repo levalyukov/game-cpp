@@ -1,11 +1,10 @@
 #pragma once
 
+#include "../screens/hud.hpp"
 #include "../../core/globals.hpp"
-#include "../../core/utils.hpp"
 #include "../../ui/ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
-#include "../screens/hud.hpp"
-#include "../../mechanics/cooking.hpp"
+#include "../../mechanics/cooking-manager.hpp"
 
 #include <iostream>
 
@@ -22,7 +21,6 @@ class KitchenMenu {
 		void setup();
 
 	private:
-		Utils& utils = Utils::instance();
 		Globals& globals = Globals::instance();
 		sf::RenderWindow& window = globals.getWindow();
 		ResourceManager& resourceManager;
