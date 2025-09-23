@@ -58,10 +58,10 @@ void Inventory::update() {
 
 						if (item.second.value > 1) {
 							/*	
-								ѕочему-то не работает конкатенаци€ строк:
-								"inventory-slot-" + item.second.caption <- приводит к исключению на Texture.cpp.
-								ѕерепробовал множество вариантов решени€ - ничего не помогает;
-								»спользовать item.second.caption - единственное рабочее решение, которое не €вл€етс€ лучшим вариантом.
+								String concatenation doesn't work for some reason:
+								"inventory-slot-" + item.second.caption <- leads to an exception on Texture.cpp.
+								I've tried many solutions, but nothing helps;
+								Using item.second.caption is the only working solution, which is not the best option.
 							*/
 
 							std::transform(item.second.caption.begin(), item.second.caption.end(), item.second.caption.begin(), [](unsigned char c) {return std::tolower(c); });
