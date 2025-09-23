@@ -17,14 +17,14 @@ class CookingManager {
 		std::map<std::string, Recipe> recipes;
 
 		CookingManager() {
-			addRecipe("ramen", { "Ramen","Description for ramen",50,5.f });
+			addRecipe("ramen", { "Ramen","Description for ramen",50,0.5f });
 		};
 
 		inline void addRecipe(std::string nameRecipe, const Recipe newRecipe) {
-			if (recipes.size() <= 4 ) {
+			if (recipes.size() <= 4) {
 				std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
 				recipes.emplace(nameRecipe, newRecipe);
-			}
+			};
 		};
 
 		inline Recipe getRecipe(std::string nameRecipe) {
@@ -37,7 +37,7 @@ class CookingManager {
 			std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
 			if (recipes.find(nameRecipe) != recipes.end()) {
 				recipes.erase(nameRecipe);
-			}
+			};
 		};
 
 		// 
@@ -54,13 +54,13 @@ class CookingManager {
 				// debug string
 				std::cout << "cookTimer: " << cookTimer << "| recipeTime: " << recipeTime << std::endl;
 				cookTimer += delta;
-				if (cookTimer > recipeTime) {
+				if (cookTimer >= recipeTime) {
 					cookingFlag = false;
 					cookedFlag = true;
 					cookTimer = 0.f;
 					recipeTime = 0.f;
-				}
-			} else return;
+				};
+			};
 		};
 
 		inline void resetCookeedFlag() { cookedFlag = false; };
@@ -73,5 +73,5 @@ class CookingManager {
 		bool cookedFlag = false;
 		float cookTimer = 0.f;
 		float recipeTime = 0.f;
-		std::string recipeName;
+		std::string recipeName = "";
 };
