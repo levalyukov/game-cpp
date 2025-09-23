@@ -55,6 +55,37 @@ void Inventory::update() {
 							slot->getSprite(),
 							slot->getIcon()
 						);
+
+						if (item.second.value > 1) {
+							/*	
+								ѕочему-то не работает конкатенаци€ строк:
+								"inventory-slot-" + item.second.caption <- приводит к исключению на Texture.cpp.
+								ѕерепробовал множество вариантов решени€ - ничего не помогает;
+								»спользовать item.second.caption - единственное рабочее решение, которое не €вл€етс€ лучшим вариантом.
+							*/
+
+							std::transform(item.second.caption.begin(), item.second.caption.end(), item.second.caption.begin(), [](unsigned char c) {return std::tolower(c); });
+							if (!uiManager.getElement(item.second.caption)) {
+								uiManager.addElement(
+									item.second.caption,
+									uiManager.gui.createLabel(
+										std::to_string(item.second.value),
+										resourceManager.getFont("nunito"), 
+										24, sf::Color::White
+									)
+								);
+
+								auto item_label = static_cast<Label*>(uiManager.getElement(item.second.caption));
+								item_label->setRelativePositionText(UIElement::BottomRight, slot->getSprite(), item_label->getText(), {-8, -16});
+								item_label->setSortIndex(2);
+							} else {
+								std::transform(item.second.caption.begin(), item.second.caption.end(), item.second.caption.begin(), [](unsigned char c) {return std::tolower(c); });
+								if (uiManager.getElement(item.second.caption)) {
+									auto item_label = static_cast<Label*>(uiManager.getElement(item.second.caption));
+									item_label->setMessage(std::to_string(item.second.value));
+								};
+							};
+						};
 					};
 				};
 			};
