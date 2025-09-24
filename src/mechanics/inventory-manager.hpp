@@ -31,10 +31,11 @@ class InventoryManager {
 			return (item != inventory.end()) ? &item->second : nullptr;
 		};
 
-		inline void removeItem(std::string name) {
-			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
-			auto item = inventory.find(name);
-			if (item != inventory.end()) inventory.erase(name);
+		inline void removeItem(const std::string& name) {
+			std::string lower_name = name;
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+			auto item = inventory.find(lower_name);
+			if (item != inventory.end()) inventory.erase(lower_name);
 		};
 
 		inline void setItemValue(std::string name, unsigned __int8 value = 0) {
@@ -54,7 +55,8 @@ class InventoryManager {
 		inline void subtractItemValue(std::string name, unsigned __int8 value = 0) {
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
 			if (getItem(name) != nullptr) {
-				getItem(name)->value -= value;
+				if (getItem(name)->value > 0) getItem(name)->value -= value;
+				else removeItem(name);
 			};
 		};
 };
