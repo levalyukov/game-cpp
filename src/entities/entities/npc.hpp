@@ -39,6 +39,8 @@ class NPC : public Entity {
 	private:
 		enum State {IDLE, WALK};
 		enum Movement {UP, DOWN, LEFT, RIGHT, ZERO};
+		enum MouseState { Normal, Hovered, Pressed };
+		MouseState m_state = Normal;
 
 		sf::Sprite npc;
 		sf::Sprite shadow;
@@ -55,6 +57,7 @@ class NPC : public Entity {
 		sf::Vector2i LeftSpriteCoords = { 0,0 };
 		sf::Vector2i RightSpriteCoords = { 0,16 };
 
+		bool isPressed = false;
 		bool stopped_flag = false;
 		float animationTimer = 0.0f;
 		const float SPEED = 1.75f;
