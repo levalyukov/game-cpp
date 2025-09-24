@@ -19,6 +19,17 @@ void Inventory::initElements() {
 void Inventory::initParameters() {};
 
 void Inventory::update() {
+	for (int y = 0; y < MAX_SLOTS; y++) {
+		if (uiManager.getElement("inventory-slot-" + std::to_string(y))) {
+			uiManager.removeElement("inventory-slot-" + std::to_string(y));
+			for (auto& item : inventoryManager.inventory) {
+				if (uiManager.getElement(item.second.caption)) {
+					uiManager.removeElement(item.second.caption);
+				};
+			};
+		};
+	};
+
 	if (inventoryManager.inventory.size() > 0) {
 		if (inventoryManager.inventory.size() <= MAX_SLOTS) {
 			for (int y = 0; y < inventoryManager.inventory.size(); y++) {
@@ -57,6 +68,7 @@ void Inventory::update() {
 						);
 
 						if (item.second.value > 1) {
+
 							/*	
 								String concatenation doesn't work for some reason:
 								"inventory-slot-" + item.second.caption <- leads to an exception on Texture.cpp.
