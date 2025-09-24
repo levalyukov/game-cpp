@@ -1,15 +1,22 @@
 #pragma once
 
-#include "../entities/entity-manager.hpp"
 #include "../core/resources/resources.hpp"
+#include "../entities/entity-manager.hpp"
 #include "../entities/entities/player.hpp"
 #include "../entities/entities/npc.hpp"
+#include "../mechanics/inventory-manager.hpp"
+#include "../ui/screens/inventory.hpp"
 
 class Characters {
 	public:
-		inline void spawn(ResourceManager& resourceManager, EntityManager& entityManager) {
+		inline void spawn(
+			ResourceManager& resourceManager, 
+			EntityManager& entityManager,
+			InventoryManager& inventoryManager,
+			Inventory& inventoryUI
+		) {
 			player(resourceManager, entityManager);
-			npcs(resourceManager, entityManager);
+			npcs(resourceManager, entityManager, inventoryManager, inventoryUI);
 		}
 
 	private:
@@ -30,7 +37,12 @@ class Characters {
 			);
 		};
 
-		inline void npcs(ResourceManager& resourceManager, EntityManager& entityManager) const {
+		inline void npcs(
+			ResourceManager& resourceManager, 
+			EntityManager& entityManager,
+			InventoryManager& inventoryManager,
+			Inventory& inventoryUI
+		) const {
 			resourceManager.loadTexture("npc-idle", "../../../assets/textures/entity/npc/npc_idle.png");
 			resourceManager.loadTexture("npc-walk-horizontal", "../../../assets/textures/entity/npc/npc_movement_horizontal.png");
 			resourceManager.loadTexture("npc-walk-vertical", "../../../assets/textures/entity/npc/npc_movement_vertical.png");
@@ -45,5 +57,17 @@ class Characters {
 					resourceManager.getTexture("npc-shadow")
 				)
 			);
+
+			if (entityManager.getEntity("npcTest")) {
+				auto npc = static_cast<NPC*>(entityManager.getEntity("npcTest"));
+				npc->setHandleEvent(
+					[&]() {
+						if (inventoryManager.getItem("bread") != nullptr) {
+							inventoryManager.subtractItemValue("bread", 1);
+						}
+						inventoryUI.update();
+					}
+				);
+			};
 		};
 };

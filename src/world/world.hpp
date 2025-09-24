@@ -24,7 +24,7 @@ class World {
 			cookingManager(cooking_manager),
 			inventoryManager(inventory_manager),
 			inventoryUI(inventory_ui) {
-			characters->spawn(resourceManager, entityManager);
+			characters->spawn(resourceManager, entityManager, inventoryManager, inventoryUI);
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
 		};
 		
