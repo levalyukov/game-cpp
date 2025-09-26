@@ -40,8 +40,8 @@ void UIElement::setGlobalPosition(
 		case BottomRight:
 			sprite.setPosition({ windowSizeX - spriteSizeWidth, windowSizeY - spriteSizeHeight });
 			break;
-	}
-}
+	};
+};
 
 void UIElement::setRelativePosition(
 	enum ElementPosition position, 
@@ -86,8 +86,51 @@ void UIElement::setRelativePosition(
 		case BottomRight:
 			child.setPosition({ parentX + (parentWidth - childWidth) + margins.x, parentY + (parentHeight - childHeight) + margins.y });
 			break;
-	}
-}
+	};
+};
+
+void UIElement::setGlobalPositionText(
+	enum ElementPosition position,
+	sf::Text& text,
+	sf::Vector2f margins
+) {
+	sf::RenderWindow& window = Globals::instance().getWindow();
+	float windowX = static_cast<float>(window.getSize().x);
+	float windowY = static_cast<float>(window.getSize().y);
+	float textHeight = text.getGlobalBounds().height;
+	float textWidth = text.getGlobalBounds().width;
+	switch (position) {
+	case TopLeft:
+		text.setPosition({ 0 + margins.x,0 + margins.y });
+		break;
+	case TopCenter:
+		text.setPosition({ (windowX - textWidth) / 2.f + margins.x, 0 + margins.y });
+		break;
+	case TopRight:
+		text.setPosition({ windowX - textWidth + margins.x, 0 + margins.y });
+		break;
+
+	case MiddleLeft:
+		text.setPosition({ 0 + margins.x, (windowY - textHeight) / 2.f + margins.y });
+		break;
+	case MiddleCenter:
+		text.setPosition({ (windowX - textWidth) / 2.f + margins.x, (windowY - textHeight) / 2.f + margins.y });
+		break;
+	case MiddleRight:
+		text.setPosition({ windowX - textWidth + margins.x, (windowY - textHeight) / 2.f + margins.y });
+		break;
+
+	case BottomLeft:
+		text.setPosition({ 0 + margins.x, (windowY - textHeight) + margins.y });
+		break;
+	case BottomCenter:
+		text.setPosition({ (windowX - textWidth) / 2.f + margins.x, (windowY - textHeight) + margins.y });
+		break;
+	case BottomRight:
+		text.setPosition({ (windowX - textWidth) + margins.x, (windowY - textHeight) + margins.y });
+		break;
+	};
+};
 
 /*? This function incorrectly assigns a position to the text. idk */
 void UIElement::setRelativePositionText(
@@ -133,5 +176,5 @@ void UIElement::setRelativePositionText(
 		case BottomRight:
 			child.setPosition({ parentX + (parentWidth - childWidth) + margins.x ,parentY + (parentHeight - childHeight) + margins.y });
 			break;
-	}
-}
+	};
+};
