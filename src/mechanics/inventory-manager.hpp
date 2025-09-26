@@ -55,7 +55,7 @@ class InventoryManager {
 		inline void subtractItemValue(std::string name, unsigned __int8 value = 0) {
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
 			if (getItem(name) != nullptr) {
-				if (getItem(name)->value > 0) getItem(name)->value -= value;
+				if (getItem(name)->value-value > 0) getItem(name)->value -= value;
 				else removeItem(name);
 			};
 		};
