@@ -7,6 +7,7 @@
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
 #include "../mechanics/inventory-manager.hpp"
+#include "../mechanics/economy-manager.hpp"
 
 class Game {
 	public:
@@ -34,9 +35,10 @@ class Game {
 		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>();
 		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
 		std::unique_ptr<InventoryManager> inventoryManager = std::make_unique<InventoryManager>();
+		std::unique_ptr<EconomyManager> economyManager = std::make_unique<EconomyManager>();
 
-		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager, *inventoryManager);
-		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager, *inventoryManager, *ui->getInventory());
+		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager);
+		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *ui->getInventory(), *ui->getHUD());
 		std::unique_ptr<Tilemap> tilemap = std::make_unique<Tilemap>();
 
 		Globals& globals = Globals::instance();

@@ -96,7 +96,5 @@ void NPC::render(sf::RenderWindow& window, float delta_time, sf::View& game_came
 			direction = utils.randi_range(0, 4);
 			clock.restart();
 		}
-	} else {
-		clock.restart();
-	};
+	} else clock.restart();
 };

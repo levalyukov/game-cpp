@@ -1,11 +1,13 @@
 #pragma once
 
 #include "../core/resources/resources.hpp"
+#include "../mechanics/inventory-manager.hpp"
+#include "../mechanics/economy-manager.hpp"
 #include "../entities/entity-manager.hpp"
 #include "../entities/entities/player.hpp"
 #include "../entities/entities/npc.hpp"
-#include "../mechanics/inventory-manager.hpp"
 #include "../ui/screens/inventory.hpp"
+#include "../ui/screens/hud.hpp"
 
 class Characters {
 	public:
@@ -13,10 +15,12 @@ class Characters {
 			ResourceManager& resourceManager, 
 			EntityManager& entityManager,
 			InventoryManager& inventoryManager,
-			Inventory& inventoryUI
+			EconomyManager& economyManager,
+			Inventory& inventoryUI,
+			HUD& hud
 		) {
 			player(resourceManager, entityManager);
-			npcs(resourceManager, entityManager, inventoryManager, inventoryUI);
+			npcs(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud);
 		}
 
 	private:
@@ -41,7 +45,9 @@ class Characters {
 			ResourceManager& resourceManager, 
 			EntityManager& entityManager,
 			InventoryManager& inventoryManager,
-			Inventory& inventoryUI
+			EconomyManager& economyManager,
+			Inventory& inventoryUI,
+			HUD& hud
 		) const {
 			resourceManager.loadTexture("npc-idle", "../../../assets/textures/entity/npc/npc_idle.png");
 			resourceManager.loadTexture("npc-walk-horizontal", "../../../assets/textures/entity/npc/npc_movement_horizontal.png");
@@ -63,9 +69,10 @@ class Characters {
 				npc->setHandleEvent(
 					[&]() {
 						if (inventoryManager.getItem("bread") != nullptr) {
+							economyManager.addMoney(inventoryManager.getItem("bread")->price);
 							inventoryManager.subtractItemValue("bread", 1);
-						}
-						inventoryUI.update();
+							hud.update();
+						}; inventoryUI.update();
 					}
 				);
 			};

@@ -13,6 +13,7 @@ class InventoryManager {
 			std::string caption = "";
 			std::string icon_path = ""; 
 			unsigned __int16 value = 1;
+			unsigned __int16 price = 100;
 		};
 		std::unordered_map<std::string, Item> inventory;
 

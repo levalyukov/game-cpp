@@ -1,20 +1,17 @@
 #pragma once
 
-class Economy {
+class EconomyManager {
 	public:
-		inline void setMoney(int value) { if (value >= 0) money = value; };
-		inline void addMoney(int value) { if (value >= 0) money += value; };
-		inline void removeMoney(int value) { 
-			if (value >= 0) {
-				if (value <= money) {
-					money -= value;
-				} else {
-					money = 0;
-				}
-			} 
-		}
 		inline int getMoney() const { return money; };
+		inline void setMoney(const int value) { if (value >= 0) money = value; };
+		inline void addMoney(const int value) { if (value >= 0) money += value; };
+		inline void removeMoney(const int value) {
+			if (value >= 0) {
+				if (value <= money) money -= value;
+				else money = 0;
+			};
+		};
 
 	private:
-		unsigned int money = 0;
+		unsigned __int32 money = 0;
 };
