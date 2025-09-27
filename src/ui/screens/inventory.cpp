@@ -95,6 +95,7 @@ void Inventory::update() {
 								if (uiManager.getElement(item.second.caption)) {
 									auto item_label = static_cast<Label*>(uiManager.getElement(item.second.caption));
 									item_label->setMessage(std::to_string(item.second.value));
+									item_label->setRelativePositionText(UIElement::BottomRight, slot->getSprite(), item_label->getText(), { -8, -16 });
 								};
 							};
 						};
