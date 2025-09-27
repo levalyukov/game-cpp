@@ -30,5 +30,6 @@ void HUD::update() {
 	if (uiManager.getElement("hud-money")) {
 		auto label = static_cast<Label*>(uiManager.getElement("hud-money"));
 		label->setMessage(std::to_string(economyManager.getMoney()));
+		label->setGlobalPositionText(UIElement::TopRight, label->getText(), { -10,5 });
 	};
 };
