@@ -134,6 +134,8 @@ void UIElement::setGlobalPositionText(
 };
 
 /*? This function incorrectly assigns a position to the text. idk */
+/*? p.s. maybe because i forgot about the font size...? */
+
 void UIElement::setRelativePositionText(
 	enum ElementPosition position, 
 	sf::Sprite& parent, 

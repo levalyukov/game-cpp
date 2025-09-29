@@ -1,0 +1,116 @@
+#include "glocery-shop.hpp"
+
+void GloceryShop::setup() {
+	initResources();
+	initElements();
+	initLayers();
+	initParametes();
+	initButtons();
+	setVisible(false);
+};
+
+void GloceryShop::initResources() {
+	resourceManager.loadTexture("glocery-panel", "../../../assets/textures/ui/glocery/menu.png");
+	resourceManager.loadTexture("glocery-close-button", "../../../assets/textures/ui/glocery/close-button.png");
+	resourceManager.loadTexture("glocery-button", "../../../assets/textures/ui/glocery/button.png");
+};
+
+void GloceryShop::initElements() {
+	float windowX = static_cast<float>(Globals::instance().getWindow().getSize().x);
+	float windowY = static_cast<float>(Globals::instance().getWindow().getSize().y);
+	uiManager.addElement("glocery-background", uiManager.gui.createColorRect(sf::Color(0, 0, 0, 100), { windowX,windowY }));
+	uiManager.addElement("glocery-panel", uiManager.gui.createPanel(resourceManager.getTexture("glocery-panel")));
+	uiManager.addElement("glocery-close-button", uiManager.gui.createButton(resourceManager.getTexture("glocery-close-button"), { 16,16 }));
+	uiManager.addElement("glocery-page-label", uiManager.gui.createLabel("0/0", resourceManager.getFont("nunito"), 22, sf::Color::White));
+};
+
+void GloceryShop::initLayers() {
+	if (!uiManager.getElement("glocery-panel")) return;
+	if (!uiManager.getElement("glocery-close-button")) return;
+	if (!uiManager.getElement("glocery-page-label")) return;
+
+	auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
+	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
+	panel->setSortIndex(1);
+
+	auto closeButton = static_cast<Button*>(uiManager.getElement("glocery-close-button"));
+	sf::Sprite& closeButtonSprite = closeButton->getSprite();
+	closeButton->setRelativePosition(UIElement::TopRight, panel->getSprite(), closeButtonSprite, { 80, -64 });
+	closeButton->setSortIndex(1);
+
+	auto pageLabel = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
+	pageLabel->setRelativePositionText(UIElement::BottomCenter, panel->getSprite(), pageLabel->getText(), {0, -24});
+	pageLabel->setSortIndex(1);
+};
+
+void GloceryShop::initParametes() {
+	if (!uiManager.getElement("glocery-close-button")) return;
+	auto closeButton = static_cast<Button*>(uiManager.getElement("glocery-close-button"));
+	closeButton->setHandleEvent([&]() {setVisible(false); });
+};
+
+void GloceryShop::initButtons() {
+	if (gloceryShopManager.shop.size() == 0) return;
+
+	if (page > 1) page = 1;
+	maxPages = floor(gloceryShopManager.shop.size() / MAX_GLOCERY_SHOP_SLOTS);
+
+	if (uiManager.getElement("glocery-page-label")) 
+		static_cast<Label*>(uiManager.getElement("glocery-page-label"))->setMessage(std::to_string(page) + "/" + std::to_string(maxPages));
+
+	unsigned int index = 0;
+	for (const auto& product : gloceryShopManager.shop) {
+		std::string buttonName = "glocery-product-" + std::to_string(index);
+		std::string buttonLabelName = "glocery-button-title-" + std::to_string(index);
+
+		uiManager.removeElement(buttonName);
+		uiManager.removeElement(buttonLabelName);
+		uiManager.addElement(buttonName, uiManager.gui.createButton(resourceManager.getTexture("glocery-button"), { 152,18 }));
+		uiManager.addElement(buttonLabelName, uiManager.gui.createLabel(product.second.name, resourceManager.getFont("nunito"), 24, sf::Color::White));
+
+		auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
+		auto buttonProduct = static_cast<Button*>(uiManager.getElement(buttonName));
+		auto buttonLabel = static_cast<Label*>(uiManager.getElement(buttonLabelName));
+		buttonProduct->setVisible(false);
+		buttonProduct->setSortIndex(2);
+		buttonProduct->setRelativePosition(UIElement::TopLeft, panel->getSprite(), buttonProduct->getSprite(), { 16,16 + (static_cast<float>(index) * 80) });
+		buttonLabel->setRelativePositionText(UIElement::TopLeft, buttonProduct->getSprite(), buttonLabel->getText());
+		buttonLabel->setSortIndex(2);
+		buttonLabel->setVisible(false);
+		index++;
+	};
+};
+
+void GloceryShop::setVisible(bool new_state) {
+	if (new_state != visible) {
+		if (!uiManager.getElement("glocery-background")) return;
+		if (!uiManager.getElement("glocery-panel")) return;
+		if (!uiManager.getElement("glocery-close-button")) return;
+		if (!uiManager.getElement("glocery-page-label")) return;
+
+		visible = new_state;
+
+		auto background = static_cast<ColorRect*>(uiManager.getElement("glocery-background"));
+		auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
+		auto closeButton = static_cast<Button*>(uiManager.getElement("glocery-close-button"));
+		auto pageLabel = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
+
+		background->setVisible(visible);
+		panel->setVisible(visible);
+		closeButton->setVisible(visible);
+		pageLabel->setVisible(visible);
+
+		unsigned int index = 0;
+		for (int i = 0; i < MAX_GLOCERY_SHOP_SLOTS; i++) {
+			std::string buttonName = "glocery-product-" + std::to_string(index);
+			std::string buttonLabelName = "glocery-button-title-" + std::to_string(index);
+
+			if (uiManager.getElement(buttonName)) 
+				uiManager.getElement(buttonName)->setVisible(visible);
+			if (uiManager.getElement(buttonLabelName))
+				uiManager.getElement(buttonLabelName)->setVisible(visible);
+
+			index++;
+		};
+	};
+};
