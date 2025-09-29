@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <unordered_map>
 
-#define MAX_SLOTS 10
+#define MAX_INVENTORY_SLOTS 10
 
 class InventoryManager {
 	public:
@@ -21,7 +21,7 @@ class InventoryManager {
 			std::string lower_name = name;
 			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
 			if (getItem(lower_name) == nullptr) {
-				if (inventory.size() < MAX_SLOTS)
+				if (inventory.size() < MAX_INVENTORY_SLOTS)
 					inventory.emplace(lower_name, item);
 			} else addItemValue(lower_name, 1);
 		};

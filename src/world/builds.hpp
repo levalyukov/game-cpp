@@ -82,7 +82,7 @@ class Builds {
 							};
 						};
 					} else if (cooking_manager.getCookeedFlag()) {
-						if (inventory_manager.inventory.size() < MAX_SLOTS) {
+						if (inventory_manager.inventory.size() < MAX_INVENTORY_SLOTS) {
 							cooking_manager.resetCookeedFlag();
 							inventory_manager.addItem("bread", { "Bread", "../../../assets/textures/ui/inventory/items/item_0.png" });
 							inventory_ui.update();

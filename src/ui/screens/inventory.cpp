@@ -19,7 +19,7 @@ void Inventory::initElements() {
 void Inventory::initParameters() {};
 
 void Inventory::update() {
-	for (int y = 0; y < MAX_SLOTS; y++) {
+	for (int y = 0; y < MAX_INVENTORY_SLOTS; y++) {
 		if (uiManager.getElement("inventory-slot-" + std::to_string(y))) {
 			uiManager.removeElement("inventory-slot-" + std::to_string(y));
 			for (auto& item : inventoryManager.inventory) {
@@ -31,7 +31,7 @@ void Inventory::update() {
 	};
 
 	if (inventoryManager.inventory.size() > 0) {
-		if (inventoryManager.inventory.size() <= MAX_SLOTS) {
+		if (inventoryManager.inventory.size() <= MAX_INVENTORY_SLOTS) {
 			for (int y = 0; y < inventoryManager.inventory.size(); y++) {
 				if (!uiManager.getElement("inventory-slot-" + std::to_string(y))) {
 					uiManager.addElement(
