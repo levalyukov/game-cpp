@@ -12,7 +12,7 @@ class UIElement {
 			BottomLeft, BottomCenter, BottomRight
 		};
 
-		void setGlobalPosition(enum ElementPosition position, sf::Sprite& sprite);
+		void setGlobalPosition(enum ElementPosition position, sf::Sprite& sprite, sf::Vector2f margins = { 0.f,0.f });
 		void setGlobalPositionText(enum ElementPosition position, sf::Text& text, sf::Vector2f margins = { 0.f,0.f });
 		void setRelativePosition(enum ElementPosition position, sf::Sprite& parent, sf::Sprite& child, sf::Vector2f margins = { 0.f,0.f });
 		void setRelativePositionText(enum ElementPosition position, sf::Sprite& parent, sf::Text& child, sf::Vector2f margins = { 0.f,0.f });

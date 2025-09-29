@@ -2,7 +2,8 @@
 
 void UIElement::setGlobalPosition(
 	enum ElementPosition position, 
-	sf::Sprite& sprite
+	sf::Sprite& sprite,
+	sf::Vector2f margins
 ) {
 	sf::RenderWindow& window = Globals::instance().getWindow();
 	float windowSizeX = static_cast<float>(window.getSize().x);
@@ -15,30 +16,30 @@ void UIElement::setGlobalPosition(
 			sprite.setPosition({ 0,0 });
 			break;
 		case TopCenter:
-			sprite.setPosition({ (windowSizeX - spriteSizeWidth) / 2.f, 0 });
+			sprite.setPosition({ (windowSizeX - spriteSizeWidth) / 2.f + margins.x, 0 + margins.y });
 			break;
 		case TopRight:
-			sprite.setPosition({ windowSizeX - spriteSizeWidth, 0 });
+			sprite.setPosition({ windowSizeX - spriteSizeWidth + margins.x, 0 + margins.y });
 			break;
 
 		case MiddleLeft:
-			sprite.setPosition({ 0, (windowSizeY - spriteSizeHeight) / 2.f });
+			sprite.setPosition({ 0 + margins.x, (windowSizeY - spriteSizeHeight) / 2.f + margins.y });
 			break;
 		case MiddleCenter:
-			sprite.setPosition({ (windowSizeX - spriteSizeWidth) / 2.f, (windowSizeY - spriteSizeHeight) / 2.f });
+			sprite.setPosition({ (windowSizeX - spriteSizeWidth) / 2.f + margins.x, (windowSizeY - spriteSizeHeight) / 2.f + margins.y });
 			break;
 		case MiddleRight:
-			sprite.setPosition({ windowSizeX - spriteSizeWidth, (windowSizeY - spriteSizeHeight) / 2.f });
+			sprite.setPosition({ windowSizeX - spriteSizeWidth + margins.x, (windowSizeY - spriteSizeHeight) / 2.f + margins.y });
 			break;
 
 		case BottomLeft:
-			sprite.setPosition({ 0, windowSizeY - spriteSizeHeight });
+			sprite.setPosition({ 0 + margins.x, windowSizeY - spriteSizeHeight + margins.y });
 			break;
 		case BottomCenter:
-			sprite.setPosition({ (windowSizeX - spriteSizeWidth) / 2.f, windowSizeY - spriteSizeHeight });
+			sprite.setPosition({ (windowSizeX - spriteSizeWidth) / 2.f + margins.x, windowSizeY - spriteSizeHeight + margins.y });
 			break;
 		case BottomRight:
-			sprite.setPosition({ windowSizeX - spriteSizeWidth, windowSizeY - spriteSizeHeight });
+			sprite.setPosition({ windowSizeX - spriteSizeWidth + margins.x, windowSizeY - spriteSizeHeight + margins.y });
 			break;
 	};
 };
