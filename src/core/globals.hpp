@@ -5,12 +5,12 @@
 
 class Globals {
 	public:
-		inline Globals() {
+		Globals() {
 			window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE);
 			event = std::make_unique<sf::Event>();
 			clock = std::make_unique<sf::Clock>();
 		};
-		inline ~Globals() {
+		~Globals() {
 			window = nullptr;
 			event = nullptr;
 			clock = nullptr;
