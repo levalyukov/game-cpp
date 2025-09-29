@@ -11,33 +11,37 @@
 
 class UIManager {
 	public:
-		std::vector<UIElement*> renderUI;
-		std::map<std::string, std::unique_ptr<UIElement>> ui_elements;
 		GUI gui;
+		std::vector<UIElement*> renderUI;
+		std::map<std::string, std::shared_ptr<UIElement>> ui_elements;
 
-		inline void addElement(std::string name_element, std::unique_ptr<UIElement> element) {
-			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
-			auto result = ui_elements.emplace(name_element, std::move(element));
+		inline void addElement(const std::string name_element, std::unique_ptr<UIElement> element) {
+			std::string lower_name = name_element;
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+			auto result = ui_elements.emplace(lower_name, std::move(element));
 			if (result.second) renderUI.push_back(result.first->second.get());
 		};
 
-		inline UIElement* getElement(std::string name_element) {
-			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
-			auto element = ui_elements.find(name_element);
+		inline UIElement* getElement(const std::string name_element) {
+			std::string lower_name = name_element;
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+			auto element = ui_elements.find(lower_name);
 			return (element != ui_elements.end()) ? element->second.get() : nullptr;
 		};
 
-		inline void removeElement(std::string name_element) {
-			std::transform(name_element.begin(), name_element.end(), name_element.begin(), [](unsigned char c) { return std::tolower(c); });
-			auto element = ui_elements.find(name_element);
-			auto it = std::find(renderUI.begin(), renderUI.end(), element->second.get());
+		inline void removeElement(const std::string name_element) {
+			std::string lower_name = name_element;
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+
+			auto element = ui_elements.find(lower_name);
 			if (element != ui_elements.end()) {
-				renderUI.erase(it);
-				ui_elements.erase(name_element);
-			}
+				auto it = std::find(renderUI.begin(), renderUI.end(), element->second.get());
+				if (it != renderUI.end()) renderUI.erase(it);
+				ui_elements.erase(lower_name);
+			};
 		};
 
-		inline void render() {
+		inline void render(sf::RenderWindow& window, sf::Event& event) {
 			if (ui_elements.empty() && renderUI.empty()) return;
 
 			std::sort(renderUI.begin(), renderUI.end(), [](UIElement* a, UIElement* b) {
@@ -46,14 +50,7 @@ class UIManager {
 
 			for (auto& element : renderUI) {
 				element->handleEvent(event, window);
-				if (element->getVisible()) {
-					element->render(window);
-				}
-			}
+				if (element->getVisible()) element->render(window);
+			};
 		};
-
-	private:
-		Globals& global = Globals::instance();
-		sf::RenderWindow& window = global.getWindow();
-		sf::Event& event = global.getEvent();
 };
