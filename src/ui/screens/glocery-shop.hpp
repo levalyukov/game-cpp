@@ -28,6 +28,11 @@ class GloceryShop {
 		unsigned int page = 1;
 		unsigned int maxPages = 0;
 
+		const unsigned int SORT_INDEX_BACKGROUND = 4;
+		const unsigned int SORT_INDEX_PANEL = 5;
+		const unsigned int SORT_INDEX_BUTTON = 6;
+		const unsigned int SORT_INDEX_TEXT = 7;
+
 		void initResources();
 		void initElements();
 		void initLayers();

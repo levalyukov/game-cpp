@@ -39,8 +39,8 @@ class Button : public UIElement {
 		inline sf::Sprite& getIcon() const { return *icon; };
 		inline sf::Sprite& getSprite() const { return *sprite; };
 		inline sf::Vector2f getElementPosition() const override { return sprite->getPosition(); };
-		inline void setSortIndex(unsigned __int8 new_index) override { depth = new_index; };
-		inline unsigned __int8 getSortIndex() const override { return depth; };
+		inline void setSortIndex(__int8 new_index) override { depth = new_index; };
+		inline __int8 getSortIndex() const override { return depth; };
 		inline bool checkHover(sf::RenderWindow& window) { return sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))); }
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
@@ -62,7 +62,7 @@ class Button : public UIElement {
 		sf::Vector2i size;
 		bool isPressed = false;
 		bool isVisible = true;
-		unsigned __int8 depth = 0;
+		__int8 depth = 0;
 
 		inline void setState(State new_state) { state = new_state; };
 };

@@ -26,6 +26,8 @@ class HUD {
 		EconomyManager& economyManager;
 		GloceryShop& gloceryShopUI;
 
+		const unsigned int SORT_INDEX_MONEY = 4;
+		const unsigned int SORT_INDEX_GLOCERY = 0;
 		bool visible = true;
 
 		void initResources();

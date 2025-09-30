@@ -29,18 +29,21 @@ void GloceryShop::initLayers() {
 	if (!uiManager.getElement("glocery-close-button")) return;
 	if (!uiManager.getElement("glocery-page-label")) return;
 
+	auto background = static_cast<ColorRect*>(uiManager.getElement("glocery-background"));
+	background->setSortIndex(SORT_INDEX_BACKGROUND);
+
 	auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
 	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
-	panel->setSortIndex(1);
+	panel->setSortIndex(SORT_INDEX_PANEL);
 
 	auto closeButton = static_cast<Button*>(uiManager.getElement("glocery-close-button"));
 	sf::Sprite& closeButtonSprite = closeButton->getSprite();
 	closeButton->setRelativePosition(UIElement::TopRight, panel->getSprite(), closeButtonSprite, { 80, -64 });
-	closeButton->setSortIndex(1);
+	closeButton->setSortIndex(SORT_INDEX_BUTTON);
 
 	auto pageLabel = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
 	pageLabel->setRelativePositionText(UIElement::BottomCenter, panel->getSprite(), pageLabel->getText(), {0, -24});
-	pageLabel->setSortIndex(1);
+	pageLabel->setSortIndex(SORT_INDEX_TEXT);
 };
 
 void GloceryShop::initParametes() {
@@ -55,8 +58,10 @@ void GloceryShop::initButtons() {
 	if (page > 1) page = 1;
 	maxPages = floor(gloceryShopManager.shop.size() / MAX_GLOCERY_SHOP_SLOTS);
 
-	if (uiManager.getElement("glocery-page-label")) 
-		static_cast<Label*>(uiManager.getElement("glocery-page-label"))->setMessage(std::to_string(page) + "/" + std::to_string(maxPages));
+	if (uiManager.getElement("glocery-page-label")) {
+		auto pages = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
+		pages->setMessage(std::to_string(page) + "/" + std::to_string(maxPages));
+	};
 
 	unsigned int index = 0;
 	for (const auto& product : gloceryShopManager.shop) {
@@ -76,16 +81,16 @@ void GloceryShop::initButtons() {
 		auto buttonLabel = static_cast<Label*>(uiManager.getElement(buttonLabelName));
 		auto buttonLabelPrice = static_cast<Label*>(uiManager.getElement(buttonLabelPriceName));
 
-		buttonProduct->setSortIndex(1);
+		buttonProduct->setSortIndex(SORT_INDEX_BUTTON);
 		buttonProduct->setVisible(false);
 		buttonProduct->setRelativePosition(UIElement::TopLeft, panel->getSprite(), buttonProduct->getSprite(), { 16,16 + (static_cast<float>(index) * 80) });
 		
-		buttonLabel->setSortIndex(2);
+		buttonLabel->setSortIndex(SORT_INDEX_TEXT);
 		buttonLabel->setVisible(false);
 		buttonLabel->setRelativePositionText(UIElement::TopLeft, buttonProduct->getSprite(), buttonLabel->getText(), {18, 18});
 		
 		buttonLabelPrice->setVisible(false);
-		buttonLabelPrice->setSortIndex(2);
+		buttonLabelPrice->setSortIndex(SORT_INDEX_TEXT);
 		buttonLabelPrice->setRelativePositionText(UIElement::TopRight, buttonProduct->getSprite(), buttonLabelPrice->getText(), { -18, 18 });
 		
 		index++;

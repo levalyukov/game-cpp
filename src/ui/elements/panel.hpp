@@ -19,8 +19,8 @@ class Panel : public UIElement {
 		std::function<void()> handler = []() {};
 
 		inline sf::Vector2f getElementPosition() const override { return panel->getPosition(); }
-		inline void setSortIndex(unsigned __int8 new_z_index) override { depth = new_z_index; };
-		inline unsigned __int8 getSortIndex() const override { return depth; };
+		inline void setSortIndex(__int8 new_z_index) override { depth = new_z_index; };
+		inline __int8 getSortIndex() const override { return depth; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline sf::Sprite& getSprite() const { return *panel; }
@@ -33,5 +33,5 @@ class Panel : public UIElement {
 		sf::Texture& texture;
 		sf::Vector2f position;
 		bool isVisible = true;
-		unsigned __int8 depth = 0;
+		__int8 depth = 0;
 };

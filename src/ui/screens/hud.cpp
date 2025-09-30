@@ -20,12 +20,13 @@ void HUD::initLayers() {
 	if (uiManager.getElement("hud-money")) {
 		auto label = static_cast<Label*>(uiManager.getElement("hud-money"));
 		label->setGlobalPositionText(UIElement::TopRight, label->getText(), { -8,8 });
-		label->setSortIndex(0);
+		label->setSortIndex(SORT_INDEX_MONEY);
 	};
 
 	if (uiManager.getElement("hud-button-store")) {
 		auto buttonStore = static_cast<Button*>(uiManager.getElement("hud-button-store"));
 		buttonStore->setGlobalPosition(UIElement::BottomRight, buttonStore->getSprite(), { -8, -8 });
+		buttonStore->setSortIndex(SORT_INDEX_GLOCERY);
 	};
 };
 

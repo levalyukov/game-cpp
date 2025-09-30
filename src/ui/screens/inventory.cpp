@@ -16,7 +16,9 @@ void Inventory::initElements() {
 	uiManager.addElement("inventory-panel", uiManager.gui.createPanel(resourceManager.getTexture("inventory-panel"), { 8.f,8.f }));
 };
 
-void Inventory::initParameters() {};
+void Inventory::initParameters() {
+	uiManager.getElement("inventory-panel")->setSortIndex(SORT_INDEX);
+};
 
 void Inventory::update() {
 	for (int y = 0; y < MAX_INVENTORY_SLOTS; y++) {
@@ -44,7 +46,7 @@ void Inventory::update() {
 					if (uiManager.getElement("inventory-slot-" + std::to_string(y))) {
 						auto panel = static_cast<Panel*>(uiManager.getElement("inventory-panel"));
 						auto slot = static_cast<Button*>(uiManager.getElement("inventory-slot-" + std::to_string(y)));
-						slot->setSortIndex(1);
+						slot->setSortIndex(SORT_INDEX_SLOT);
 						slot->getSprite().setPosition(
 							(panel->getSprite().getPosition().x + 8 + (y * 18 * 4)) + 12,
 							panel->getSprite().getPosition().y + (panel->getSprite().getGlobalBounds().height - slot->getSprite().getGlobalBounds().height) / 2
@@ -89,7 +91,7 @@ void Inventory::update() {
 
 								auto item_label = static_cast<Label*>(uiManager.getElement(item.second.caption));
 								item_label->setRelativePositionText(UIElement::BottomRight, slot->getSprite(), item_label->getText(), {-8, -16});
-								item_label->setSortIndex(2);
+								item_label->setSortIndex(SORT_INDEX_SLOT_COUNTER);
 							} else {
 								std::transform(item.second.caption.begin(), item.second.caption.end(), item.second.caption.begin(), [](unsigned char c) {return std::tolower(c); });
 								if (uiManager.getElement(item.second.caption)) {

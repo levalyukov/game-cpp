@@ -27,6 +27,11 @@ class KitchenMenu {
 		UIManager& uiManager;
 		CookingManager& cooking;
 
+		const unsigned int SORT_INDEX_BACKGROUND = 0;
+		const unsigned int SORT_INDEX_PANEL = 1;
+		const unsigned int SORT_INDEX_BUTTON = 2;
+		const unsigned int SORT_INDEX_TEXT = 3;
+
 		bool visibleState = false;
 		std::string currentRecipe;
 
@@ -34,7 +39,6 @@ class KitchenMenu {
 		void initElements();
 		void initParameters();
 
-		void initPanel();
 		void initCloseButton();
 		void initRecipeButtons();
 		void initRecipeInfo();

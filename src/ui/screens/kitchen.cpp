@@ -25,15 +25,15 @@ void KitchenMenu::initElements() {
 };
 
 void KitchenMenu::initParameters() {
-	initPanel();
+	auto background = static_cast<ColorRect*>(uiManager.getElement("kitchen-ui-background"));
+	auto panel = static_cast<Panel*>(uiManager.getElement("kitchen-ui-panel"));
+	background->setSortIndex(SORT_INDEX_BACKGROUND);
+	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
+	panel->setSortIndex(SORT_INDEX_PANEL);
+
 	initCloseButton();
 	initRecipeButtons();
 	initRecipeInfo();
-};
-
-void KitchenMenu::initPanel() {
-	auto panel = static_cast<Panel*>(uiManager.getElement("kitchen-ui-panel"));
-	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 };
 
 void KitchenMenu::initCloseButton() {
@@ -59,15 +59,20 @@ void KitchenMenu::initRecipeButtons() {
 		auto panel = static_cast<Panel*>(uiManager.getElement("kitchen-ui-panel"));
 		auto buttonRecipe = static_cast<Button*>(uiManager.getElement(buttonName));
 		auto labelRecipe = static_cast<Label*>(uiManager.getElement(buttonNameLabel));
+
 		sf::Sprite& buttonSprite = buttonRecipe->getSprite();
 		sf::Sprite& panelSprite = panel->getSprite();
 		sf::Text& labelText = labelRecipe->getText();
 
+		buttonRecipe->setSortIndex(SORT_INDEX_BUTTON);
 		buttonRecipe->setVisible(false);
 		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,buttonPosY + (buttonSprite.getGlobalBounds().height * id + 1) + 15 });
 		buttonRecipe->setHandleEvent([&]() { getRecipeInfo(pair.first); currentRecipe = pair.first; });
+		
 		labelRecipe->setRelativePositionText(UIElement::TopLeft, buttonSprite, labelText, { 18.f,18.f });
 		labelRecipe->setVisible(false);
+		labelRecipe->setSortIndex(SORT_INDEX_TEXT);
+		
 		id++;
 	}
 };
@@ -78,6 +83,7 @@ void KitchenMenu::initRecipeInfo() {
 	auto cookingButtonLabel = static_cast<Label*>(uiManager.getElement("kitchen-ui-recipe-button-cooking-label"));
 
 	/* Cooking button */
+	cookingButton->setSortIndex(SORT_INDEX_BUTTON);
 	cookingButton->setRelativePosition(UIElement::BottomRight, panel->getSprite(), cookingButton->getSprite(), { -16, -16 });
 	cookingButton->setHandleEvent(
 		[&]() {
@@ -86,6 +92,8 @@ void KitchenMenu::initRecipeInfo() {
 			currentRecipe.clear();
 		}
 	);
+
+	cookingButtonLabel->setSortIndex(SORT_INDEX_TEXT);
 	cookingButtonLabel->setPosition(
 		{
 			cookingButton->getSprite().getPosition().x - (cookingButtonLabel->getText().getGlobalBounds().width - cookingButton->getSprite().getGlobalBounds().width) / 2.f,
@@ -96,6 +104,8 @@ void KitchenMenu::initRecipeInfo() {
 	/* Recipe header */
 	auto labelHeader = static_cast<Label*>(uiManager.getElement("kitchen-ui-recipe-header"));
 	auto labelDescription = static_cast<Label*>(uiManager.getElement("kitchen-ui-recipe-description"));
+	labelHeader->setSortIndex(SORT_INDEX_TEXT);
+	labelDescription->setSortIndex(SORT_INDEX_TEXT);
 	labelDescription->setPosition(
 		{
 			cookingButton->getSprite().getPosition().x,
@@ -105,6 +115,7 @@ void KitchenMenu::initRecipeInfo() {
 
 	/* Recipe condition */
 	auto labelConditions = static_cast<Label*>(uiManager.getElement("kitchen-ui-recipe-conditions"));
+	labelConditions->setSortIndex(SORT_INDEX_TEXT);
 	labelConditions->setPosition(
 		{
 			cookingButton->getSprite().getPosition().x,
@@ -151,11 +162,11 @@ void KitchenMenu::setVisible(bool _state) {
 	uiManager.getElement("kitchen-ui-recipe-button-cooking")->setVisible(_state);
 	uiManager.getElement("kitchen-ui-recipe-button-cooking-label")->setVisible(_state);
 	for (int y = 0; y < cooking.recipes.size(); y++) {
-		std::string buttonRecipe = "kitchen-ui-recipe-button-" + std::to_string(y);
-		std::string buttonLabelRecipe = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
-		if (uiManager.getElement(buttonRecipe) && uiManager.getElement(buttonLabelRecipe)) {
-			uiManager.getElement(buttonRecipe)->setVisible(_state);
-			uiManager.getElement(buttonLabelRecipe)->setVisible(_state);
+		std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(y);
+		std::string buttonNameLabel = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
+		if (uiManager.getElement(buttonName) && uiManager.getElement(buttonNameLabel)) {
+			uiManager.getElement(buttonName)->setVisible(_state);
+			uiManager.getElement(buttonNameLabel)->setVisible(_state);
 		};
 	};
 };

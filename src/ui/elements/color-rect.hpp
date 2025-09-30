@@ -17,9 +17,9 @@ class ColorRect : public UIElement {
 		std::function<void()> handler;
 
 		inline void setNewRectSize(sf::Vector2f new_size) { size = new_size; };
-		inline void setSortIndex(unsigned __int8 new_z_index) override { depth = new_z_index; };
+		inline void setSortIndex(__int8 new_z_index) override { depth = new_z_index; };
 		inline sf::Vector2f getElementPosition() const override { return rect.getPosition(); };
-		inline unsigned __int8 getSortIndex() const override { return depth; };
+		inline __int8 getSortIndex() const override { return depth; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handle) override { handler = new_handle; };
@@ -31,5 +31,5 @@ class ColorRect : public UIElement {
 		sf::Color color;
 		sf::Vector2f size;
 		bool isVisible = true;
-		unsigned __int8 depth = 0;
+		__int8 depth = 0;
 };
