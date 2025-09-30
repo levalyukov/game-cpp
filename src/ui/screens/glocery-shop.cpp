@@ -56,11 +56,11 @@ void GloceryShop::initButtons() {
 	if (gloceryShopManager.shop.size() == 0) return;
 
 	if (page > 1) page = 1;
-	maxPages = floor(gloceryShopManager.shop.size() / MAX_GLOCERY_SHOP_SLOTS);
+	maxPages = ceil(static_cast<double>(gloceryShopManager.shop.size()) / MAX_GLOCERY_SHOP_SLOTS);
 
 	if (uiManager.getElement("glocery-page-label")) {
 		auto pages = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
-		pages->setMessage(std::to_string(page) + "/" + std::to_string(maxPages));
+		pages->setMessage(std::to_string(page) + "/" + std::to_string(static_cast<int>(maxPages)));
 	};
 
 	unsigned int index = 0;
