@@ -23,6 +23,9 @@ class UI {
 			gloceryShopManager(glocery_shop_manager) { allSetup(); };
 
 		inline void allSetup() {
+			//hud->setGloceryShop(gloceryShop);
+			gloceryShop->setHUD(hud.get());
+
 			pause->setup();
 			hud->setup();
 			kitchenMenu->setup();

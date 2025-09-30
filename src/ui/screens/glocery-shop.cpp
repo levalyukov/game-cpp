@@ -87,8 +87,8 @@ void GloceryShop::initButtons() {
 		buttonProduct->setHandleEvent([&](){
 			if (economyManager.getMoney() >= product.second.price) {
 				economyManager.removeMoney(product.second.price);
-			}
-			else std::cout << economyManager.getMoney() << " < " << product.second.price << std::endl;
+				hud->update();
+			} else std::cout << economyManager.getMoney() << " < " << product.second.price << std::endl;
 		});
 
 		buttonLabel->setSortIndex(SORT_INDEX_TEXT);
