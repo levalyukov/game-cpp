@@ -49,7 +49,7 @@ class UI {
 		CookingManager& cookingManager;
 		GloceryShopManager& gloceryShopManager;
 
-		std::unique_ptr<GloceryShop> gloceryShop = std::make_unique<GloceryShop>(uiManager, resourceManager, gloceryShopManager);
+		std::unique_ptr<GloceryShop> gloceryShop = std::make_unique<GloceryShop>(uiManager, resourceManager, gloceryShopManager, economyManager);
 		std::unique_ptr<Pause> pause = std::make_unique<Pause>(uiManager, resourceManager);
 		std::unique_ptr<HUD> hud = std::make_unique<HUD>(uiManager, resourceManager, economyManager, *gloceryShop);
 		std::unique_ptr<KitchenMenu> kitchenMenu = std::make_unique<KitchenMenu>(uiManager, resourceManager, cookingManager);

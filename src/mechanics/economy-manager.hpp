@@ -11,6 +11,7 @@ class EconomyManager {
 				else money = 0;
 			};
 		};
+		inline void removeMoney(const int value) { if (money >= value) money -= value; };
 
 	private:
 		unsigned __int32 money = 0;

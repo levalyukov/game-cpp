@@ -84,7 +84,13 @@ void GloceryShop::initButtons() {
 		buttonProduct->setSortIndex(SORT_INDEX_BUTTON);
 		buttonProduct->setVisible(false);
 		buttonProduct->setRelativePosition(UIElement::TopLeft, panel->getSprite(), buttonProduct->getSprite(), { 16,16 + (static_cast<float>(index) * 80) });
-		
+		buttonProduct->setHandleEvent([&](){
+			if (economyManager.getMoney() >= product.second.price) {
+				economyManager.removeMoney(product.second.price);
+			}
+			else std::cout << economyManager.getMoney() << " < " << product.second.price << std::endl;
+		});
+
 		buttonLabel->setSortIndex(SORT_INDEX_TEXT);
 		buttonLabel->setVisible(false);
 		buttonLabel->setRelativePositionText(UIElement::TopLeft, buttonProduct->getSprite(), buttonLabel->getText(), {18, 18});
