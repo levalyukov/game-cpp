@@ -66,7 +66,7 @@ void KitchenMenu::initRecipeButtons() {
 
 		buttonRecipe->setSortIndex(SORT_INDEX_BUTTON);
 		buttonRecipe->setVisible(false);
-		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,buttonPosY + (buttonSprite.getGlobalBounds().height * id + 1) + 15 });
+		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,buttonPosY + (buttonSprite.getGlobalBounds().height * id) + 8 });
 		buttonRecipe->setHandleEvent([&]() { getRecipeInfo(pair.first); currentRecipe = pair.first; });
 		
 		labelRecipe->setRelativePositionText(UIElement::TopLeft, buttonSprite, labelText, { 18.f,18.f });
