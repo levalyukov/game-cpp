@@ -41,22 +41,17 @@ void KitchenMenu::initCloseButton() {
 	sf::Sprite& closeButtonSprite = closeButton->getSprite();
 	closeButton->setGlobalPosition(UIElement::TopRight, closeButtonSprite);
 	closeButtonSprite.setPosition(closeButtonSprite.getPosition().x + -240, closeButtonSprite.getPosition().y + 128);
-	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent(
-		[&]() { 
-			setVisible(false); 
-			currentRecipe.clear();
-		}
-	);
+	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent([&]() { setVisible(false); currentRecipe.clear(); });
 };
 
 void KitchenMenu::initRecipeButtons() {
-	float button_pos_y = 0.f;
-	unsigned int new_id = 0;
+	float buttonPosY = 0.f;
+	unsigned int id = 0;
 
 	for (const auto& pair : cooking.recipes) {
-		button_pos_y += 8;
-		std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(new_id);
-		std::string buttonNameLabel = "kitchen-ui-recipe-button-" + std::to_string(new_id) + "-label";
+		buttonPosY += 8;
+		std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(id);
+		std::string buttonNameLabel = "kitchen-ui-recipe-button-" + std::to_string(id) + "-label";
 
 		uiManager.addElement(buttonName, uiManager.gui.createButton(resourceManager.getTexture("kitchen-ui-buttons"), { 73,18 }, { 0,24 }));
 		uiManager.addElement(buttonNameLabel, uiManager.gui.createLabel(pair.second.title, resourceManager.getFont("nunito"), 22, sf::Color::White));
@@ -69,11 +64,11 @@ void KitchenMenu::initRecipeButtons() {
 		sf::Text& labelText = labelRecipe->getText();
 
 		buttonRecipe->setVisible(false);
-		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,button_pos_y + (buttonSprite.getGlobalBounds().height * new_id + 1) + 15 });
+		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,buttonPosY + (buttonSprite.getGlobalBounds().height * id + 1) + 15 });
 		buttonRecipe->setHandleEvent([&]() { getRecipeInfo(pair.first); currentRecipe = pair.first; });
 		labelRecipe->setRelativePositionText(UIElement::TopLeft, buttonSprite, labelText, { 18.f,18.f });
 		labelRecipe->setVisible(false);
-		new_id++;
+		id++;
 	}
 };
 
