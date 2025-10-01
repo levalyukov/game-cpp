@@ -5,6 +5,7 @@
 #include "kitchen.hpp"
 #include "inventory.hpp"
 #include "glocery-shop.hpp"
+#include "warehouse.hpp"
 
 class UI {
 	public: 
@@ -23,14 +24,12 @@ class UI {
 			gloceryShopManager(glocery_shop_manager) { allSetup(); };
 
 		inline void allSetup() {
-			//hud->setGloceryShop(gloceryShop);
-			gloceryShop->setHUD(hud.get());
-
 			pause->setup();
 			hud->setup();
 			kitchenMenu->setup();
 			inventory->setup();
 			gloceryShop->setup();
+			gloceryShop->setHUD(hud.get());
 		};
 
 		inline Inventory* getInventory() const { return inventory.get(); };
@@ -57,4 +56,5 @@ class UI {
 		std::unique_ptr<HUD> hud = std::make_unique<HUD>(uiManager, resourceManager, economyManager, *gloceryShop);
 		std::unique_ptr<KitchenMenu> kitchenMenu = std::make_unique<KitchenMenu>(uiManager, resourceManager, cookingManager);
 		std::unique_ptr<Inventory> inventory = std::make_unique<Inventory>(uiManager, resourceManager, inventoryManager);
+		std::unique_ptr<Warehouse> warehouse = std::make_unique<Warehouse>(uiManager, resourceManager, *hud);
 };
