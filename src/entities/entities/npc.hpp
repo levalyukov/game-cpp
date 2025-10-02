@@ -1,12 +1,6 @@
 #pragma once
 
 #include "../entity.hpp"
-#include "../../core/animations/animations.hpp"
-#include "../../core/utils.hpp"
-#include "../../core/globals.hpp"
-
-#include <iostream>
-#include <SFML/System.hpp>
 
 class NPC : public Entity {
 	public:
@@ -14,58 +8,38 @@ class NPC : public Entity {
 			sf::Texture* idle_texture,
 			sf::Texture* movement_vertical,
 			sf::Texture* movement_horizontal,
-			sf::Texture* shdw
-		) : idle(std::move(*idle_texture)),
+			sf::Texture* shadow_texture
+		) : idleTexture(std::move(*idle_texture)),
 			movementVertical(std::move(*movement_vertical)),
 			movementHorizontal(std::move(*movement_horizontal)),
-			npcShadow(std::move(*shdw)) {
-			npc.setTexture(idle);
-			npc.setTextureRect(sf::IntRect({16,0}, {16,16}));
-			shadow.setTexture(npcShadow);
-			npc.setScale({ 4,4 });
+			shadowTexture(std::move(*shadow_texture)) {
+			sprite->setTexture(idleTexture);
+			sprite->setTextureRect(sf::IntRect({ 16,0 }, { 16,16 }));
+			sprite->setPosition({ 52 * 16,52 * 16 });
+			sprite->setScale({ 4,4 });
+			shadow.setTexture(shadowTexture);
 			shadow.setScale({ 4,4 });
-			npc.setPosition({52*16,52*16});
-			direction = 0;
-		}
+		};
 
 		std::function<void()> handler;
 
-		void movement(float deltaTime);
-		float getDepth() const override { return npc.getPosition().y + 4; };
-		void setHandleEvent(std::function<void()> new_handler) override { handler = new_handler; };
+		inline float getDepth() const override { return sprite->getPosition().y + 4; };
+		inline void setHandleEvent(std::function<void()> new_handler) override { handler = new_handler; };
 		void handleEvent(sf::RenderWindow& window, sf::Event& event) override;
 		void render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) override;
 	
 	private:
-		enum State {IDLE, WALK};
-		enum Movement {UP, DOWN, LEFT, RIGHT, ZERO};
+		enum State {Idle, Walk};
+		enum Movement {Up, Down, Left, Right, Stopped };
 		enum MouseState { Normal, Hovered, Pressed };
-		MouseState m_state = Normal;
+		MouseState mouseState = Normal;
 
-		sf::Sprite npc;
+		std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>();
 		sf::Sprite shadow;
-		sf::Texture idle;
-		sf::Texture movementVertical;
-		sf::Texture movementHorizontal;
-		sf::Texture npcShadow;
-
-		sf::Vector2i coords = { 8,0 };
-		sf::Vector2f position = { 0,0 };
-
-		sf::Vector2i UpSpriteCoords = { 0,0 };
-		sf::Vector2i DownSpriteCoords = { 0,16 };
-		sf::Vector2i LeftSpriteCoords = { 0,0 };
-		sf::Vector2i RightSpriteCoords = { 0,16 };
+		sf::Texture& idleTexture;
+		sf::Texture& movementVertical;
+		sf::Texture& movementHorizontal;
+		sf::Texture& shadowTexture;
 
 		bool isPressed = false;
-		bool stopped_flag = false;
-		float animationTimer = 0.0f;
-		const float SPEED = 1.75f;
-		const float AnimSpeed = 0.05f;
-		float timer = 0.0;
-		int direction = 0; // Stub
-		int vectorTimeValue = 0;
-
-		Animations anim;
-		Utils utils;
 };
