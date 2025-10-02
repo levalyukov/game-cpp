@@ -1,14 +1,14 @@
 #include "player.hpp"
 
-void Player::render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) {
+void Player::render(sf::RenderWindow& window, const float delta, sf::View& game_camera, sf::Clock& clock) {
 	window.draw(shadow_sprite);
 	window.draw(player);
-	movement(delta_time);
+	movement(delta);
 	shadow_sprite.setPosition(player.getPosition());
 	game_camera.setCenter(player.getPosition());
-}
+};
 
-void Player::movement(float delta_time) {
+void Player::movement(const float delta) {
 	if (!stopped_flag) {
 		bool movementUp = false;
 		bool movementDown = false;
@@ -18,19 +18,16 @@ void Player::movement(float delta_time) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 			movementUp = true;
 			direction = "up";
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		}; if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			movementLeft = true;
 			direction = "left";
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		}; if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 			movementDown = true;
 			direction = "down";
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		}; if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			movementRight = true;
 			direction = "right";
-		}
+		};
 
 		std::string newDirection = direction;
 
@@ -43,9 +40,10 @@ void Player::movement(float delta_time) {
 			oldVectorDOWN = vectorDOWN;
 			oldVectorLEFT = vectorLEFT;
 			oldVectorRIGHT = vectorRIGHT;
-		}
+		};
 
 		float speed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_SPEED : WALK_SPEED;
+		
 		if (movementUp && !movementDown) player.move(0.0, -speed);
 		if (movementDown && !movementUp) player.move(0.0, speed);
 		if (movementLeft && !movementRight) player.move(-speed, 0.0);
@@ -65,11 +63,9 @@ void Player::movement(float delta_time) {
 					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					delta_time
+					delta
 				);
-			}
-
-			if (currentDirection == "down") {
+			}; if (currentDirection == "down") {
 				animations.setAnimation(
 					player,
 					target_texture,
@@ -77,11 +73,9 @@ void Player::movement(float delta_time) {
 					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					delta_time
+					delta
 				);
-			}
-
-			if (currentDirection == "left") {
+			}; if (currentDirection == "left") {
 				animations.setAnimation(
 					player,
 					target_texture,
@@ -89,11 +83,9 @@ void Player::movement(float delta_time) {
 					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					delta_time
+					delta
 				);
-			}
-
-			if (currentDirection == "right") {
+			}; if (currentDirection == "right") {
 				animations.setAnimation(
 					player,
 					target_texture,
@@ -101,32 +93,28 @@ void Player::movement(float delta_time) {
 					4, { 16, 16 },
 					animationTimer,
 					animationSpeed,
-					delta_time
+					delta
 				);
-			}
-		}
-		else {
+			};
+		} else {
 			player.setTexture(idle);
 			if (currentDirection == "up") {
 				player.setTextureRect(sf::IntRect(0, 0, 16, 16));
 				oldVectorUP = vectorUP;
 				animationTimer = 0.0;
-			}
-			if (currentDirection == "down") {
+			} if (currentDirection == "down") {
 				player.setTextureRect(sf::IntRect(16, 0, 16, 16));
 				oldVectorDOWN = vectorDOWN;
 				animationTimer = 0.0;
-			}
-			if (currentDirection == "left") {
+			} if (currentDirection == "left") {
 				player.setTextureRect(sf::IntRect(0, 16, 16, 16));
 				oldVectorLEFT = vectorLEFT;
 				animationTimer = 0.0;
-			}
-			if (currentDirection == "right") {
+			} if (currentDirection == "right") {
 				player.setTextureRect(sf::IntRect(16, 16, 16, 16));
 				oldVectorRIGHT = vectorRIGHT;
 				animationTimer = 0.0;
-			}
-		}
-	}
-}
+			};
+		};
+	};
+};

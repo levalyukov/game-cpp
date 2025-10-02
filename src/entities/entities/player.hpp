@@ -31,7 +31,7 @@ class Player : public Entity {
 		inline float getDepth() const override { return player.getPosition().y + 4; };
 		inline void setHandleEvent(std::function<void()> newHandler) override {};
 		inline void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
-		void render(sf::RenderWindow& window, float deltaTime, sf::View& gameCamera, sf::Clock& clock) override;
+		void render(sf::RenderWindow& window, float delta, sf::View& gameCamera, sf::Clock& clock) override;
 	
 	private:
 		sf::Sprite player;
