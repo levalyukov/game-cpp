@@ -1,6 +1,6 @@
 #include "npc.hpp"
 
-void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
+void NPC::handler(sf::RenderWindow& window, sf::Event& event) {
 	if (sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
 		bool isHovered = sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 		switch (event.type) {
@@ -16,7 +16,7 @@ void NPC::handleEvent(sf::RenderWindow& window, sf::Event& event) {
 
 			case sf::Event::MouseButtonReleased:
 				if (event.mouseButton.button == sf::Mouse::Left && isPressed) {
-					if (isHovered && mouseState == Pressed) { if (handler) handler(); };
+					if (isHovered && mouseState == Pressed) { if (handler_) handler_(); };
 					mouseState = isHovered ? Hovered : Normal;
 					isPressed = false;
 				}; break;

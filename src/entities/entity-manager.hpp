@@ -48,7 +48,8 @@ class EntityManager {
 
 			for (auto& object : render_entities) {
 				object->render(globals.getWindow(), delta_time, game_camera, globals.getClock());
-				object->handleEvent(globals.getWindow(), globals.getEvent());
+				object->handler(globals.getWindow(), globals.getEvent());
+				object->event(globals.getWindow(), globals.getEvent());
 			};
 		};
 

@@ -15,26 +15,28 @@ class Player : public Entity {
 			walkHorizontal(std::move(*character_walk_horizontal)),
 			walkVertical(std::move(*character_walk_vertical)),
 			shadow_texture(std::move(*character_shadow)) {
-			player.setTexture(idle);
-			player.setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
-			player.setPosition((9 / 2) * 64, (9 / 2) * 64); // change this in the future
-			player.setScale(4, 4);
+			player->setTexture(idle);
+			player->setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
+			player->setPosition((9 / 2) * 64, (9 / 2) * 64); // change this in the future
+			player->setScale(4, 4);
+			player->setPosition({ 51 * 16,52 * 16 });
 			shadow_sprite.setTexture(shadow_texture);
 			shadow_sprite.setScale(4, 4);
-			player.setPosition({ 51 * 16,52 * 16 });
 		};
 
 		void movement(float deltaTime);
 		inline void setStoppedFlag(bool _state) { stopped_flag = _state; };
 		inline bool getStoppedFlag() const { return stopped_flag; };
-
-		inline float getDepth() const override { return player.getPosition().y + 4; };
-		inline void setHandleEvent(std::function<void()> newHandler) override {};
-		inline void handleEvent(sf::RenderWindow& window, sf::Event& event) override {};
+		inline sf::Sprite& getSprite() const { return *player; };
+		inline float getDepth() const override { return player->getPosition().y + 4; };
+		inline void setEvent(std::function<void()> new_event) override {};
+		inline void setHandler(std::function<void()> new_handler) override {};
+		inline void event(sf::RenderWindow& window, sf::Event& event) override {};
+		inline void handler(sf::RenderWindow& window, sf::Event& event) override {};
 		void render(sf::RenderWindow& window, float delta, sf::View& gameCamera, sf::Clock& clock) override;
 	
 	private:
-		sf::Sprite player;
+		std::unique_ptr<sf::Sprite> player = std::make_unique<sf::Sprite>();
 		sf::Sprite shadow_sprite;
 
 		sf::Texture idle;

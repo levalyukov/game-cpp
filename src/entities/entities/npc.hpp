@@ -21,11 +21,14 @@ class NPC : public Entity {
 			shadow.setScale({ 4,4 });
 		};
 
-		std::function<void()> handler;
-
+		std::function<void()> handler_;
+		std::function<void()> event_;
+		inline sf::Sprite& getSprite() const { return *sprite; };
 		inline float getDepth() const override { return sprite->getPosition().y + 4; };
-		inline void setHandleEvent(std::function<void()> new_handler) override { handler = new_handler; };
-		void handleEvent(sf::RenderWindow& window, sf::Event& event) override;
+		inline void setEvent(std::function<void()> new_event) override { event_ = new_event; };
+		inline void setHandler(std::function<void()> new_handler) override { handler_ = new_handler; };
+		inline void event(sf::RenderWindow& window, sf::Event& event) override { if (event_) event_(); };
+		void handler(sf::RenderWindow& window, sf::Event& event) override;
 		void render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) override;
 	
 	private:
