@@ -6,9 +6,19 @@
 #include <string>
 #include <cctype>
 #include <algorithm>
+#include <cmath>
 
 class EntityManager {
 	public:
+		inline int getDistance(const sf::Sprite first, const sf::Sprite second) {
+			int firstX = static_cast<int>(first.getPosition().x);
+			int firstY = static_cast<int>(first.getPosition().y);
+			int secondX = static_cast<int>(second.getPosition().x);
+			int secondY = static_cast<int>(second.getPosition().y);
+			int distance = static_cast<int>(std::sqrt(pow(secondX - firstX, 2) + pow(secondY - firstY, 2)));
+			return distance;
+		};
+
 		inline void addEntity(std::string name, std::unique_ptr<Entity> entity) { 
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
 			auto result = entities.emplace(name, std::move(entity));
