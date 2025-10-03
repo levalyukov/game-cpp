@@ -2,6 +2,11 @@
 
 void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
 	if (getVisible()) {
+        if (isDisabled) {
+            sprite->setTextureRect(sf::IntRect({ 0,size.y * Disabled }, size));
+            return;
+        };
+
         bool isHovered = checkHover(window);
         switch (event.type) {
             case sf::Event::MouseMoved:
@@ -27,5 +32,5 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
                     sprite->setTextureRect(sf::IntRect({ 0,size.y * Normal }, size));
                 }; break;
         };
-	};
+    };
 };
