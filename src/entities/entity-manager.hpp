@@ -10,11 +10,11 @@
 
 class EntityManager {
 	public:
-		inline int getDistance(const sf::Sprite first, const sf::Sprite second) {
-			int firstX = static_cast<int>(first.getPosition().x);
-			int firstY = static_cast<int>(first.getPosition().y);
-			int secondX = static_cast<int>(second.getPosition().x);
-			int secondY = static_cast<int>(second.getPosition().y);
+		inline int getDistance(const sf::Sprite main_entity, const sf::Sprite secondary_entity) {
+			int firstX = static_cast<int>(main_entity.getPosition().x);
+			int firstY = static_cast<int>(main_entity.getPosition().y);
+			int secondX = static_cast<int>(secondary_entity.getPosition().x);
+			int secondY = static_cast<int>(secondary_entity.getPosition().y);
 			int distance = static_cast<int>(std::sqrt(pow(secondX - firstX, 2) + pow(secondY - firstY, 2)));
 			return distance;
 		};
@@ -49,7 +49,7 @@ class EntityManager {
 			for (auto& object : render_entities) {
 				object->render(globals.getWindow(), delta_time, game_camera, globals.getClock());
 				object->handleEvent(globals.getWindow(), globals.getEvent());
-			}
+			};
 		};
 
 	private:
