@@ -5,7 +5,8 @@
 class GloceryShopManager {
 	public:
 		struct Product {
-			std::string name = "";
+			std::string title = "";
+			const std::string icon = "";
 			unsigned __int32 price = 0;
 			unsigned __int16 value = 1;
 		};
@@ -15,10 +16,10 @@ class GloceryShopManager {
 		GloceryShopManager() { initStore(); };
 
 		inline void initStore() {
-			addProduct("potato", { "Potato", 100 });
-			addProduct("tomato", { "Tomato", 100 });
-			addProduct("greens", { "Greens", 100 });
-			addProduct("onion", { "Onion", 100 });
+			addProduct("potato", { "Potato", "", 100 });
+			addProduct("tomato", { "Tomato", "", 100 });
+			addProduct("greens", { "Greens", "", 100 });
+			addProduct("onion", { "Onion", "", 100 });
 		};
 
 		inline void addProduct(const std::string name, const Product product) {
