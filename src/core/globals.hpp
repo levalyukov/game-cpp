@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 class Globals {
@@ -10,18 +9,12 @@ class Globals {
 			event = std::make_unique<sf::Event>();
 			clock = std::make_unique<sf::Clock>();
 		};
-		~Globals() {
-			window = nullptr;
-			event = nullptr;
-			clock = nullptr;
-		}
+		
+		~Globals() { window = nullptr; event = nullptr; clock = nullptr; };
 		Globals(Globals& const) = delete;
 		Globals& operator=(Globals& const) = delete;
-		inline static Globals& instance() {
-			static Globals gl;
-			return gl;
-		}
 
+		inline static Globals& instance() { static Globals gl; return gl; };
 		inline sf::RenderWindow& getWindow() const { return *window; };
 		inline sf::Event& getEvent() const { return *event; };
 		inline sf::Clock& getClock() const { return *clock; };
@@ -29,13 +22,14 @@ class Globals {
 		inline bool getGamePause() const { return paused; };
 
 	private:
+		const unsigned int WINDOW_WIDTH = 1280;
+		const unsigned int WINDOW_HEIGHT = 720;
+		const std::string WINDOW_TITLE = "Delicious Soup";
+
 		std::unique_ptr<sf::RenderWindow> window;
 		std::unique_ptr<sf::Event> event;
 		std::unique_ptr<sf::Clock> clock;
 
 		bool paused = false;
-
-		const int WINDOW_WIDTH = 1280;
-		const int WINDOW_HEIGHT = 720;
-		const std::string WINDOW_TITLE = "Delicious Soup";
+		bool uiOpened = false;
 };
