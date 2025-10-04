@@ -32,6 +32,7 @@ class Game {
 		};
 
 	private:
+		Globals& globals = Globals::instance();
 		std::unique_ptr<ResourceManager> resourceManager = std::make_unique<ResourceManager>();
 		std::unique_ptr<EntityManager> entityManager = std::make_unique<EntityManager>();
 		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>();
@@ -39,12 +40,12 @@ class Game {
 		std::unique_ptr<InventoryManager> inventoryManager = std::make_unique<InventoryManager>();
 		std::unique_ptr<EconomyManager> economyManager = std::make_unique<EconomyManager>();
 		std::unique_ptr<GloceryShopManager> gloceryShopManager = std::make_unique<GloceryShopManager>();
+		std::unique_ptr<WarehouseManager> warehouseManager = std::make_unique<WarehouseManager>();
 
-		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *gloceryShopManager);
-		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *ui->getInventory(), *ui->getHUD());
+		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *gloceryShopManager, *warehouseManager);
+		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *ui->getInventory(), *ui->getHUD(), globals);
 		std::unique_ptr<Tilemap> tilemap = std::make_unique<Tilemap>();
 
-		Globals& globals = Globals::instance();
 		sf::RenderWindow& window = globals.getWindow();
 		sf::Event& event = globals.getEvent();
 		sf::Clock& clock = globals.getClock();

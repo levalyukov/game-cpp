@@ -73,7 +73,7 @@ void GloceryShop::initButtons() {
 		uiManager.removeElement(buttonLabelName);
 		uiManager.removeElement(buttonLabelPriceName);
 		uiManager.addElement(buttonName, uiManager.gui.createButton(resourceManager.getTexture("glocery-button"), { 152,18 }));
-		uiManager.addElement(buttonLabelName, uiManager.gui.createLabel(product.second.name, resourceManager.getFont("nunito"), 24, sf::Color::White));
+		uiManager.addElement(buttonLabelName, uiManager.gui.createLabel(product.second.title, resourceManager.getFont("nunito"), 24, sf::Color::White));
 		uiManager.addElement(buttonLabelPriceName, uiManager.gui.createLabel(std::to_string(product.second.price), resourceManager.getFont("nunito"), 24, sf::Color::White));
 
 		auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
@@ -86,9 +86,12 @@ void GloceryShop::initButtons() {
 		buttonProduct->setRelativePosition(UIElement::TopLeft, panel->getSprite(), buttonProduct->getSprite(), { 16,16 + (static_cast<float>(index) * 80) });
 		buttonProduct->setHandleEvent([&](){
 			if (economyManager.getMoney() >= product.second.price) {
+				warehouseManager.addItem(product.first, {product.second.title, product.second.icon, 1});
 				economyManager.removeMoney(product.second.price);
 				hud->update();
-			} else std::cout << economyManager.getMoney() << " < " << product.second.price << std::endl;
+			} else {
+				// todo: ... audioPlay() ...
+			};
 		});
 
 		buttonLabel->setSortIndex(SORT_INDEX_TEXT);
@@ -111,6 +114,7 @@ void GloceryShop::setVisible(bool new_state) {
 		if (!uiManager.getElement("glocery-page-label")) return;
 
 		visible = new_state;
+		globals.setUIOpened(new_state);
 
 		auto background = static_cast<ColorRect*>(uiManager.getElement("glocery-background"));
 		auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
@@ -122,20 +126,14 @@ void GloceryShop::setVisible(bool new_state) {
 		closeButton->setVisible(visible);
 		pageLabel->setVisible(visible);
 
-		unsigned int index = 0;
 		for (int i = 0; i < MAX_GLOCERY_SHOP_SLOTS; i++) {
-			std::string buttonName = "glocery-product-" + std::to_string(index);
-			std::string buttonLabelName = "glocery-button-title-" + std::to_string(index);
-			std::string buttonLabelPriceName = "glocery-button-title-" + std::to_string(index) + "-price";
+			std::string buttonName = "glocery-product-" + std::to_string(i);
+			std::string buttonLabelName = "glocery-button-title-" + std::to_string(i);
+			std::string buttonLabelPriceName = "glocery-button-title-" + std::to_string(i) + "-price";
 
-			if (uiManager.getElement(buttonName)) 
-				uiManager.getElement(buttonName)->setVisible(visible);
-			if (uiManager.getElement(buttonLabelName))
-				uiManager.getElement(buttonLabelName)->setVisible(visible);
-			if (uiManager.getElement(buttonLabelPriceName))
-				uiManager.getElement(buttonLabelPriceName)->setVisible(visible);
-
-			index++;
+			if (uiManager.getElement(buttonName)) uiManager.getElement(buttonName)->setVisible(visible);
+			if (uiManager.getElement(buttonLabelName)) uiManager.getElement(buttonLabelName)->setVisible(visible);
+			if (uiManager.getElement(buttonLabelPriceName)) uiManager.getElement(buttonLabelPriceName)->setVisible(visible);
 		};
 	};
 };
