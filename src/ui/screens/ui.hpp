@@ -42,8 +42,10 @@ class UI {
 			inventory = nullptr;
 			gloceryShop = nullptr;
 		};
+		~UI() { pause = nullptr; hud = nullptr; kitchenMenu = nullptr; inventory = nullptr; gloceryShop = nullptr; };
 
 	private:
+		Globals& globals = Globals::instance();
 		UIManager& uiManager;
 		ResourceManager& resourceManager;
 		EconomyManager& economyManager;

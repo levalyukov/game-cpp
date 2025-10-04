@@ -8,14 +8,16 @@ class Pause {
 	public:
 		Pause(
 			UIManager& ui_manager,
-			ResourceManager& resourse_manager
+			ResourceManager& resourse_manager,
+			Globals& global_manager
 		) : uiManager(ui_manager),
-			resourseManager(resourse_manager) {};
+			resourseManager(resourse_manager),
+			globals(global_manager) {};
 
 		void setup();
 
 	private:
-		Globals& globals = Globals::instance();
+		Globals& globals;
 		ResourceManager& resourseManager;
 		UIManager& uiManager;
 

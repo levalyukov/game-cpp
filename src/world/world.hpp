@@ -19,16 +19,18 @@ class World {
 			InventoryManager& inventory_manager,
 			EconomyManager& economy_manager,
 			Inventory& inventory_ui,
-			HUD& hud_ui
+			HUD& hud_ui,
+			Globals& global_manager
 		) : uiManager(ui_manager),
 			entityManager(entity_manager),
 			resourceManager(resource_manager),
 			cookingManager(cooking_manager),
 			inventoryManager(inventory_manager),
 			economyManager(economy_manager),
-			inventoryUI(inventory_ui) {
+			inventoryUI(inventory_ui),
+			globals(global_manager) {
 			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud_ui);
-			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
+			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI, global_manager);
 		};
 		
 		~World() {
@@ -43,6 +45,7 @@ class World {
 		};
 
 	private:
+		Globals& globals;
 		UIManager& uiManager;
 		EntityManager& entityManager;
 		ResourceManager& resourceManager;

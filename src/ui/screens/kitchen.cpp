@@ -151,22 +151,23 @@ void KitchenMenu::getRecipeInfo(std::string recipe_name) {
 	);
 };
 
-void KitchenMenu::setVisible(bool _state) {
-	visibleState = _state;
-	uiManager.getElement("kitchen-ui-background")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-panel")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-close-button")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-recipe-header")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-recipe-description")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-recipe-conditions")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-recipe-button-cooking")->setVisible(_state);
-	uiManager.getElement("kitchen-ui-recipe-button-cooking-label")->setVisible(_state);
+void KitchenMenu::setVisible(bool new_state) {
+	visible = new_state;
+	globals.setUIOpened(visible);
+	uiManager.getElement("kitchen-ui-background")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-panel")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-close-button")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-recipe-header")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-recipe-description")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-recipe-conditions")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-recipe-button-cooking")->setVisible(visible);
+	uiManager.getElement("kitchen-ui-recipe-button-cooking-label")->setVisible(visible);
 	for (int y = 0; y < cooking.recipes.size(); y++) {
 		std::string buttonName = "kitchen-ui-recipe-button-" + std::to_string(y);
 		std::string buttonNameLabel = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
 		if (uiManager.getElement(buttonName) && uiManager.getElement(buttonNameLabel)) {
-			uiManager.getElement(buttonName)->setVisible(_state);
-			uiManager.getElement(buttonNameLabel)->setVisible(_state);
+			uiManager.getElement(buttonName)->setVisible(visible);
+			uiManager.getElement(buttonNameLabel)->setVisible(visible);
 		};
 	};
 };

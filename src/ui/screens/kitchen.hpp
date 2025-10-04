@@ -13,27 +13,29 @@ class KitchenMenu {
 		KitchenMenu(
 			UIManager& ui_manager,
 			ResourceManager& resource_manager, 
-			CookingManager& cooking_manager
+			CookingManager& cooking_manager,
+			Globals& global_manager
 		) : uiManager(ui_manager), 
 			resourceManager(resource_manager),
-			cooking(cooking_manager) {};
+			cooking(cooking_manager),
+			globals(global_manager) {};
 
 		void setup();
 
 	private:
-		Globals& globals = Globals::instance();
+		Globals& globals;
 		sf::RenderWindow& window = globals.getWindow();
 		ResourceManager& resourceManager;
 		UIManager& uiManager;
 		CookingManager& cooking;
 
+		std::string currentRecipe;
+		bool visible = false;
+
 		const unsigned int SORT_INDEX_BACKGROUND = 0;
 		const unsigned int SORT_INDEX_PANEL = 1;
 		const unsigned int SORT_INDEX_BUTTON = 2;
 		const unsigned int SORT_INDEX_TEXT = 3;
-
-		bool visibleState = false;
-		std::string currentRecipe;
 
 		void initResources();
 		void initElements();

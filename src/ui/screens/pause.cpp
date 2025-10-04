@@ -55,6 +55,8 @@ void Pause::initPanel() {
 		panel->setVisible(false);
 		panel->setHandleEvent(
 			[&]() {
+				if (globals.getUIOpened()) return;
+
 				static bool escWasPressed = false;
 				bool escIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
 				if (escIsPressed && !escWasPressed) {

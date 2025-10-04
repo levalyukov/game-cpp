@@ -12,16 +12,19 @@ class HUD : public IHUD {
 			UIManager& ui_manager,
 			ResourceManager& resource_manager,
 			EconomyManager& economy_manager,
-			GloceryShop& glocery_ui
+			GloceryShop& glocery_ui,
+			Globals& global_manager
 		) : uiManager(ui_manager), 
 			resourceManager(resource_manager),
 			economyManager(economy_manager),
-			gloceryShop(glocery_ui) {};
+			gloceryShop(glocery_ui),
+			globals(global_manager) {};
 
 		void setup();
 		void update() override;
 
 	private:
+		Globals& globals;
 		UIManager& uiManager;
 		ResourceManager& resourceManager;
 		EconomyManager& economyManager;

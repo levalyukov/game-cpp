@@ -20,6 +20,8 @@ class Globals {
 		inline sf::Clock& getClock() const { return *clock; };
 		inline void setGamePause(bool new_state) { paused = new_state; };
 		inline bool getGamePause() const { return paused; };
+		inline void setUIOpened(bool new_state) { uiOpened = new_state; };
+		inline bool getUIOpened() const { return uiOpened; };
 
 	private:
 		const unsigned int WINDOW_WIDTH = 1280;
