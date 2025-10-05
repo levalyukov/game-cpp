@@ -16,10 +16,7 @@ void AnimationManager::update(
 		sprite_size.x, sprite_size.y
 	));
 
-	printf("Delta: %f | animTimer: %f | frame_duration: %f\n", delta, animTimer, frame_duration);
-
 	if (animTimer > frame_duration) {
-		printf("Frame a changed!");
 		animTimer = 0.0;
 		animationVector.x += 16;
 		if (animationVector.x > sprite_size.x * max_frames) animationVector.x = 0;
