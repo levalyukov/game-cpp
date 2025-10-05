@@ -23,17 +23,16 @@ class NPC : public Entity {
 
 		std::function<void()> handler_;
 		std::function<void()> event_;
+		inline float getDelta() const { return deltaSaved; };
 		inline sf::Sprite& getSprite() const { return *sprite; };
 		inline float getDepth() const override { return sprite->getPosition().y + 4; };
 		inline void setEvent(std::function<void()> new_event) override { event_ = new_event; };
 		inline void setHandler(std::function<void()> new_handler) override { handler_ = new_handler; };
 		inline void event(sf::RenderWindow& window, sf::Event& event) override { if (event_) event_(); };
 		void handler(sf::RenderWindow& window, sf::Event& event) override;
-		void render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) override;
+		void render(sf::RenderWindow& window, float delta, sf::View& game_camera, sf::Clock& clock) override;
 	
 	private:
-		enum State {Idle, Walk};
-		enum Movement {Up, Down, Left, Right, Stopped };
 		enum MouseState { Normal, Hovered, Pressed };
 		MouseState mouseState = Normal;
 
@@ -45,4 +44,6 @@ class NPC : public Entity {
 		sf::Texture& shadowTexture;
 
 		bool isPressed = false;
+		bool isDeltaSaved = false;
+		float deltaSaved = 0.0f;
 };

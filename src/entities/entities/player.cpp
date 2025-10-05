@@ -50,51 +50,19 @@ void Player::movement(const float delta) {
 		if (movementRight && !movementLeft) player->move(speed, 0.0);
 
 		bool isMoving = (movementUp || movementDown || movementLeft || movementRight);
-
+	
 		if (isMoving) {
 			float animationSpeed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_ANIM : WALK_ANIM;
-			sf::Texture& target_texture = (currentDirection == "up" || currentDirection == "down") ? walkVertical : walkHorizontal;
+			sf::Texture& targetTexture = (currentDirection == "up" || currentDirection == "down") ? walkVertical : walkHorizontal;
 
 			if (currentDirection == "up") {
-				animations.setAnimation(
-					*player,
-					target_texture,
-					oldVectorUP,
-					4, { 16, 16 },
-					animationTimer,
-					animationSpeed,
-					delta
-				);
+				anim.update(*player, targetTexture, { 0,16 }, { 16,16 }, animationSpeed, 3, delta);
 			}; if (currentDirection == "down") {
-				animations.setAnimation(
-					*player,
-					target_texture,
-					oldVectorDOWN,
-					4, { 16, 16 },
-					animationTimer,
-					animationSpeed,
-					delta
-				);
+				anim.update(*player, targetTexture, { 0,0 }, { 16,16 }, animationSpeed, 3, delta);
 			}; if (currentDirection == "left") {
-				animations.setAnimation(
-					*player,
-					target_texture,
-					oldVectorLEFT,
-					4, { 16, 16 },
-					animationTimer,
-					animationSpeed,
-					delta
-				);
+				anim.update(*player, targetTexture, { 16,0 }, { 16,16 }, animationSpeed, 3, delta);
 			}; if (currentDirection == "right") {
-				animations.setAnimation(
-					*player,
-					target_texture,
-					oldVectorRIGHT,
-					4, { 16, 16 },
-					animationTimer,
-					animationSpeed,
-					delta
-				);
+				anim.update(*player, targetTexture, { 0,16 }, { 16,16 }, animationSpeed, 3, delta);
 			};
 		} else {
 			player->setTexture(idle);

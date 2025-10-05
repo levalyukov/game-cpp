@@ -3,6 +3,11 @@
 #include <functional>
 #include <SFML/Graphics.hpp>
 
+constexpr int RUN_SPEED = 6.0f;
+constexpr int WALK_SPEED = 4.0f;
+constexpr float RUN_ANIM = 0.08f;
+constexpr float WALK_ANIM = 0.12f;
+
 class Entity {
 	public:
 		virtual float getDepth() const = 0;

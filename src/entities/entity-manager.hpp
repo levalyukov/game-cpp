@@ -39,7 +39,7 @@ class EntityManager {
 			if (entity != entities.end()) entities.erase(enitity_name);
 		};
 		
-		inline void render(float delta_time, sf::View& game_camera) {
+		inline void render(const float delta_time, sf::View& game_camera) {
 			if (entities.empty()) return;
 
 			std::sort(render_entities.begin(), render_entities.end(), [](Entity* a, Entity* b) {

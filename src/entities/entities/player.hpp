@@ -45,16 +45,10 @@ class Player : public Entity {
 		sf::Texture shadow_texture;
 		sf::Vector2i spriteSizeX {16,16};
 
-		const float RUN_SPEED = 6.0f;
-		const float WALK_SPEED = 4.0f;
-
-		Animations animations;
+		AnimationManager anim;
 		std::string direction;
 		std::string currentDirection;
 		std::string oldDirection;
-
-		const float RUN_ANIM = 0.04f;
-		const float WALK_ANIM = 0.08f;
 
 		int currentFrame = 0;
 		float animationTimer = 0.0f;

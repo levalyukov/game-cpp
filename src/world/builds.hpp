@@ -18,12 +18,11 @@ class Builds {
 			UIManager& uiManager,
 			CookingManager& cookingManager,
 			InventoryManager& inventoryManager,
-			Inventory& inventory_ui,
-			Globals& global_manager
+			Inventory& inventory_ui
 		) {
 			initResources(resourceManager);
 			initBuilds(entityManager, resourceManager, uiManager, cookingManager, inventoryManager);
-			initParameters(entityManager, resourceManager, uiManager, cookingManager, inventoryManager, inventory_ui, global_manager);
+			initParameters(entityManager, resourceManager, uiManager, cookingManager, inventoryManager, inventory_ui);
 		};
 
 	private:
@@ -49,11 +48,10 @@ class Builds {
 			UIManager& uiManager,
 			CookingManager& cookingManager,
 			InventoryManager& inventoryManager,
-			Inventory& inventory_ui,
-			Globals& global_manager
+			Inventory& inventory_ui
 		) {
-			initKitchen(entityManager, uiManager, cookingManager, inventoryManager, inventory_ui, global_manager);
-			initWarehouse(entityManager, uiManager, global_manager);
+			initKitchen(entityManager, uiManager, cookingManager, inventoryManager, inventory_ui);
+			initWarehouse(entityManager, uiManager);
 		};
 
 		inline void initKitchen(
@@ -61,19 +59,18 @@ class Builds {
 			UIManager& uiManager, 
 			CookingManager& cookingManager,
 			InventoryManager& inventoryManager,
-			Inventory& inventory_ui,
-			Globals& global_manager
+			Inventory& inventory_ui
 		) {
 			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
 			kitchen->setHandler(
 				[&]() {
-					if (global_manager.getUIOpened()) return;
+					if (Globals::instance().getUIOpened()) return;
 
 					auto player = static_cast<Player*>(entityManager.getEntity("player"));
 					auto build = static_cast<Build*>(entityManager.getEntity("kitchen"));
 					if (entityManager.getDistance(build->getSprite(), player->getSprite()) <= DISTANCE_FOR_INTERACTION) {
 						if (!cookingManager.getCookeedFlag() && !cookingManager.getCookingFlag()) {
-							global_manager.setUIOpened(true);
+							Globals::instance().setUIOpened(true);
 							uiManager.getElement("kitchen-ui-background")->setVisible(true);
 							uiManager.getElement("kitchen-ui-panel")->setVisible(true);
 							uiManager.getElement("kitchen-ui-close-button")->setVisible(true);
@@ -99,13 +96,12 @@ class Builds {
 
 		inline void initWarehouse(
 			EntityManager& entityManager,
-			UIManager& uiManager,
-			Globals& global_manager
+			UIManager& uiManager
 		) {
 			auto warehouse = static_cast<Build*>(entityManager.getEntity("warehouse"));
 			warehouse->setHandler(
 				[&]() {
-					if (global_manager.getUIOpened()) return;
+					if (Globals::instance().getUIOpened()) return;
 
 					auto player = static_cast<Player*>(entityManager.getEntity("player"));
 					auto build = static_cast<Build*>(entityManager.getEntity("warehouse"));
@@ -113,7 +109,7 @@ class Builds {
 						if (!uiManager.getElement("warehouse-background")) return;
 						if (!uiManager.getElement("warehouse-panel")) return;
 
-						global_manager.setUIOpened(true);
+						Globals::instance().setUIOpened(true);
 						uiManager.getElement("warehouse-background")->setVisible(true);
 						uiManager.getElement("warehouse-panel")->setVisible(true);
 						uiManager.getElement("warehouse-close-button")->setVisible(true);

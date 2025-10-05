@@ -19,8 +19,7 @@ class World {
 			InventoryManager& inventory_manager,
 			EconomyManager& economy_manager,
 			Inventory& inventory_ui,
-			HUD& hud_ui,
-			Globals& global_manager
+			HUD& hud_ui
 		) : uiManager(ui_manager),
 			entityManager(entity_manager),
 			resourceManager(resource_manager),
@@ -28,24 +27,20 @@ class World {
 			inventoryManager(inventory_manager),
 			economyManager(economy_manager),
 			inventoryUI(inventory_ui),
-			globals(global_manager) {
-			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud_ui);
-			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI, global_manager);
+			hud(hud_ui) {
+			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud);
+			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
 		};
-		
-		~World() {
-			characters = nullptr;
-			nature = nullptr;
-			builds = nullptr;
-		}
 
 		inline void render(float delta, sf::View& game_camera) {
 			entityManager.render(delta, game_camera);
 			cookingManager.cookingProcess(delta);
 		};
 
+		~World() { characters = nullptr; nature = nullptr; builds = nullptr; };
+
 	private:
-		Globals& globals;
+		HUD& hud;
 		UIManager& uiManager;
 		EntityManager& entityManager;
 		ResourceManager& resourceManager;
