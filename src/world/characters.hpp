@@ -12,6 +12,8 @@
 #include "../ui/screens/hud.hpp"
 #include "../core/utils.hpp"
 
+#define DELETE_PASSERBY 250 // for testing
+
 class Characters {
 	public:
 		inline void spawn(
@@ -27,11 +29,12 @@ class Characters {
 		};
 
 	private:
+		Utils utils;
 		AnimationManager anim;
-		const int DELETE_PASSERBY = 500;
+		
+		///////////////////// -- Tools -- ////////////////////////
 
 		inline float getDirection() {
-			Utils utils;
 			if (utils.rangeRandom(0, 1) == 0) return -WALK_SPEED;
 			else return WALK_SPEED;
 		};
@@ -40,6 +43,19 @@ class Characters {
 			if (direction < 0) return sf::Vector2i(0, 0);
 			else return sf::Vector2i(0, 16);
 		};
+
+
+		inline std::string generetingNewPasserbyID(EntityManager& entityManager) {
+			unsigned __int16 id = 0;
+			unsigned __int16 attempts = 0;
+			while (attempts < 10) {
+				id = utils.rangeRandom(0, 10);
+				if (entityManager.getEntity("npc-" + std::to_string(static_cast<int>(id)))) attempts++;
+				else break;
+			}; return std::to_string(static_cast<int>(id));
+		};
+
+		/////////////////////////////////////////////////////////
 
 		inline void player(ResourceManager& resourceManager, EntityManager& entityManager) const {
 			resourceManager.loadTexture("character-idle", "../../../assets/textures/entity/player/character_idle.png");
@@ -62,38 +78,78 @@ class Characters {
 			ResourceManager& resourceManager, 
 			EntityManager& entityManager
 		) {
-			resourceManager.loadTexture("npc-idle", "../../../assets/textures/entity/npc/npc_idle.png");
-			resourceManager.loadTexture("npc-walk-horizontal", "../../../assets/textures/entity/npc/npc_movement_horizontal.png");
-			resourceManager.loadTexture("npc-walk-vertical", "../../../assets/textures/entity/npc/npc_movement_vertical.png");
-			resourceManager.loadTexture("npc-shadow", "../../../assets/textures/entity/player/character_shadow.png");
+			std::string new_npc_id = generetingNewPasserbyID(entityManager);
+			initPasserbyResources(resourceManager, new_npc_id);
+			spawnPasserby(resourceManager, entityManager, new_npc_id);
+			setPasserbyEvent(resourceManager, entityManager, new_npc_id);
+		};
+
+		////////////////////// -- Init -- ////////////////////////
+
+		inline void initPasserbyResources(
+			ResourceManager& resourceManager,
+			const std::string npc_id
+		) {
+			if (resourceManager.getTexture("npc-" + npc_id + "-idle")) return;
+			if (resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal")) return;
+			if (resourceManager.getTexture("npc-" + npc_id + "-walk-vertical")) return;
+			if (resourceManager.getTexture("npc-" + npc_id + "-shadow")) return;
+
+			resourceManager.loadTexture("npc-" + npc_id + "-idle", "../../../assets/textures/entity/npc/npc_idle.png");
+			resourceManager.loadTexture("npc-" + npc_id + "-walk-horizontal", "../../../assets/textures/entity/npc/npc_movement_horizontal.png");
+			resourceManager.loadTexture("npc-" + npc_id + "-walk-vertical", "../../../assets/textures/entity/npc/npc_movement_vertical.png");
+			resourceManager.loadTexture("npc-" + npc_id + "-shadow", "../../../assets/textures/entity/player/character_shadow.png");
+		};
+		
+		inline void spawnPasserby(
+			ResourceManager& resourceManager,
+			EntityManager& entityManager,
+			const std::string npc_id
+		) {
+			if (!resourceManager.getTexture("npc-" + npc_id + "-idle")) return;
+			if (!resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal")) return;
+			if (!resourceManager.getTexture("npc-" + npc_id + "-walk-vertical")) return;
+			if (!resourceManager.getTexture("npc-" + npc_id + "-shadow")) return;
+
 			entityManager.addEntity(
-				"npcTest",
+				"npc-" + npc_id,
 				std::make_unique<NPC>(
-					resourceManager.getTexture("npc-idle"),
-					resourceManager.getTexture("npc-walk-horizontal"),
-					resourceManager.getTexture("npc-walk-vertical"),
-					resourceManager.getTexture("npc-shadow")
+					resourceManager.getTexture("npc-" + npc_id + "-idle"),
+					resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal"),
+					resourceManager.getTexture("npc-" + npc_id + "-walk-vertical"),
+					resourceManager.getTexture("npc-" + npc_id + "-shadow")
 				)
 			);
+		};
 
-			entityManager.getEntity("npcTest")->setEvent([&]() {
+		inline void setPasserbyEvent(
+			ResourceManager& resourceManager,
+			EntityManager& entityManager,
+			const std::string npc_id
+		) {
+			std::string npcName = "npc-" + npc_id;
+			auto passerby = entityManager.getEntity(npcName);
+
+			float direction = getDirection();
+			sf::Vector2i currentVector = getVector(direction);
+			sf::Texture* passerbyTexture = resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal");
+
+			passerby->setEvent(
+				[this, npcName, passerby, direction, passerbyTexture, currentVector, &entityManager]() {
+				auto npc = static_cast<NPC*>(passerby);
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
-				auto npc = static_cast<NPC*>(entityManager.getEntity("npcTest"));
 
-				static float time = 0.f;
-				static float direction = getDirection();
-				static sf::Vector2i currentVector = getVector(direction);
+				// Movement //
+				float time = 0.f;
 				npc->getSprite().move({ static_cast<float>(direction - (direction * 0.5)),0 });
-
-				anim.update(
-					npc->getSprite(), 
-					*resourceManager.getTexture("npc-walk-horizontal"), 
-					currentVector, { 16,16 }, WALK_ANIM, 3, npc->getDelta()
-				);
+				anim.update(npc->getSprite(), *passerbyTexture, currentVector, { 16,16 }, WALK_ANIM, 3, npc->getDelta());
 
 				if (entityManager.getDistance(player->getSprite(), npc->getSprite()) > DELETE_PASSERBY) {
-					entityManager.removeEntity("npcTest");
+					entityManager.removeEntity(npcName);
 				};
 			});
+
 		};
+
+		/////////////////////////////////////////////////////////
 };
