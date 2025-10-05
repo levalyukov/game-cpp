@@ -1,20 +1,17 @@
 #pragma once
 
-#include <iostream>
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Color.hpp>
-class Animations {
+
+class AnimationManager {
 	public:
-		void setAnimation(
-            sf::Sprite& sprite,
-            sf::Texture& texture,
-            sf::Vector2i& anim_start,
-            int frame_count,
-            sf::Vector2i frames,
-            float& timer,
-            float frame_duration,
-            float delta
+		void update(
+			sf::Sprite& sprite, sf::Texture& texture, sf::Vector2i animation_start, 
+			sf::Vector2i sprite_size, const float frame_duration, const int max_frames, 
+			const float delta
 		);
+
+	private:
+		float animTimer = 0.0f;
+		sf::Vector2i animationVector = { 0,0 };
 };
 
