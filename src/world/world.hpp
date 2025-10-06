@@ -4,6 +4,7 @@
 #include "../core/resources/resources.hpp"
 #include "../mechanics/inventory-manager.hpp"
 #include "../ui/screens/inventory.hpp"
+#include "../events/event-manager.hpp"
 
 #include "characters.hpp"
 #include "nature.hpp"
@@ -18,6 +19,7 @@ class World {
 			CookingManager& cooking_manager,
 			InventoryManager& inventory_manager,
 			EconomyManager& economy_manager,
+			EventManager& event_manager,
 			Inventory& inventory_ui,
 			HUD& hud_ui
 		) : uiManager(ui_manager),
@@ -26,15 +28,18 @@ class World {
 			cookingManager(cooking_manager),
 			inventoryManager(inventory_manager),
 			economyManager(economy_manager),
+			eventManager(event_manager),
 			inventoryUI(inventory_ui),
 			hud(hud_ui) {
 			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud);
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
+			//eventManager.addEvent("passerby", std::make_unique<Passerby>(resourceManager, entityManager));
 		};
 
 		inline void render(float delta, sf::View& game_camera) {
 			entityManager.render(delta, game_camera);
 			cookingManager.cookingProcess(delta);
+			eventManager.update(delta);
 		};
 
 		~World() { characters = nullptr; nature = nullptr; builds = nullptr; };
@@ -47,6 +52,7 @@ class World {
 		CookingManager& cookingManager;
 		InventoryManager& inventoryManager;
 		EconomyManager& economyManager;
+		EventManager& eventManager;
 		Inventory& inventoryUI;
 
 		std::unique_ptr<Characters> characters = std::make_unique<Characters>();
