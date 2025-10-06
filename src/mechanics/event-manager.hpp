@@ -1,22 +1,13 @@
 #pragma once
 
-#include "Event.hpp"
-#include "events/passerby.hpp"
 #include <functional>
 
 class EventManager {
 	public:
-		EventManager() {
-			addEvent("test-1", { []() {std::cout << "\n---\nLambda #1;\n---\n"; }, 1.0f });
-			addEvent("test-2", { []() {std::cout << "\n---\nLambda #2;\n---\n"; }, 1.5f });
-			addEvent("test-3", { []() {std::cout << "\n---\nLambda #3;\n---\n"; }, 5.0f, true });
-		}
-
 		struct EventConfig {
 			std::function<void()> lambda;
 			float delay;
 			bool repeat = false;
-
 			float next_trigger = 0.f;
 			bool triggered = false;
 		};

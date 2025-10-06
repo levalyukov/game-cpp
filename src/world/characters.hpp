@@ -25,14 +25,23 @@ class Characters {
 			HUD& hud
 		) {
 			player(resourceManager, entityManager);
-			passerby(resourceManager, entityManager);
+		};
+
+		inline void passerby(
+			ResourceManager& resourceManager,
+			EntityManager& entityManager
+		) {
+			std::string new_npc_id = generetingNewPasserbyID(entityManager);
+			initPasserbyResources(resourceManager, new_npc_id);
+			spawnPasserby(resourceManager, entityManager, new_npc_id);
+			setPasserbyEvent(resourceManager, entityManager, new_npc_id);
 		};
 
 	private:
 		Utils utils;
 		AnimationManager anim;
-		
-		///////////////////// -- Tools -- ////////////////////////
+
+		/////////////////////////////////////////////////////////
 
 		inline float getDirection() {
 			if (utils.rangeRandom(0, 1) == 0) return -WALK_SPEED;
@@ -73,18 +82,6 @@ class Characters {
 				)
 			);
 		};
-
-		inline void passerby(
-			ResourceManager& resourceManager, 
-			EntityManager& entityManager
-		) {
-			std::string new_npc_id = generetingNewPasserbyID(entityManager);
-			initPasserbyResources(resourceManager, new_npc_id);
-			spawnPasserby(resourceManager, entityManager, new_npc_id);
-			setPasserbyEvent(resourceManager, entityManager, new_npc_id);
-		};
-
-		////////////////////// -- Init -- ////////////////////////
 
 		inline void initPasserbyResources(
 			ResourceManager& resourceManager,
@@ -139,7 +136,6 @@ class Characters {
 				auto npc = static_cast<NPC*>(passerby);
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
 
-				// Movement //
 				float time = 0.f;
 				npc->getSprite().move({ static_cast<float>(direction - (direction * 0.5)),0 });
 				anim.update(npc->getSprite(), *passerbyTexture, currentVector, { 16,16 }, WALK_ANIM, 3, npc->getDelta());
@@ -150,6 +146,4 @@ class Characters {
 			});
 
 		};
-
-		/////////////////////////////////////////////////////////
 };

@@ -10,7 +10,7 @@
 #include "../mechanics/inventory-manager.hpp"
 #include "../mechanics/economy-manager.hpp"
 #include "../mechanics/glocery-shop-manager.hpp"
-#include "../events/event-manager.hpp"
+#include "../mechanics/event-manager.hpp"
 
 class Game {
 	public:

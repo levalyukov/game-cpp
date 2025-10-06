@@ -4,7 +4,7 @@
 #include "../core/resources/resources.hpp"
 #include "../mechanics/inventory-manager.hpp"
 #include "../ui/screens/inventory.hpp"
-#include "../events/event-manager.hpp"
+#include "../mechanics/event-manager.hpp"
 
 #include "characters.hpp"
 #include "nature.hpp"
@@ -33,7 +33,7 @@ class World {
 			hud(hud_ui) {
 			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud);
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
-			//eventManager.addEvent("passerby", std::make_unique<Passerby>(resourceManager, entityManager));
+			eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 5.f, true });
 		};
 
 		inline void render(float delta, sf::View& game_camera) {
