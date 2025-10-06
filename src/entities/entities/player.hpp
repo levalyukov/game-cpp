@@ -17,9 +17,7 @@ class Player : public Entity {
 			shadow_texture(std::move(*character_shadow)) {
 			player->setTexture(idle);
 			player->setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
-			player->setPosition((9 / 2) * 64, (9 / 2) * 64); // change this in the future
 			player->setScale(4, 4);
-			player->setPosition({ 51 * 16,52 * 16 });
 			shadow_sprite.setTexture(shadow_texture);
 			shadow_sprite.setScale(4, 4);
 		};

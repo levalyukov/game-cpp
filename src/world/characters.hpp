@@ -12,8 +12,6 @@
 #include "../ui/screens/hud.hpp"
 #include "../core/utils.hpp"
 
-#define DELETE_PASSERBY 250 // for testing
-
 class Characters {
 	public:
 		inline void spawn(
@@ -40,6 +38,8 @@ class Characters {
 	private:
 		Utils utils;
 		AnimationManager anim;
+
+		const int DELETE_PASSERBY = 1280;
 
 		/////////////////////////////////////////////////////////
 

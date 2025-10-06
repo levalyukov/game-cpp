@@ -15,7 +15,6 @@ class NPC : public Entity {
 			shadowTexture(std::move(*shadow_texture)) {
 			sprite->setTexture(idleTexture);
 			sprite->setTextureRect(sf::IntRect({ 16,0 }, { 16,16 }));
-			sprite->setPosition({ 52 * 16,52 * 16 });
 			sprite->setScale({ 4,4 });
 			shadow.setTexture(shadowTexture);
 			shadow.setScale({ 4,4 });
