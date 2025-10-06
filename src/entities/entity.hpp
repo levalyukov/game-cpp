@@ -9,7 +9,7 @@ constexpr float RUN_ANIM = 0.08f;
 constexpr float WALK_ANIM = 0.12f;
 
 class Entity {
-	public:
+	protected:
 		virtual float getDepth() const = 0;
 		virtual void setHandler(std::function<void()> new_handler) = 0;
 		virtual void setEvent(std::function<void()> new_event) = 0;
