@@ -33,7 +33,8 @@ class World {
 			hud(hud_ui) {
 			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud);
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
-			eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 5.f, true });
+			eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 25.f, true });
+			eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager); }, 10.f, true });
 		};
 
 		inline void render(float delta, sf::View& game_camera) {

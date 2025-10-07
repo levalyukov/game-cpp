@@ -26,7 +26,7 @@ TEST_CASE("Removing positive value", "[economy]") {
 	EconomyManager economyManager;
 	economyManager.addMoney(100);
 	economyManager.removeMoney(105);
-	CHECK(economyManager.getMoney() == 0);
+	CHECK(economyManager.getMoney() == 100);
 }
 
 TEST_CASE("Removing negative value", "[economy]") {

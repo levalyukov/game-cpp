@@ -14,6 +14,10 @@
 
 class Characters {
 	public:
+		//std::vector<sf::Vector2i> passerbyPositions = {
+		//	sf::Vector2i(0,0), sf::Vector2i(0,0)
+		//};
+
 		inline void spawn(
 			ResourceManager& resourceManager,
 			EntityManager& entityManager,
@@ -35,11 +39,18 @@ class Characters {
 			setPasserbyEvent(resourceManager, entityManager, new_npc_id);
 		};
 
+		inline void customer(
+			ResourceManager& resourceManager,
+			EntityManager& entityManager
+		) {
+			std::cout << "Spawn customer;\n";
+		};
+
 	private:
 		Utils utils;
 		AnimationManager anim;
 
-		const int DELETE_PASSERBY = 1280;
+		const int DELETE_PASSERBY = 700;
 
 		/////////////////////////////////////////////////////////
 
@@ -79,8 +90,7 @@ class Characters {
 					resourceManager.getTexture("character-walk-horizontal"),
 					resourceManager.getTexture("character-walk-vertical"),
 					resourceManager.getTexture("character-shadow")
-				)
-			);
+			));
 		};
 
 		inline void initPasserbyResources(
@@ -115,8 +125,7 @@ class Characters {
 					resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal"),
 					resourceManager.getTexture("npc-" + npc_id + "-walk-vertical"),
 					resourceManager.getTexture("npc-" + npc_id + "-shadow")
-				)
-			);
+			));
 		};
 
 		inline void setPasserbyEvent(
@@ -144,6 +153,5 @@ class Characters {
 					entityManager.removeEntity(npcName);
 				};
 			});
-
 		};
 };
