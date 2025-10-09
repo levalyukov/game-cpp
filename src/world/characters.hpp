@@ -12,11 +12,13 @@
 #include "../ui/screens/hud.hpp"
 #include "../core/utils.hpp"
 
+#include <vector>
+
 class Characters {
 	public:
-		//std::vector<sf::Vector2i> passerbyPositions = {
-		//	sf::Vector2i(0,0), sf::Vector2i(0,0)
-		//};
+		std::vector<sf::Vector2f> passerbyPositions = {
+			sf::Vector2f(0.f,7 * 64), sf::Vector2f(0.f,5 * 64), sf::Vector2f(5 * 64,5 * 64)
+		};
 
 		inline void spawn(
 			ResourceManager& resourceManager,
@@ -48,9 +50,8 @@ class Characters {
 
 	private:
 		Utils utils;
-		AnimationManager anim;
 
-		const int DELETE_PASSERBY = 700;
+		const int DELETE_PASSERBY = 2000;//700;
 
 		/////////////////////////////////////////////////////////
 
@@ -73,6 +74,13 @@ class Characters {
 				if (entityManager.getEntity("npc-" + std::to_string(static_cast<int>(id)))) attempts++;
 				else break;
 			}; return std::to_string(static_cast<int>(id));
+		};
+
+		inline sf::Vector2f getPasserbyPosition() {
+			std::random_device rd;
+			std::mt19937 rand(rd());
+			std::uniform_int_distribution<int> dist(0, 2);
+			return passerbyPositions[dist(rd)];
 		};
 
 		/////////////////////////////////////////////////////////
@@ -135,20 +143,18 @@ class Characters {
 		) {
 			std::string npcName = "npc-" + npc_id;
 			auto passerby = entityManager.getEntity(npcName);
-
+			auto player = static_cast<Player*>(entityManager.getEntity("player"));
 			float direction = getDirection();
-			sf::Vector2i currentVector = getVector(direction);
-			sf::Texture* passerbyTexture = resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal");
-
+			sf::Vector2i vector = getVector(direction);
+			sf::Texture* texture = resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal");
+			static_cast<NPC*>(passerby)->getSprite().setPosition(getPasserbyPosition());
 			passerby->setEvent(
-				[this, npcName, passerby, direction, passerbyTexture, currentVector, &entityManager]() {
+				[this, npcName, passerby, direction, texture, vector, &entityManager]() {
 				auto npc = static_cast<NPC*>(passerby);
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
-
-				float time = 0.f;
+				static float time = 0.f;
 				npc->getSprite().move({ static_cast<float>(direction - (direction * 0.5)),0 });
-				anim.update(npc->getSprite(), *passerbyTexture, currentVector, { 16,16 }, WALK_ANIM, 3, npc->getDelta());
-
+				npc->getAnimation().update(npc->getSprite(), *texture, vector, { 16,16 }, WALK_ANIM, 3, npc->getDelta());
 				if (entityManager.getDistance(player->getSprite(), npc->getSprite()) > DELETE_PASSERBY) {
 					entityManager.removeEntity(npcName);
 				};

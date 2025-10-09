@@ -1,11 +1,11 @@
 #include "player.hpp"
 
-void Player::render(sf::RenderWindow& window, const float delta, sf::View& game_camera, sf::Clock& clock) {
-	window.draw(shadow_sprite);
+void Player::render(sf::RenderWindow& window, const float delta, sf::View& camera, sf::Clock& clock) {
+	window.draw(shadowSprite);
 	window.draw(*player);
 	movement(delta);
-	shadow_sprite.setPosition(player->getPosition());
-	game_camera.setCenter(player->getPosition());
+	shadowSprite.setPosition(player->getPosition());
+	camera.setCenter(player->getPosition());
 };
 
 void Player::movement(const float delta) {

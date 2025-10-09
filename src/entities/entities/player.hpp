@@ -7,23 +7,24 @@
 class Player : public Entity {
 	public:
 		Player(
-			sf::Texture* character_idle,
-			sf::Texture* character_walk_horizontal,
-			sf::Texture* character_walk_vertical,
-			sf::Texture* character_shadow
+			sf::Texture*&& character_idle,
+			sf::Texture*&& character_walk_horizontal,
+			sf::Texture*&& character_walk_vertical,
+			sf::Texture*&& character_shadow
 		) : idle(std::move(*character_idle)),
 			walkHorizontal(std::move(*character_walk_horizontal)),
 			walkVertical(std::move(*character_walk_vertical)),
-			shadow_texture(std::move(*character_shadow)) {
+			shadowTexture(std::move(*character_shadow)) {
 			player->setTexture(idle);
-			player->setTextureRect(sf::IntRect(16, 0, spriteSizeX.x, spriteSizeX.y));
-			player->setPosition({ 52 * 16,52 * 16 });
+			player->setTextureRect(sf::IntRect(16, 0, spriteSize.x, spriteSize.y));
+			player->setPosition({ (25 * 64) / 2,(17 * 64) / 2 });
 			player->setScale(4, 4);
-			shadow_sprite.setTexture(shadow_texture);
-			shadow_sprite.setScale(4, 4);
+			shadowSprite.setTexture(shadowTexture);
+			shadowSprite.setScale(4, 4);
 		};
 
 		void movement(float deltaTime);
+		inline float getDelta() const { return savedDelta; };
 		inline void setStoppedFlag(bool _state) { stopped_flag = _state; };
 		inline bool getStoppedFlag() const { return stopped_flag; };
 		inline sf::Sprite& getSprite() const { return *player; };
@@ -35,14 +36,14 @@ class Player : public Entity {
 		void render(sf::RenderWindow& window, float delta, sf::View& gameCamera, sf::Clock& clock) override;
 	
 	private:
+		sf::Vector2i spriteSize{ 16,16 };
 		std::unique_ptr<sf::Sprite> player = std::make_unique<sf::Sprite>();
-		sf::Sprite shadow_sprite;
+		sf::Sprite shadowSprite;
 
 		sf::Texture idle;
 		sf::Texture walkHorizontal;
 		sf::Texture walkVertical;
-		sf::Texture shadow_texture;
-		sf::Vector2i spriteSizeX {16,16};
+		sf::Texture shadowTexture;
 
 		AnimationManager anim;
 		std::string direction;
@@ -51,6 +52,7 @@ class Player : public Entity {
 
 		int currentFrame = 0;
 		float animationTimer = 0.0f;
+		float savedDelta = 0.f;
 
 		sf::Vector2i vectorUP = { 0,16 };
 		sf::Vector2i vectorDOWN = { 0,0 };
@@ -62,5 +64,6 @@ class Player : public Entity {
 		sf::Vector2i oldVectorLEFT;
 		sf::Vector2i oldVectorRIGHT;
 
+		bool isDeltaSaved = false;
 		bool stopped_flag = false;
 };

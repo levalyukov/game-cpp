@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../entity.hpp"
+#include "../../core/animations/animations.hpp"
 
 class NPC : public Entity {
 	public:
@@ -22,6 +23,7 @@ class NPC : public Entity {
 
 		std::function<void()> handler_;
 		std::function<void()> event_;
+		inline AnimationManager& getAnimation() { return anim; };
 		inline float getDelta() const { return deltaSaved; };
 		inline sf::Sprite& getSprite() const { return *sprite; };
 		inline float getDepth() const override { return sprite->getPosition().y + 4; };
@@ -32,6 +34,7 @@ class NPC : public Entity {
 		void render(sf::RenderWindow& window, float delta, sf::View& game_camera, sf::Clock& clock) override;
 	
 	private:
+		AnimationManager anim;
 		enum MouseState { Normal, Hovered, Pressed };
 		MouseState mouseState = Normal;
 
