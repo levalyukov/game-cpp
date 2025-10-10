@@ -17,7 +17,8 @@
 class Characters {
 	public:
 		std::vector<sf::Vector2f> passerbyPositions = {
-			sf::Vector2f(0.f,7 * 64), sf::Vector2f(0.f,5 * 64), sf::Vector2f(5 * 64,5 * 64)
+			sf::Vector2f(0,8 * 64), sf::Vector2f(0,8 * 64 + 48), sf::Vector2f(0,8 * 64 + 32), sf::Vector2f(0,8 * 64 -32),
+			sf::Vector2f(25 * 64,8 * 64), sf::Vector2f(25 * 64,8 * 64 + 48), sf::Vector2f(25 * 64,8 * 64 + 32), sf::Vector2f(0,8 * 64 -32),
 		};
 
 		inline void spawn(
@@ -51,7 +52,7 @@ class Characters {
 	private:
 		Utils utils;
 
-		const int DELETE_PASSERBY = 2000;//700;
+		const int DELETE_PASSERBY = 1000;
 
 		/////////////////////////////////////////////////////////
 
@@ -76,10 +77,13 @@ class Characters {
 			}; return std::to_string(static_cast<int>(id));
 		};
 
-		inline sf::Vector2f getPasserbyPosition() {
+		inline sf::Vector2f getPasserbyPosition(const float direction) {
+			sf::Vector2i vector;
 			std::random_device rd;
 			std::mt19937 rand(rd());
-			std::uniform_int_distribution<int> dist(0, 2);
+			if (direction > 0) vector = { 0, 3 };
+			else vector = { 4,static_cast<int>(passerbyPositions.size() - 1)};
+			std::uniform_int_distribution<int> dist(vector.x, vector.y);
 			return passerbyPositions[dist(rd)];
 		};
 
@@ -147,7 +151,7 @@ class Characters {
 			float direction = getDirection();
 			sf::Vector2i vector = getVector(direction);
 			sf::Texture* texture = resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal");
-			static_cast<NPC*>(passerby)->getSprite().setPosition(getPasserbyPosition());
+			static_cast<NPC*>(passerby)->getSprite().setPosition(getPasserbyPosition(direction));
 			passerby->setEvent(
 				[this, npcName, passerby, direction, texture, vector, &entityManager]() {
 				auto npc = static_cast<NPC*>(passerby);
