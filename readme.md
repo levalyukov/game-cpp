@@ -19,6 +19,7 @@ Delicious Soup is a simple 2D simulation game owner of a street restaurant. You 
 - [X] Entity (player, npc, builds)
 - [ ] Cooking (*in progress*)
 - [ ] Orders (*in plans*)
+- [X] Events (repetitive, single)
 - [ ] Changing scenes (*in plans*)
 - [ ] Save / Load (*in plans*)
 - [ ] Music / Sounds (*in plans*)
