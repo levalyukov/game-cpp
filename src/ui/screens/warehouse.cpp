@@ -20,7 +20,7 @@ void Warehouse::initElements() {
 	float windowX = static_cast<float>(windowSize.x);
 	float windowY = static_cast<float>(windowSize.y);
 	uiManager.addElement("warehouse-background", uiManager.gui.createColorRect(sf::Color(0, 0, 0, 100), { windowX,windowY }));
-	uiManager.addElement("warehouse-panel", uiManager.gui.createPanel(resourceManager.getTexture("warehouse-panel")));
+	uiManager.addElement("warehouse-panel", uiManager.gui.createSprite(resourceManager.getTexture("warehouse-panel")));
 	uiManager.addElement("warehouse-close-button", uiManager.gui.createButton(resourceManager.getTexture("warehouse-close-button"), { 16,16 }));
 };
 
@@ -30,7 +30,7 @@ void Warehouse::initLayers() {
 	if (!uiManager.getElement("warehouse-close-button")) return;
 	
 	auto background = static_cast<ColorRect*>(uiManager.getElement("warehouse-background"));
-	auto panel = static_cast<Panel*>(uiManager.getElement("warehouse-panel"));
+	auto panel = static_cast<Sprite*>(uiManager.getElement("warehouse-panel"));
 	auto closeButton = static_cast<Button*>(uiManager.getElement("warehouse-close-button"));
 
 	background->setSortIndex(SORT_INDEX_BACKGROUND);
@@ -40,12 +40,11 @@ void Warehouse::initLayers() {
 
 void Warehouse::initParameters() {
 	if (!uiManager.getElement("warehouse-panel")) return;
-	if (!uiManager.getElement("warehouse-close-button")) return;
-
-	auto panel = static_cast<Panel*>(uiManager.getElement("warehouse-panel"));
-	auto closeButton = static_cast<Button*>(uiManager.getElement("warehouse-close-button"));
-
+	auto panel = static_cast<Sprite*>(uiManager.getElement("warehouse-panel"));
 	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
+	
+	if (!uiManager.getElement("warehouse-close-button")) return;
+	auto closeButton = static_cast<Button*>(uiManager.getElement("warehouse-close-button"));
 	closeButton->setRelativePosition(UIElement::TopRight, panel->getSprite(), closeButton->getSprite(), {80, -64});
 	closeButton->setHandleEvent([&]() {setVisible(false); });
 };

@@ -15,7 +15,7 @@ void Pause::initResources() {
 
 void Pause::initElements() {
 	uiManager.addElement("pause-background", uiManager.gui.createColorRect(sf::Color(0,0,0,100), {static_cast<float>(globals.getWindow().getSize().x),static_cast<float>(globals.getWindow().getSize().y)}));
-	uiManager.addElement("pause-panel", uiManager.gui.createPanel(resourseManager.getTexture("pause-panel")));
+	uiManager.addElement("pause-panel", uiManager.gui.createSprite(resourseManager.getTexture("pause-panel")));
 	uiManager.addElement("pause-button-continue", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
 	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
 	
@@ -50,7 +50,7 @@ void Pause::initBackground() {
 
 void Pause::initPanel() {
 	if (uiManager.getElement("pause-panel")) {
-		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
+		auto panel = static_cast<Sprite*>(uiManager.getElement("pause-panel"));
 		uiManager.getElement("pause-panel")->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 		panel->setVisible(false);
 		panel->setHandleEvent(
@@ -88,8 +88,8 @@ void Pause::initPanel() {
 
 void Pause::initButtonContinue() {
 	if (uiManager.getElement("pause-button-continue")) {
-		Button* button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
-		Panel* panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
+		auto button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
+		auto panel = static_cast<Sprite*>(uiManager.getElement("pause-panel"));
 		
 		sf::Vector2f panelPosition = panel->getElementPosition();
 		button->setRelativePosition(UIElement::TopCenter, panel->getSprite(), button->getSprite(), {0.f, 25});
@@ -112,14 +112,10 @@ void Pause::initButtonContinue() {
 void Pause::initButtonExit() {
 	if (uiManager.getElement("pause-button-quit")) {
 		auto button = static_cast<Button*>(uiManager.getElement("pause-button-quit"));
-		auto panel = static_cast<Panel*>(uiManager.getElement("pause-panel"));
+		auto panel = static_cast<Sprite*>(uiManager.getElement("pause-panel"));
 		button->setRelativePosition(UIElement::TopCenter, panel->getSprite(), button->getSprite(), { 0.f, 100 });
 		button->setVisible(false);
-		button->setHandleEvent(
-			[&]() {
-				globals.getWindow().close();
-			}
-		);
+		button->setHandleEvent([&]() {globals.getWindow().close(); });
 	}
 }
 

@@ -5,12 +5,12 @@
 #include <iostream>
 #include <functional>
 
-class Panel : public UIElement {
+class Sprite : public UIElement {
 	public:
-		inline Panel(
-			sf::Texture* panel_texture,
+		inline Sprite(
+			sf::Texture* sprite_texture,
 			sf::Vector2f position_coords
-		) : texture(std::move(*panel_texture)), position(position_coords) {
+		) : texture(std::move(*sprite_texture)), position(position_coords) {
 			panel->setTexture(texture);
 			panel->setScale({ 4,4 });
 			panel->setPosition(position);

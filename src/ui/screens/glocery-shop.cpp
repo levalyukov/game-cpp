@@ -19,7 +19,7 @@ void GloceryShop::initElements() {
 	float windowX = static_cast<float>(Globals::instance().getWindow().getSize().x);
 	float windowY = static_cast<float>(Globals::instance().getWindow().getSize().y);
 	uiManager.addElement("glocery-background", uiManager.gui.createColorRect(sf::Color(0, 0, 0, 100), { windowX,windowY }));
-	uiManager.addElement("glocery-panel", uiManager.gui.createPanel(resourceManager.getTexture("glocery-panel")));
+	uiManager.addElement("glocery-panel", uiManager.gui.createSprite(resourceManager.getTexture("glocery-panel")));
 	uiManager.addElement("glocery-close-button", uiManager.gui.createButton(resourceManager.getTexture("glocery-close-button"), { 16,16 }));
 	uiManager.addElement("glocery-page-label", uiManager.gui.createLabel("0/0", resourceManager.getFont("nunito"), 22, sf::Color::White));
 };
@@ -32,7 +32,7 @@ void GloceryShop::initLayers() {
 	auto background = static_cast<ColorRect*>(uiManager.getElement("glocery-background"));
 	background->setSortIndex(SORT_INDEX_BACKGROUND);
 
-	auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
+	auto panel = static_cast<Sprite*>(uiManager.getElement("glocery-panel"));
 	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 	panel->setSortIndex(SORT_INDEX_PANEL);
 
@@ -76,7 +76,7 @@ void GloceryShop::initButtons() {
 		uiManager.addElement(buttonLabelName, uiManager.gui.createLabel(product.second.title, resourceManager.getFont("nunito"), 24, sf::Color::White));
 		uiManager.addElement(buttonLabelPriceName, uiManager.gui.createLabel(std::to_string(product.second.price), resourceManager.getFont("nunito"), 24, sf::Color::White));
 
-		auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
+		auto panel = static_cast<Sprite*>(uiManager.getElement("glocery-panel"));
 		auto buttonProduct = static_cast<Button*>(uiManager.getElement(buttonName));
 		auto buttonLabel = static_cast<Label*>(uiManager.getElement(buttonLabelName));
 		auto buttonLabelPrice = static_cast<Label*>(uiManager.getElement(buttonLabelPriceName));
@@ -117,7 +117,7 @@ void GloceryShop::setVisible(bool new_state) {
 		globals.setUIOpened(new_state);
 
 		auto background = static_cast<ColorRect*>(uiManager.getElement("glocery-background"));
-		auto panel = static_cast<Panel*>(uiManager.getElement("glocery-panel"));
+		auto panel = static_cast<Sprite*>(uiManager.getElement("glocery-panel"));
 		auto closeButton = static_cast<Button*>(uiManager.getElement("glocery-close-button"));
 		auto pageLabel = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
 

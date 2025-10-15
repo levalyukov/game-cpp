@@ -32,10 +32,10 @@ class KitchenMenu {
 		std::string currentRecipe;
 		bool visible = false;
 
-		const unsigned int SORT_INDEX_BACKGROUND = 0;
-		const unsigned int SORT_INDEX_PANEL = 1;
-		const unsigned int SORT_INDEX_BUTTON = 2;
-		const unsigned int SORT_INDEX_TEXT = 3;
+		const size_t SORT_INDEX_BACKGROUND = 0;
+		const size_t SORT_INDEX_PANEL = 1;
+		const size_t SORT_INDEX_BUTTON = 2;
+		const size_t SORT_INDEX_TEXT = 3;
 
 		void initResources();
 		void initElements();

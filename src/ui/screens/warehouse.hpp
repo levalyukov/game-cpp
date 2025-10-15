@@ -29,9 +29,9 @@ class Warehouse {
 
 		bool visible = false;
 
-		const unsigned int SORT_INDEX_BACKGROUND = 8;
-		const unsigned int SORT_INDEX_PANEL = 9;
-		const unsigned int SORT_INDEX_BUTTON = 10;
+		const size_t SORT_INDEX_BACKGROUND = 8;
+		const size_t SORT_INDEX_PANEL = 9;
+		const size_t SORT_INDEX_BUTTON = 10;
 
 		void initResources();
 		void initElements();

@@ -30,8 +30,8 @@ class HUD : public IHUD {
 		EconomyManager& economyManager;
 		GloceryShop& gloceryShop;
 
-		const unsigned int SORT_INDEX_MONEY = 4;
-		const unsigned int SORT_INDEX_GLOCERY = 0;
+		const size_t SORT_INDEX_MONEY = 4;
+		const size_t SORT_INDEX_GLOCERY = 0;
 		bool visible = true;
 
 		void initResources();

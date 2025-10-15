@@ -19,7 +19,7 @@ void HUD::initElements() {
 void HUD::initLayers() {
 	if (uiManager.getElement("hud-money")) {
 		auto label = static_cast<Label*>(uiManager.getElement("hud-money"));
-		label->setGlobalPositionText(UIElement::TopRight, label->getText(), { -8,8 });
+		label->setGlobalPositionText(UIElement::BottomLeft, label->getText(), { 8,-16 });
 		label->setSortIndex(SORT_INDEX_MONEY);
 	};
 

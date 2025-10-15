@@ -2,7 +2,7 @@
 
 #include "elements/label.hpp"
 #include "elements/button.hpp"
-#include "elements/panel.hpp"
+#include "elements/sprite.hpp"
 #include "elements/color-rect.hpp"
 
 #include <iostream>
@@ -30,17 +30,17 @@ class GUI {
 			return std::make_unique<Button>(button_texture, button_size, button_position);
 		};
 
-		inline std::unique_ptr<Panel> createPanel(
-			sf::Texture* panel_texture,
-			sf::Vector2f panel_position = { 0.f,0.f }
+		inline std::unique_ptr<Sprite> createSprite(
+			sf::Texture* sprite_texture,
+			sf::Vector2f sprite_position = { 0.f,0.f }
 		) {
-			return std::make_unique<Panel>(panel_texture, panel_position);
-		}
+			return std::make_unique<Sprite>(sprite_texture, sprite_position);
+		};
 
 		inline std::unique_ptr<ColorRect> createColorRect(
 			sf::Color rect_color,
 			sf::Vector2f rect_position = { 0.f,0.f }
 		) {
 			return std::make_unique<ColorRect>(rect_color, rect_position);
-		}
+		};
 };
