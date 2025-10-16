@@ -5,54 +5,45 @@
 #include <iostream>
 #include <algorithm>
 #include <cctype>
+#include "items.hpp"
 
 class CookingManager {
 	public:
-		struct Recipe {
-			std::string title;
-			std::string description;
-			unsigned __int16 price = 0;
-			float cookTime = 0.f;
-		};
-		std::map<std::string, Recipe> recipes;
 
-		CookingManager() {
-			addRecipe("ramen", { "Ramen","Description for ramen",50,0.5f });
+		CookingManager(Items& items_container) : items(items_container) {
+			addRecipe("borsch", 1);
+			addRecipe("chicken", 2);
+			addRecipe("vegan", 3);
+			addRecipe("recipe", 4);
 		};
 
-		inline void addRecipe(std::string nameRecipe, const Recipe newRecipe) {
-			if (recipes.size() <= 4) {
-				std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
-				recipes.emplace(nameRecipe, newRecipe);
+		std::map<std::string, Items::CookRecipe> availableRecipes;
+		inline void addRecipe(const std::string name, unsigned __int16 id) {
+			if (items.hasRecipe(id)) {
+				std::string lower_name = name;
+				std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(),
+					[](unsigned char c) {return std::tolower(c); });
+				availableRecipes.emplace(lower_name, *items.getRecipeInfo(id));
 			};
 		};
 
-		inline Recipe getRecipe(std::string nameRecipe) {
-			std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
-			auto recipe = recipes.find(nameRecipe);
-			if (recipe != recipes.end()) return recipe->second;
+		inline Items::CookRecipe* getRecipe(const std::string name) {
+			std::string lower_name = name;
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(),
+				[](unsigned char c) {return std::tolower(c); });
+			auto item = availableRecipes.find(lower_name);
+			return (item != availableRecipes.end()) ? &item->second : nullptr;
 		};
 
-		inline void removeRecipe(std::string nameRecipe) {
-			std::transform(nameRecipe.begin(), nameRecipe.end(), nameRecipe.begin(), [](unsigned char c) {return std::tolower(c); });
-			if (recipes.find(nameRecipe) != recipes.end()) {
-				recipes.erase(nameRecipe);
-			};
-		};
-
-		// 
 		inline void startCookProcess(const std::string nameRecipe) {
-			cookingFlag = true;
-			cookedFlag = false;
-			recipeName = nameRecipe;
+			recipeTime = getRecipe(nameRecipe)->cooking_time;
 			cookTimer = 0.f;
-			recipeTime = getRecipe(nameRecipe).cookTime;
+			cookedFlag = false;
+			cookingFlag = true;
 		};
 
 		inline void cookingProcess(const float delta) {
 			if (cookingFlag) {
-				// debug string
-				std::cout << "cookTimer: " << cookTimer << "| recipeTime: " << recipeTime << std::endl;
 				cookTimer += delta;
 				if (cookTimer >= recipeTime) {
 					cookingFlag = false;
@@ -66,12 +57,11 @@ class CookingManager {
 		inline void resetCookeedFlag() { cookedFlag = false; };
 		inline bool getCookingFlag() const { return cookingFlag; };
 		inline bool getCookeedFlag() const { return cookedFlag; };
-		inline std::string getCookedRecipe() const { return recipeName; };
 
 	private:
+		Items& items;
 		bool cookingFlag = false;
 		bool cookedFlag = false;
 		float cookTimer = 0.f;
 		float recipeTime = 0.f;
-		std::string recipeName = "";
 };
