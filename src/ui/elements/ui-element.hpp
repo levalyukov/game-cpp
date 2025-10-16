@@ -17,12 +17,11 @@ class UIElement {
 		void setRelativePosition(enum ElementPosition position, sf::Sprite& parent, sf::Sprite& child, sf::Vector2f margins = { 0.f,0.f });
 		void setRelativePositionText(enum ElementPosition position, sf::Sprite& parent, sf::Text& child, sf::Vector2f margins = { 0.f,0.f });
 
-		virtual sf::Vector2f getElementPosition() const = 0;
 		virtual void setSortIndex(__int8 new_depth) = 0;
 		virtual __int8 getSortIndex() const = 0;
 		virtual void setVisible(bool state) = 0;
 		virtual bool getVisible() const = 0;
 		virtual void setHandleEvent(std::function<void()> handle) = 0;
-		virtual void handleEvent(sf::Event& event, sf::RenderWindow& window) = 0;
+		virtual void handleEvent(sf::Event& event, sf::RenderWindow& window, const float delta) = 0;
 		virtual void render(sf::RenderWindow& window) const = 0;
 };

@@ -4,6 +4,7 @@
 #include "elements/button.hpp"
 #include "elements/sprite.hpp"
 #include "elements/color-rect.hpp"
+#include "elements/progress-bar.hpp"
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -42,5 +43,12 @@ class GUI {
 			sf::Vector2f rect_position = { 0.f,0.f }
 		) {
 			return std::make_unique<ColorRect>(rect_color, rect_position);
+		};
+
+		inline std::unique_ptr<ProgressBar> createProgressBar(
+			sf::Texture* bar_texture,
+			sf::Vector2i bar_size
+		) {
+			return std::make_unique<ProgressBar>(bar_texture, bar_size);
 		};
 };
