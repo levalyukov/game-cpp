@@ -38,18 +38,25 @@ class Game {
 		sf::Image icon;
 		const sf::Uint8* iconData = {};
 
+		std::unique_ptr<Items> itemsContainer = std::make_unique<Items>();
 		std::unique_ptr<EventManager> eventManager = std::make_unique<EventManager>();
 		std::unique_ptr<ResourceManager> resourceManager = std::make_unique<ResourceManager>();
 		std::unique_ptr<EntityManager> entityManager = std::make_unique<EntityManager>();
-		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>();
+		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>(*itemsContainer);
 		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
 		std::unique_ptr<InventoryManager> inventoryManager = std::make_unique<InventoryManager>();
 		std::unique_ptr<EconomyManager> economyManager = std::make_unique<EconomyManager>();
 		std::unique_ptr<GloceryShopManager> gloceryShopManager = std::make_unique<GloceryShopManager>();
 		std::unique_ptr<WarehouseManager> warehouseManager = std::make_unique<WarehouseManager>();
 
-		std::unique_ptr<UI> ui = std::make_unique<UI>(*uiManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *gloceryShopManager, *warehouseManager);
-		std::unique_ptr<World> world = std::make_unique<World>(*uiManager, *entityManager, *resourceManager, *cookingManager, *inventoryManager, *economyManager, *eventManager, *ui->getInventory(), *ui->getHUD());
+		std::unique_ptr<UI> ui = std::make_unique<UI>(
+			*uiManager, *resourceManager, *cookingManager, 
+			*economyManager, *gloceryShopManager, *warehouseManager, 
+			*ordersManager);
+		std::unique_ptr<World> world = std::make_unique<World>(
+			*uiManager, *entityManager, *resourceManager, 
+			*cookingManager, *economyManager, *eventManager, 
+			*ordersManager, *itemsContainer, *ui);
 		std::unique_ptr<Tilemap> tilemap = std::make_unique<Tilemap>();
 
 		void processEvent();
