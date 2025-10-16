@@ -1,6 +1,10 @@
 #include "button.hpp"
 
-void Button::handleEvent(sf::Event& event, sf::RenderWindow& window) {
+void Button::handleEvent(
+    sf::Event& event, 
+    sf::RenderWindow& window,
+    const float delta
+) {
 	if (getVisible()) {
         if (isDisabled) {
             sprite->setTextureRect(sf::IntRect({ 0,size.y * Disabled }, size));

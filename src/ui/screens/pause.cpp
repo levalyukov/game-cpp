@@ -91,7 +91,7 @@ void Pause::initButtonContinue() {
 		auto button = static_cast<Button*>(uiManager.getElement("pause-button-continue"));
 		auto panel = static_cast<Sprite*>(uiManager.getElement("pause-panel"));
 		
-		sf::Vector2f panelPosition = panel->getElementPosition();
+		sf::Vector2f panelPosition = panel->getSprite().getPosition();
 		button->setRelativePosition(UIElement::TopCenter, panel->getSprite(), button->getSprite(), {0.f, 25});
 		button->setVisible(false);
 		button->setHandleEvent(

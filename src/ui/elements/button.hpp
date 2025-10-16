@@ -32,15 +32,14 @@ class Button : public UIElement {
 		};
 		inline sf::Sprite& getIcon() const { return *icon; };
 		inline sf::Sprite& getSprite() const { return *sprite; };
-		inline sf::Vector2f getElementPosition() const override { return sprite->getPosition(); };
 		inline void setSortIndex(__int8 new_index) override { depth = new_index; };
 		inline __int8 getSortIndex() const override { return depth; };
 		inline bool checkHover(sf::RenderWindow& window) { return sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))); };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handle) override { if (new_handle) handler = new_handle; };
-		inline void render(sf::RenderWindow& window) const override { window.draw(*sprite); if (icon) window.draw(*icon); };
-		void handleEvent(sf::Event& event, sf::RenderWindow& window) override;
+		inline void render(sf::RenderWindow& window) const override { if (sprite) window.draw(*sprite); if (icon) window.draw(*icon); };
+		void handleEvent(sf::Event& event, sf::RenderWindow& window, const float delta) override;
 
 		~Button() { sprite = nullptr; icon = nullptr; iconTexture = nullptr; };
 
@@ -59,5 +58,5 @@ class Button : public UIElement {
 		bool isVisible = true;
 		bool isDisabled = false;
 
-		__int8 depth = 0;
+		unsigned __int8 depth = 0;
 };

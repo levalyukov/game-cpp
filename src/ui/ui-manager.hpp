@@ -40,7 +40,7 @@ class UIManager {
 			};
 		};
 
-		inline void render(sf::RenderWindow& window, sf::Event& event) {
+		inline void render(sf::RenderWindow& window, sf::Event& event, const float delta) {
 			if (ui_elements.empty() && renderUI.empty()) return;
 
 			std::sort(renderUI.begin(), renderUI.end(), [](UIElement* a, UIElement* b) {
@@ -48,7 +48,7 @@ class UIManager {
 			});
 
 			for (auto& element : renderUI) {
-				element->handleEvent(event, window);
+				element->handleEvent(event, window, delta);
 				if (element->getVisible()) element->render(window);
 			};
 		};
