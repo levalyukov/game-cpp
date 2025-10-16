@@ -7,10 +7,10 @@
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
 #include "../mechanics/cooking-manager.hpp"
-#include "../mechanics/inventory-manager.hpp"
 #include "../mechanics/economy-manager.hpp"
 #include "../mechanics/glocery-shop-manager.hpp"
 #include "../mechanics/event-manager.hpp"
+#include "../mechanics/items.hpp"
 
 class Game {
 	public:
@@ -44,10 +44,10 @@ class Game {
 		std::unique_ptr<EntityManager> entityManager = std::make_unique<EntityManager>();
 		std::unique_ptr<CookingManager> cookingManager = std::make_unique<CookingManager>(*itemsContainer);
 		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
-		std::unique_ptr<InventoryManager> inventoryManager = std::make_unique<InventoryManager>();
 		std::unique_ptr<EconomyManager> economyManager = std::make_unique<EconomyManager>();
 		std::unique_ptr<GloceryShopManager> gloceryShopManager = std::make_unique<GloceryShopManager>();
 		std::unique_ptr<WarehouseManager> warehouseManager = std::make_unique<WarehouseManager>();
+		std::unique_ptr<OrdersManager> ordersManager = std::make_unique<OrdersManager>();
 
 		std::unique_ptr<UI> ui = std::make_unique<UI>(
 			*uiManager, *resourceManager, *cookingManager, 

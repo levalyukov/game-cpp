@@ -24,13 +24,13 @@ class Globals {
 		inline bool getUIOpened() const { return uiOpened; };
 
 	private:
-		const unsigned int WINDOW_WIDTH = 1280;
-		const unsigned int WINDOW_HEIGHT = 720;
+		const size_t WINDOW_WIDTH = 1280;
+		const size_t WINDOW_HEIGHT = 720;
 		const std::string WINDOW_TITLE = "Delicious Soup";
 
-		std::unique_ptr<sf::RenderWindow> window;
-		std::unique_ptr<sf::Event> event;
-		std::unique_ptr<sf::Clock> clock;
+		std::unique_ptr<sf::RenderWindow> window = nullptr;
+		std::unique_ptr<sf::Event> event = nullptr;
+		std::unique_ptr<sf::Clock> clock = nullptr;
 
 		bool paused = false;
 		bool uiOpened = false;
