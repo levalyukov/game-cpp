@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 #include "../../core/globals.hpp"
@@ -12,8 +13,8 @@ class Player : public Entity {
 			sf::Texture*&& character_walk_vertical,
 			sf::Texture*&& character_shadow
 		) : idle(std::move(*character_idle)),
-			walkHorizontal(std::move(*character_walk_horizontal)),
-			walkVertical(std::move(*character_walk_vertical)),
+			movementHorizontal(std::move(*character_walk_horizontal)),
+			movementVertical(std::move(*character_walk_vertical)),
 			shadowTexture(std::move(*character_shadow)) {
 			player->setTexture(idle);
 			player->setTextureRect(sf::IntRect(16, 0, spriteSize.x, spriteSize.y));
@@ -24,6 +25,9 @@ class Player : public Entity {
 		};
 
 		void movement(float deltaTime);
+		inline sf::Texture& getTextureIDLE() const { return idle; };
+		inline sf::Texture& getTextureMoveVertical() const { return movementVertical; };
+		inline sf::Texture& getTextureMoveHorizontal() const { return movementHorizontal; };
 		inline float getDelta() const { return savedDelta; };
 		inline void setStoppedFlag(bool _state) { stopped_flag = _state; };
 		inline bool getStoppedFlag() const { return stopped_flag; };
@@ -40,10 +44,10 @@ class Player : public Entity {
 		std::unique_ptr<sf::Sprite> player = std::make_unique<sf::Sprite>();
 		sf::Sprite shadowSprite;
 
-		sf::Texture idle;
-		sf::Texture walkHorizontal;
-		sf::Texture walkVertical;
-		sf::Texture shadowTexture;
+		sf::Texture& idle;
+		sf::Texture& movementHorizontal;
+		sf::Texture& movementVertical;
+		sf::Texture& shadowTexture;
 
 		AnimationManager anim;
 		std::string direction;

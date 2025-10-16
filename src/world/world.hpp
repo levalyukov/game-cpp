@@ -2,9 +2,9 @@
 
 #include "../entities/entity-manager.hpp"
 #include "../core/resources/resources.hpp"
-#include "../mechanics/inventory-manager.hpp"
-#include "../ui/screens/inventory.hpp"
 #include "../mechanics/event-manager.hpp"
+#include "../mechanics/orders-manager.hpp"
+#include "../ui/screens/ui.hpp"
 
 #include "characters.hpp"
 #include "nature.hpp"
@@ -17,24 +17,26 @@ class World {
 			EntityManager& entity_manager,
 			ResourceManager& resource_manager,
 			CookingManager& cooking_manager,
-			InventoryManager& inventory_manager,
 			EconomyManager& economy_manager,
 			EventManager& event_manager,
-			Inventory& inventory_ui,
-			HUD& hud_ui
+			OrdersManager& order_manager,
+			Items& items_container,
+			UI& main_ui
 		) : uiManager(ui_manager),
 			entityManager(entity_manager),
 			resourceManager(resource_manager),
 			cookingManager(cooking_manager),
-			inventoryManager(inventory_manager),
 			economyManager(economy_manager),
 			eventManager(event_manager),
-			inventoryUI(inventory_ui),
-			hud(hud_ui) {
-			characters->spawn(resourceManager, entityManager, inventoryManager, economyManager, inventoryUI, hud);
-			builds->create(resourceManager, entityManager, uiManager, cookingManager, inventoryManager, inventoryUI);
-			eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 25.f, true });
-			eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager); }, 10.f, true });
+			orderManager(order_manager),
+			items(items_container),
+			ui(main_ui) {
+			characters->spawn(resourceManager, entityManager, economyManager, *ui.getHUD());
+			builds->create(resourceManager, entityManager, uiManager, cookingManager);
+			//eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 12.25f, true });
+			//eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager, orderManager, eventManager, *ui.getOrderDisplay(), items); }, 1.5f, !true });
+			orderManager.addOrder("test-1", { 1, items.getRecipeInfo(1)->title, items.getRecipeInfo(1)->cooking_time, items.getRecipeInfo(1)->icon_path});
+			ui.getOrderDisplay()->update();
 		};
 
 		inline void render(float delta, sf::View& game_camera) {
@@ -46,15 +48,15 @@ class World {
 		~World() { characters = nullptr; nature = nullptr; builds = nullptr; };
 
 	private:
-		HUD& hud;
+		UI& ui;
+		Items& items;
 		UIManager& uiManager;
 		EntityManager& entityManager;
 		ResourceManager& resourceManager;
 		CookingManager& cookingManager;
-		InventoryManager& inventoryManager;
 		EconomyManager& economyManager;
 		EventManager& eventManager;
-		Inventory& inventoryUI;
+		OrdersManager& orderManager;
 
 		std::unique_ptr<Characters> characters = std::make_unique<Characters>();
 		std::unique_ptr<Nature> nature = std::make_unique<Nature>();

@@ -19,7 +19,7 @@ class EntityManager {
 			return distance;
 		};
 
-		inline void addEntity(std::string name, std::unique_ptr<Entity> entity) { 
+		inline void addEntity(std::string name, std::unique_ptr<Entity>&& entity) { 
 			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
 			auto result = entities.emplace(name, std::move(entity));
 			if (result.second) render_entities.push_back(result.first->second.get());

@@ -14,6 +14,7 @@ class NPC : public Entity {
 			movementVertical(std::move(*movement_vertical)),
 			movementHorizontal(std::move(*movement_horizontal)),
 			shadowTexture(std::move(*shadow_texture)) {
+			sprite = std::make_unique<sf::Sprite>();
 			sprite->setTexture(idleTexture);
 			sprite->setTextureRect(sf::IntRect({ 16,0 }, { 16,16 }));
 			sprite->setScale({ 4,4 });
@@ -23,6 +24,10 @@ class NPC : public Entity {
 
 		std::function<void()> handler_;
 		std::function<void()> event_;
+
+		inline sf::Texture& getTextureIDLE() const { return idleTexture; };
+		inline sf::Texture& getTextureMoveVertical() const { return movementVertical; };
+		inline sf::Texture& getTextureMoveHorizontal() const { return movementHorizontal; };
 		inline AnimationManager& getAnimation() { return anim; };
 		inline float getDelta() const { return deltaSaved; };
 		inline sf::Sprite& getSprite() const { return *sprite; };
@@ -38,7 +43,7 @@ class NPC : public Entity {
 		enum MouseState { Normal, Hovered, Pressed };
 		MouseState mouseState = Normal;
 
-		std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>();
+		std::unique_ptr<sf::Sprite> sprite = nullptr;
 		sf::Sprite shadow;
 		sf::Texture& idleTexture;
 		sf::Texture& movementVertical;
