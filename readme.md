@@ -58,9 +58,9 @@ mkdir build
 cd build
 
 cmake ..
-cmake --build . --config release
+make
 
-./release/main.exe
+./main
 ```
 
 ## 📜 License
