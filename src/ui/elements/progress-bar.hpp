@@ -38,7 +38,7 @@ class ProgressBar : public UIElement {
 		sf::Vector2i size;
 
 		float executionStep = 0;
-		bool processed = false; // if lambda was called
+		bool trigger = false;
 		bool process = true; 
 		bool reverse = false;
 		float max = 100.f;

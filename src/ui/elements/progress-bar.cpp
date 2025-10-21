@@ -18,9 +18,9 @@ void ProgressBar::handleEvent(
 				));
 			};
 		} else { 
-			if (!processed) {
+			if (!trigger) {
 				if (handler) handler();
-				processed = true;
+				trigger = true;
 			};
 		};
 	} else {
@@ -36,9 +36,9 @@ void ProgressBar::handleEvent(
 				));
 			};
 		} else {
-			if (!processed) {
+			if (!trigger) {
 				if (handler) handler();
-				processed = true;
+				trigger = true;
 			};
 		};
 	};
