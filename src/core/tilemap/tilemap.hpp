@@ -6,20 +6,18 @@
 class Tilemap {
 	public:
 		Tilemap();
-		void render();
+		void render(sf::RenderWindow& window);
 
 	private:
-		const int TILE_SIZE = 64;
-		const int WIDHT_MAX = 32;
-		const int HEIGH_MAX = 32;
+		const size_t TILE_SIZE = 64;
+		const sf::Vector2i MAP_SIZE = {26,18};
 		
-		sf::RenderWindow& window = Globals::instance().getWindow();
-		sf::Texture rock_texture;
-		sf::Texture water_texture;
-		sf::Texture grass_texture;
-		sf::Sprite rock_sprite;
-		sf::Sprite water_sprite;
-		sf::Sprite grass_sprite;
+		sf::Texture rockTexture;
+		sf::Texture waterTexture;
+		sf::Texture grassTexture;
+		sf::Sprite rockSprite;
+		sf::Sprite waterSprite;
+		sf::Sprite grassSprite;
 
 		void initilize();
 };

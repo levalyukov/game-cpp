@@ -5,42 +5,39 @@ Tilemap::Tilemap() {
 }
 
 void Tilemap::initilize() {
-	if (!rock_texture.loadFromFile("../../../assets/textures/location/tiles/rock.png")) return;
-	if (!water_texture.loadFromFile("../../../assets/textures/location/tiles/water.png")) return;
-	if (!grass_texture.loadFromFile("../../../assets/textures/location/tiles/grass.png")) return;
+	if (!rockTexture.loadFromFile("../../../assets/textures/location/tiles/rock.png")) return;
+	if (!waterTexture.loadFromFile("../../../assets/textures/location/tiles/water.png")) return;
+	if (!grassTexture.loadFromFile("../../../assets/textures/location/tiles/grass.png")) return;
 
-	rock_sprite.setTexture(rock_texture);
-	water_sprite.setTexture(water_texture);
-	grass_sprite.setTexture(grass_texture);
+	rockSprite.setTexture(rockTexture);
+	waterSprite.setTexture(waterTexture);
+	grassSprite.setTexture(grassTexture);
 
-	rock_sprite.setScale(4, 4);
-	water_sprite.setScale(4, 4);
-	grass_sprite.setScale(4, 4);
+	rockSprite.setScale(4, 4);
+	waterSprite.setScale(4, 4);
+	grassSprite.setScale(4, 4);
 
-	rock_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
-	water_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
-	grass_sprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
+	rockSprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
+	waterSprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
+	grassSprite.setTextureRect(sf::IntRect({ 0,0 }, { 16,16 }));
 }
 
-void Tilemap::render() {
-	for (int x = 0; x < 36; x++) {
-		for (int y = 0; y < 63; y++) {
+void Tilemap::render(sf::RenderWindow& window) {
+	for (int x = 0; x < MAP_SIZE.x; x++) {
+		for (int y = 0; y < MAP_SIZE.y; y++) {
 
-			if (x % 9 == 0) water_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			else if (y % 9 == 0) water_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			else if (x % 9 == 8) water_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			else if (y % 9 == 8) water_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+			sf::Vector2f position = { static_cast<float>(x * TILE_SIZE), static_cast<float>(y * TILE_SIZE) };
 
-			else if (x % 9 == 1 && y >= 1 && y <= 7) rock_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			else if (x % 9 == 7 && y >= 1 && y <= 7) rock_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			else if (y % 9 == 1 && x >= 1 && x <= 7) rock_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-			else if (y % 9 == 7 && x >= 1 && x <= 7) rock_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+			if (y % 8 == 0) rockSprite.setPosition(position);
+			else if (y % 8 == 1) rockSprite.setPosition(position);
+			else if (x % 8 == 0) rockSprite.setPosition(position);
+			else if (x % 8 == 1) rockSprite.setPosition(position);
 
-			else grass_sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+			else grassSprite.setPosition(position);
 
-			window.draw(rock_sprite);
-			window.draw(water_sprite);
-			window.draw(grass_sprite);
+			window.draw(rockSprite);
+			//window.draw(waterSprite);
+			window.draw(grassSprite);
 		}
 	}
 }
