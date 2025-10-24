@@ -21,8 +21,8 @@ class Sprite : public UIElement {
 
 		inline sf::Sprite& getSprite() const { return *sprite; }
 		inline void setVisible(bool state) override { isVisible = state; };
-		inline void setSortIndex(__int8 new_z_index) override { depth = new_z_index; };
-		inline __int8 getSortIndex() const override { return depth; };
+		inline void setSortIndex(uint8_t new_z_index) override { depth = new_z_index; };
+		inline uint8_t getSortIndex() const override { return depth; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> handle) override { if (handle) handler = handle; };
 		inline void handleEvent(sf::Event& event, sf::RenderWindow& window, const float delta) override { if (handler) handler(); };
@@ -33,5 +33,5 @@ class Sprite : public UIElement {
 		sf::Texture& texture;
 		sf::Vector2f position;
 		bool isVisible = true;
-		unsigned __int8 depth = 0;
+		uint8_t depth = 0;
 };

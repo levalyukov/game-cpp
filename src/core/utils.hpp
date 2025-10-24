@@ -10,8 +10,8 @@ class Utils {
 	public:
 		Utils() {};
 		~Utils() {};
-		Utils(Utils& const) = delete;
-		Utils& operator=(Utils& const) = delete;
+		Utils(const Utils&) = delete;
+		Utils& operator=(const Utils&) = delete;
 		
 		static Utils& instance() {
 			static Utils u;

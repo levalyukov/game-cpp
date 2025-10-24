@@ -25,22 +25,22 @@ void GloceryShop::initElements() {
 };
 
 void GloceryShop::initLayers() {
-	if (!uiManager.getElement("glocery-panel")) return;
-	if (!uiManager.getElement("glocery-close-button")) return;
-	if (!uiManager.getElement("glocery-page-label")) return;
-
+	if (!uiManager.getElement("glocery-background")) return;
 	auto background = static_cast<ColorRect*>(uiManager.getElement("glocery-background"));
 	background->setSortIndex(SORT_INDEX_BACKGROUND);
 
+	if (!uiManager.getElement("glocery-panel")) return;
 	auto panel = static_cast<Sprite*>(uiManager.getElement("glocery-panel"));
 	panel->setGlobalPosition(UIElement::MiddleCenter, panel->getSprite());
 	panel->setSortIndex(SORT_INDEX_PANEL);
 
+	if (!uiManager.getElement("glocery-close-button")) return;
 	auto closeButton = static_cast<Button*>(uiManager.getElement("glocery-close-button"));
 	sf::Sprite& closeButtonSprite = closeButton->getSprite();
 	closeButton->setRelativePosition(UIElement::TopRight, panel->getSprite(), closeButtonSprite, { 80, -64 });
 	closeButton->setSortIndex(SORT_INDEX_BUTTON);
 
+	if (!uiManager.getElement("glocery-page-label")) return;
 	auto pageLabel = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
 	pageLabel->setRelativePositionText(UIElement::BottomCenter, panel->getSprite(), pageLabel->getText(), {0, -24});
 	pageLabel->setSortIndex(SORT_INDEX_TEXT);

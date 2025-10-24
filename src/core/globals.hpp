@@ -11,8 +11,8 @@ class Globals {
 		};
 		
 		~Globals() { window = nullptr; event = nullptr; clock = nullptr; };
-		Globals(Globals& const) = delete;
-		Globals& operator=(Globals& const) = delete;
+		Globals(const Globals&) = delete;
+		Globals& operator=(const Globals&) = delete;
 
 		inline static Globals& instance() { static Globals gl; return gl; };
 		inline sf::RenderWindow& getWindow() const { return *window; };

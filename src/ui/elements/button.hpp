@@ -32,8 +32,8 @@ class Button : public UIElement {
 		};
 		inline sf::Sprite& getIcon() const { return *icon; };
 		inline sf::Sprite& getSprite() const { return *sprite; };
-		inline void setSortIndex(__int8 new_index) override { depth = new_index; };
-		inline __int8 getSortIndex() const override { return depth; };
+		inline void setSortIndex(uint8_t new_index) override { depth = new_index; };
+		inline uint8_t getSortIndex() const override { return depth; };
 		inline bool checkHover(sf::RenderWindow& window) { return sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window))); };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
@@ -58,5 +58,5 @@ class Button : public UIElement {
 		bool isVisible = true;
 		bool isDisabled = false;
 
-		unsigned __int8 depth = 0;
+		uint8_t depth = 0;
 };

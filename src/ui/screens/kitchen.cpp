@@ -41,7 +41,8 @@ void KitchenMenu::initCloseButton() {
 	sf::Sprite& closeButtonSprite = closeButton->getSprite();
 	closeButton->setGlobalPosition(UIElement::TopRight, closeButtonSprite);
 	closeButtonSprite.setPosition(closeButtonSprite.getPosition().x + -240, closeButtonSprite.getPosition().y + 128);
-	uiManager.getElement("kitchen-ui-close-button")->setHandleEvent([&]() { setVisible(false); currentRecipe.clear(); });
+	closeButton->setHandleEvent([&]() { setVisible(false); currentRecipe.clear(); });
+	closeButton->setSortIndex(SORT_INDEX_BUTTON);
 };
 
 void KitchenMenu::initRecipeButtons() {
@@ -56,19 +57,21 @@ void KitchenMenu::initRecipeButtons() {
 		uiManager.addElement(buttonName, uiManager.gui.createButton(resourceManager.getTexture("kitchen-ui-buttons"), { 73,18 }, { 0,24 }));
 		uiManager.addElement(buttonNameLabel, uiManager.gui.createLabel(pair.second.title, resourceManager.getFont("nunito"), 22, sf::Color::White));
 
+		if (!uiManager.getElement("kitchen-ui-panel")) return;
 		auto panel = static_cast<Sprite*>(uiManager.getElement("kitchen-ui-panel"));
-		auto buttonRecipe = static_cast<Button*>(uiManager.getElement(buttonName));
-		auto labelRecipe = static_cast<Label*>(uiManager.getElement(buttonNameLabel));
-
-		sf::Sprite& buttonSprite = buttonRecipe->getSprite();
 		sf::Sprite& panelSprite = panel->getSprite();
-		sf::Text& labelText = labelRecipe->getText();
 
+		if (!uiManager.getElement(buttonName)) return;
+		auto buttonRecipe = static_cast<Button*>(uiManager.getElement(buttonName));
+		sf::Sprite& buttonSprite = buttonRecipe->getSprite();
 		buttonRecipe->setSortIndex(SORT_INDEX_BUTTON);
 		buttonRecipe->setVisible(false);
 		buttonRecipe->setRelativePosition(UIElement::TopLeft, panelSprite, buttonSprite, { 16,buttonPosY + (buttonSprite.getGlobalBounds().height * id) + 8 });
 		buttonRecipe->setHandleEvent([&]() { getRecipeInfo(pair.first); currentRecipe = pair.first; });
 		
+		if (!uiManager.getElement(buttonNameLabel)) return;
+		auto labelRecipe = static_cast<Label*>(uiManager.getElement(buttonNameLabel));
+		sf::Text& labelText = labelRecipe->getText();
 		labelRecipe->setRelativePositionText(UIElement::TopLeft, buttonSprite, labelText, { 18.f,18.f });
 		labelRecipe->setVisible(false);
 		labelRecipe->setSortIndex(SORT_INDEX_TEXT);

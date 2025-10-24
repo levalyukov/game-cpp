@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ui-element.hpp";
+#include "ui-element.hpp"
 
 #include <iostream>
 #include <functional>
@@ -24,8 +24,8 @@ class ProgressBar : public UIElement {
 		inline void setValues(float max_val = 100.f, float min_val = 0.f) { max = max_val; min = min_val; counter = max; };
 		inline void setMode(bool state) { reverse = state; };
 		inline sf::Sprite& getSprite() const { return *bar; };
-		inline void setSortIndex(__int8 new_depth) override { depth = new_depth; };
-		inline __int8 getSortIndex() const override { return depth; };
+		inline void setSortIndex(uint8_t new_depth) override { depth = new_depth; };
+		inline uint8_t getSortIndex() const override { return depth; };
 		inline void setVisible(bool state) override { isVisible = state; };
 		inline bool getVisible() const override { return isVisible; };
 		inline void setHandleEvent(std::function<void()> new_handler) { handler = new_handler; };
@@ -47,5 +47,5 @@ class ProgressBar : public UIElement {
 		float timer = 0.f;
 
 		bool isVisible = true;
-		unsigned __int8 depth = 0;
+		uint8_t depth = 0;
 };
