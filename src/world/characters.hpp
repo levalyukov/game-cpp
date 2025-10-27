@@ -114,6 +114,9 @@ class Characters {
 			resourceManager.loadTexture("character-idle", "../../../assets/textures/entity/player/character-idle.png");
 			resourceManager.loadTexture("character-walk-horizontal", "../../../assets/textures/entity/player/character-walk-horizontal.png");
 			resourceManager.loadTexture("character-walk-vertical", "../../../assets/textures/entity/player/character-walk-vertical.png");
+			resourceManager.loadTexture("character-item-idle", "../../../assets/textures/entity/player/character-item-idle.png");
+			resourceManager.loadTexture("character-walk-item-horizontal", "../../../assets/textures/entity/player/character-walk-item-horizontal.png");
+			resourceManager.loadTexture("character-walk-item-vertical", "../../../assets/textures/entity/player/character-walk-item-vertical.png");
 			resourceManager.loadTexture("entity-shadow", "../../../assets/textures/entity/entity-shadow.png");
 
 			entityManager.addEntity(
@@ -122,6 +125,9 @@ class Characters {
 					resourceManager.getTexture("character-idle"),
 					resourceManager.getTexture("character-walk-horizontal"),
 					resourceManager.getTexture("character-walk-vertical"),
+					resourceManager.getTexture("character-item-idle"),
+					resourceManager.getTexture("character-walk-item-horizontal"),
+					resourceManager.getTexture("character-walk-item-vertical"),
 					resourceManager.getTexture("entity-shadow")
 			));
 		};
@@ -255,9 +261,8 @@ class Characters {
 							eventManager.addEvent(
 								"order-" + npc_id, { [&orderManager, &ordersDisplay, &items]() {
 									std::cout << "The customer has placed an order: " + std::to_string(customer_order) << std::endl;
-
 									auto recipe = items.getRecipeInfo(customer_order);
-									orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cooking_time, recipe->icon_path });
+									orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cook_time, recipe->icon_path });
 									ordersDisplay.update();
 								}, 1.f }
 							);

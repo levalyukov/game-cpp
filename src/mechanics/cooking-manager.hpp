@@ -9,7 +9,6 @@
 
 class CookingManager {
 	public:
-
 		CookingManager(Items& items_container) : items(items_container) {
 			addRecipe("borsch", 1);
 			addRecipe("chicken", 2);
@@ -36,15 +35,19 @@ class CookingManager {
 		};
 
 		inline void startCookProcess(const std::string nameRecipe) {
-			recipeTime = getRecipe(nameRecipe)->cooking_time;
+			std::string lower_name = nameRecipe;
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) {return std::tolower(c); });
+			recipeTime = getRecipe(lower_name)->cook_time;
 			cookTimer = 0.f;
 			cookedFlag = false;
 			cookingFlag = true;
+			recipeName = lower_name;
 		};
 
 		inline void cookingProcess(const float delta) {
 			if (cookingFlag) {
 				cookTimer += delta;
+				std::cout << cookTimer << std::endl;
 				if (cookTimer >= recipeTime) {
 					cookingFlag = false;
 					cookedFlag = true;
@@ -54,12 +57,14 @@ class CookingManager {
 			};
 		};
 
-		inline void resetCookeedFlag() { cookedFlag = false; };
+		inline void resetCookeedFlag() { cookedFlag = false; recipeName.clear(); };
 		inline bool getCookingFlag() const { return cookingFlag; };
 		inline bool getCookeedFlag() const { return cookedFlag; };
+		inline std::string getCookingRecipeName() const { return recipeName; }
 
 	private:
 		Items& items;
+		std::string recipeName;
 		bool cookingFlag = false;
 		bool cookedFlag = false;
 		float cookTimer = 0.f;

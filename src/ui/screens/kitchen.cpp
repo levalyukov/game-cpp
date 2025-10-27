@@ -88,13 +88,11 @@ void KitchenMenu::initRecipeInfo() {
 	/* Cooking button */
 	cookingButton->setSortIndex(SORT_INDEX_BUTTON);
 	cookingButton->setRelativePosition(UIElement::BottomRight, panel->getSprite(), cookingButton->getSprite(), { -16, -16 });
-	cookingButton->setHandleEvent(
-		[&]() {
-			setVisible(false);
-			cooking.startCookProcess(currentRecipe);
-			currentRecipe.clear();
-		}
-	);
+	cookingButton->setHandleEvent([&]() {
+		setVisible(false);
+		cooking.startCookProcess(currentRecipe);
+		currentRecipe.clear();
+	});
 
 	cookingButtonLabel->setSortIndex(SORT_INDEX_TEXT);
 	cookingButtonLabel->setPosition(

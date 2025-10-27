@@ -6,29 +6,33 @@
 class Items {
 	public:
 		struct Item {
+			uint8_t id;
 			std::string icon;
 			unsigned int price;
 		};
 
 		struct CookRecipe {
+			uint8_t id;
 			std::string title;
 			std::string description;
 			std::string icon_path;
-			unsigned int output_item = 0;
-			float cooking_time = 0.f;
+			unsigned int output = 0;
+			float cook_time = 0.f;
 
 			CookRecipe() = default;
 			CookRecipe(
-				const std::string item_title,
-				const std::string item_description,
-				const std::string item_icon_path,
-				const unsigned int output,
-				const float cook_time
-			) : title(item_title),
-				description(item_description),
-				output_item(output),
-				icon_path(item_icon_path),
-				cooking_time(cook_time) {};
+				const uint8_t _id,
+				const std::string _title,
+				const std::string _description,
+				const std::string _icon_path,
+				const unsigned int _output,
+				const float _cook_time
+			) : id(_id),
+				title(_title),
+				description(_description),
+				output(_output),
+				icon_path(_icon_path),
+				cook_time(_cook_time) {};
 		};
 
 		inline bool hasRecipe(const unsigned __int16 id) {
@@ -50,16 +54,16 @@ class Items {
 
 	private:
 		std::map<unsigned __int16, Item> items = {
-			{1, {"../../../assets/textures/ui/icons/soup-1.png", 100}},
-			{2, {"../../../assets/textures/ui/icons/soup-2.png", 100}},
-			{3, {"../../../assets/textures/ui/icons/soup-3.png", 100}},
-			{4, {"../../../assets/textures/ui/icons/soup-4.png", 100}},
+			{1, {1, "../../../assets/textures/ui/icons/soup-1.png", 100}},
+			{2, {2, "../../../assets/textures/ui/icons/soup-2.png", 100}},
+			{3, {3, "../../../assets/textures/ui/icons/soup-3.png", 100}},
+			{4, {4, "../../../assets/textures/ui/icons/soup-4.png", 100}},
 		};
 
 		std::map<unsigned __int16, CookRecipe> recipes = {
-			{1, {"Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 5.f}},
-			{2, {"Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 5.f}},
-			{3, {"Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 5.f}},
-			{4, {"Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 5.f}},
+			{1, {1, "Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f}},
+			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 5.f}},
+			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 5.f}},
+			{4, {4, "Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 5.f}},
 		};
 };

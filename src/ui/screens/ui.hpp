@@ -7,6 +7,8 @@
 #include "warehouse.hpp"
 #include "orders.hpp"
 
+#include <memory>
+
 class UI {
 	public: 
 		UI(

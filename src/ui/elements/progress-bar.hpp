@@ -21,6 +21,8 @@ class ProgressBar : public UIElement {
 
 		std::function<void()> handler;
 
+		inline float getMaxValue() const { return max; };
+		inline float getMinValue() const { return min; };
 		inline void setValues(float max_val = 100.f, float min_val = 0.f) { max = max_val; min = min_val; counter = max; };
 		inline void setMode(bool state) { reverse = state; };
 		inline sf::Sprite& getSprite() const { return *bar; };

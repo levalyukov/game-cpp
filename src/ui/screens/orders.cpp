@@ -13,7 +13,7 @@ void OrdersDisplay::initResources() {
 
 void OrdersDisplay::update() {
 	if (ordersManager.orders.size() > 0) {
-		for (int id = 0; id < MAX_ORDERS; id++) {
+		for (uint8_t id = 0; id < MAX_ORDERS; id++) {
 			std::string orderName = "order-" + std::to_string(id);
 			std::string orderIcon = "order-" + std::to_string(id) + "-icon";
 			std::string orderTitle = "order-title" + std::to_string(id);
@@ -28,8 +28,8 @@ void OrdersDisplay::update() {
 		};
 	};
 
-	unsigned int id = 0;
-	unsigned int buttonX = 0;
+	uint8_t id = 0;
+	uint8_t buttonX = 0;
 	for (const auto& order : ordersManager.orders) {
 		buttonX += 8;
 		std::string orderName = "order-" + std::to_string(id);

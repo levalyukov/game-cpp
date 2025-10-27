@@ -1,9 +1,10 @@
 #pragma once
 
-#include <iostream>
+#include <memory>
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 #include "../../core/globals.hpp"
+#include "../../mechanics/items.hpp"
 
 class Player : public Entity {
 	public:
@@ -11,11 +12,18 @@ class Player : public Entity {
 			sf::Texture*&& character_idle,
 			sf::Texture*&& character_walk_horizontal,
 			sf::Texture*&& character_walk_vertical,
+			sf::Texture*&& character_item_idle,
+			sf::Texture*&& character_item_horizontal,
+			sf::Texture*&& character_item_vertical,
 			sf::Texture*&& character_shadow
 		) : idle(std::move(*character_idle)),
 			movementHorizontal(std::move(*character_walk_horizontal)),
 			movementVertical(std::move(*character_walk_vertical)),
+			itemIdle(std::move(*character_item_idle)),
+			movementItemHorizontal(std::move(*character_item_horizontal)),
+			movementItemVertical(std::move(*character_item_vertical)),
 			shadowTexture(std::move(*character_shadow)) {
+			player = std::make_unique<sf::Sprite>();
 			player->setTexture(idle);
 			player->setTextureRect(sf::IntRect(16, 0, spriteSize.x, spriteSize.y));
 			player->setPosition({ (25 * 64) / 2,(17 * 64) / 2 });
@@ -25,6 +33,8 @@ class Player : public Entity {
 		};
 
 		void movement(float deltaTime);
+		void setSelectedItem(uint8_t new_item, Items& items);
+		inline uint8_t getSelectedItem() const { return selectedItem; };
 		inline sf::Texture& getTextureIDLE() const { return idle; };
 		inline sf::Texture& getTextureMoveVertical() const { return movementVertical; };
 		inline sf::Texture& getTextureMoveHorizontal() const { return movementHorizontal; };
@@ -41,7 +51,9 @@ class Player : public Entity {
 	
 	private:
 		sf::Vector2i spriteSize{ 16,16 };
-		std::unique_ptr<sf::Sprite> player = std::make_unique<sf::Sprite>();
+		std::unique_ptr<sf::Sprite> player = nullptr;
+		std::unique_ptr<sf::Sprite> itemSprite = nullptr;
+		std::unique_ptr<sf::Texture> itemTexture = nullptr;
 		sf::Sprite shadowSprite;
 
 		sf::Texture& idle;
@@ -49,12 +61,17 @@ class Player : public Entity {
 		sf::Texture& movementVertical;
 		sf::Texture& shadowTexture;
 
+		sf::Texture& itemIdle;
+		sf::Texture& movementItemHorizontal;
+		sf::Texture& movementItemVertical;
+
 		AnimationManager anim;
 		std::string direction;
 		std::string currentDirection;
 		std::string oldDirection;
 
-		int currentFrame = 0;
+		uint8_t selectedItem = 0;
+		uint8_t currentFrame = 0;
 		float animationTimer = 0.0f;
 		float savedDelta = 0.f;
 
