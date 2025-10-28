@@ -12,20 +12,18 @@ void OrdersDisplay::initResources() {
 };
 
 void OrdersDisplay::update() {
-	if (ordersManager.orders.size() > 0) {
-		for (uint8_t id = 0; id < MAX_ORDERS; id++) {
-			std::string orderName = "order-" + std::to_string(id);
-			std::string orderIcon = "order-" + std::to_string(id) + "-icon";
-			std::string orderTitle = "order-title" + std::to_string(id);
+	for (uint8_t id = 0; id < MAX_ORDERS; id++) {
+		std::string orderName = "order-" + std::to_string(id);
+		std::string orderIcon = "order-" + std::to_string(id) + "-icon";
+		std::string orderTitle = "order-title" + std::to_string(id);
 
-			if (!uiManager.getElement(orderName)) break;
-			if (!uiManager.getElement(orderIcon)) break;
-			if (!uiManager.getElement(orderTitle)) break;
+		if (!uiManager.getElement(orderName)) break;
+		if (!uiManager.getElement(orderIcon)) break;
+		if (!uiManager.getElement(orderTitle)) break;
 
-			uiManager.removeElement(orderName);
-			uiManager.removeElement(orderIcon);
-			uiManager.removeElement(orderTitle);
-		};
+		uiManager.removeElement(orderName);
+		uiManager.removeElement(orderIcon);
+		uiManager.removeElement(orderTitle);
 	};
 
 	uint8_t id = 0;
@@ -67,9 +65,9 @@ void OrdersDisplay::update() {
 			orderProgressBar->setSortIndex(SORT_INDEX_PROGRESS_BAR);
 			orderProgressBar->getSprite().setScale(3.5, 3.5);
 			orderProgressBar->setRelativePosition(UIElement::BottomCenter, orderBlock->getSprite(), orderProgressBar->getSprite(), { 0, -8 });
-			orderProgressBar->setValues(100, 0);
+			orderProgressBar->setValues(5, 0);
 			orderProgressBar->setMode(true);
-			orderProgressBar->setHandleEvent([]() {std::cout << "Progress bar handler!\n"; });
+			orderProgressBar->setHandleEvent([&]() {ordersManager.removeOrder(order.first); this->update();});
 		} else uiManager.removeElement(orderProgress);
 
 		id++;
