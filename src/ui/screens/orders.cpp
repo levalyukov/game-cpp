@@ -65,7 +65,7 @@ void OrdersDisplay::update() {
 			orderProgressBar->setSortIndex(SORT_INDEX_PROGRESS_BAR);
 			orderProgressBar->getSprite().setScale(3.5, 3.5);
 			orderProgressBar->setRelativePosition(UIElement::BottomCenter, orderBlock->getSprite(), orderProgressBar->getSprite(), { 0, -8 });
-			orderProgressBar->setValues(5, 0);
+			orderProgressBar->setValues(config.customer_wait, 0);
 			orderProgressBar->setMode(true);
 			orderProgressBar->setHandleEvent([&]() {ordersManager.removeOrder(order.first); this->update();});
 		} else uiManager.removeElement(orderProgress);

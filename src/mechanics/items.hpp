@@ -18,6 +18,7 @@ class Items {
 			std::string icon_path;
 			unsigned int output = 0;
 			float cook_time = 0.f;
+			float customer_wait = 0.f;
 
 			CookRecipe() = default;
 			CookRecipe(
@@ -26,13 +27,15 @@ class Items {
 				const std::string _description,
 				const std::string _icon_path,
 				const unsigned int _output,
-				const float _cook_time
+				const float _cook_time,
+				const float _customer_wait
 			) : id(_id),
 				title(_title),
 				description(_description),
 				output(_output),
 				icon_path(_icon_path),
-				cook_time(_cook_time) {};
+				cook_time(_cook_time),
+				customer_wait(_customer_wait) {};
 		};
 
 		inline bool hasRecipe(const unsigned __int16 id) {
@@ -61,9 +64,9 @@ class Items {
 		};
 
 		std::map<unsigned __int16, CookRecipe> recipes = {
-			{1, {1, "Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f}},
-			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 5.f}},
-			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 5.f}},
-			{4, {4, "Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 5.f}},
+			{1, {1, "Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f, 60.f}},
+			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 5.f, 60.f}},
+			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 5.f, 60.f}},
+			{4, {4, "Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 5.f, 60.f}},
 		};
 };

@@ -262,7 +262,7 @@ class Characters {
 								"order-" + npc_id, { [&orderManager, &ordersDisplay, &items]() {
 									std::cout << "The customer has placed an order: " + std::to_string(customer_order) << std::endl;
 									auto recipe = items.getRecipeInfo(customer_order);
-									orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cook_time, recipe->icon_path });
+									orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cook_time, recipe->icon_path, recipe->customer_wait });
 									ordersDisplay.update();
 								}, 1.f }
 							);

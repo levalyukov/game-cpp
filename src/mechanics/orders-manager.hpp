@@ -12,6 +12,7 @@ class OrdersManager {
 			std::string title;
 			float timeout = 0;
 			const std::string iconPath;
+			float customer_wait = 0.f;
 			bool cookeed = false;
 		};
 
