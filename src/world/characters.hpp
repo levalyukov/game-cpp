@@ -72,9 +72,9 @@ class Characters {
 		};
 
 		inline std::string generetingNewPasserbyID(EntityManager& entityManager) {
-			unsigned __int16 id = 0;
-			unsigned __int16 gen_id = 0;
-			unsigned __int16 attempts = 0;
+			uint16_t id = 0;
+			uint16_t gen_id = 0;
+			uint16_t attempts = 0;
 			while (attempts < 10) {
 				gen_id = utils.rangeRandom(1, 3);
 				if (entityManager.getEntity("npc-" + std::to_string(gen_id))) attempts++;
@@ -83,9 +83,9 @@ class Characters {
 		};
 
 		inline std::string generetingNewCustomerID(EntityManager& entityManager) {
-			unsigned __int16 id = 0;
-			unsigned __int16 gen_id = 0;
-			unsigned __int16 attempts = 0;
+			uint16_t id = 0;
+			uint16_t gen_id = 0;
+			uint16_t attempts = 0;
 			while (attempts < 10) {
 				gen_id = utils.rangeRandom(1, 2);
 				if (entityManager.getEntity("npc-customer-" + std::to_string(gen_id))) attempts++;

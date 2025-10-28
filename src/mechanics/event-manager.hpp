@@ -56,6 +56,7 @@ class EventManager {
 					if (!config.triggered && current_time >= config.next_trigger) {
 						config.triggered = true;
 						config.lambda();
+						//removeEvent(event.first);
 					};
 				};
 			};

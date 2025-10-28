@@ -85,6 +85,14 @@ class Builds {
 						auto player = static_cast<Player*>(entityManager.getEntity("player"));
 						if (player->getSelectedItem() != 0) return;
 						player->setSelectedItem(cookingManager.getRecipe(cookingManager.getCookingRecipeName())->id, items);
+						
+						if (orderManager.orders.empty()) return;
+						for (auto& order : orderManager.orders) {
+							if (orderManager.getOrder(order.first)->id == player->getSelectedItem()) {
+								orderManager.getOrder(order.first)->cookeed = true;
+								break;
+							};
+						}; orderDisplay.update();
 					};
 				};
 			});

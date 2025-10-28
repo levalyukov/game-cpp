@@ -43,7 +43,7 @@ void OrdersDisplay::update() {
 		if (orderTexture) uiManager.addElement(orderName, uiManager.gui.createSprite(orderTexture));
 		if (resourceManager.getTexture(orderIcon)) uiManager.addElement(orderIcon, uiManager.gui.createSprite(resourceManager.getTexture(orderIcon)));
 		if (!config.title.empty()) uiManager.addElement(orderTitle, uiManager.gui.createLabel(config.title, resourceManager.getFont("nunito"), 22, sf::Color::Black));
-		uiManager.addElement(orderProgress, uiManager.gui.createProgressBar(resourceManager.getTexture("order-progress"), {32,3}));
+		if (!config.cookeed) uiManager.addElement(orderProgress, uiManager.gui.createProgressBar(resourceManager.getTexture("order-progress"), {32,3}));
 
 		if (!uiManager.getElement(orderName)) return;
 		auto orderBlock = static_cast<Sprite*>(uiManager.getElement(orderName));
@@ -62,13 +62,15 @@ void OrdersDisplay::update() {
 		orderTitleLabel->setRelativePositionText(UIElement::BottomCenter, orderBlock->getSprite(), orderTitleLabel->getText(), { 0,-32 });
 
 		if (!uiManager.getElement(orderProgress)) return;
-		auto orderProgressBar = static_cast<ProgressBar*>(uiManager.getElement(orderProgress));
-		orderProgressBar->setSortIndex(SORT_INDEX_PROGRESS_BAR);
-		orderProgressBar->getSprite().setScale(3.5, 3.5);
-		orderProgressBar->setRelativePosition(UIElement::BottomCenter, orderBlock->getSprite(), orderProgressBar->getSprite(), { 0, -8 });
-		orderProgressBar->setValues(100, 0);
-		orderProgressBar->setMode(true);
-		orderProgressBar->setHandleEvent([]() {std::cout << "Progress bar handler!\n"; });
+		if (!config.cookeed) {
+			auto orderProgressBar = static_cast<ProgressBar*>(uiManager.getElement(orderProgress));
+			orderProgressBar->setSortIndex(SORT_INDEX_PROGRESS_BAR);
+			orderProgressBar->getSprite().setScale(3.5, 3.5);
+			orderProgressBar->setRelativePosition(UIElement::BottomCenter, orderBlock->getSprite(), orderProgressBar->getSprite(), { 0, -8 });
+			orderProgressBar->setValues(100, 0);
+			orderProgressBar->setMode(true);
+			orderProgressBar->setHandleEvent([]() {std::cout << "Progress bar handler!\n"; });
+		} else uiManager.removeElement(orderProgress);
 
 		id++;
 	};
