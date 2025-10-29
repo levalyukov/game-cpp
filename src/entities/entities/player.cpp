@@ -59,34 +59,31 @@ void Player::movement(const float delta) {
 			float animationSpeed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_ANIM : WALK_ANIM;
 			if (selectedItem > 0) animationSpeed = WALK_ANIM * 1.5;
 
-			sf::Texture& targetTexture = (currentDirection == "up" || currentDirection == "down") ? movementVertical : movementHorizontal;
-			if (selectedItem > 0) targetTexture = (currentDirection == "up" || currentDirection == "down") ? movementItemVertical : movementItemHorizontal;
-			else targetTexture = (currentDirection == "up" || currentDirection == "down") ? movementVertical : movementHorizontal;
+			bool hasItem = selectedItem > 0;
+			bool isVertical = (currentDirection == "up" || currentDirection == "down");
 
-			if (currentDirection == "up") anim.update(*player, targetTexture, { 0,16 }, { 16,16 }, animationSpeed, 3, delta);
-			if (currentDirection == "down") anim.update(*player, targetTexture, { 0,0 }, { 16,16 }, animationSpeed, 3, delta); 
-			if (currentDirection == "left") anim.update(*player, targetTexture, { 16,0 }, { 16,16 }, animationSpeed, 3, delta);
-			if (currentDirection == "right") anim.update(*player, targetTexture, { 0,16 }, { 16,16 }, animationSpeed, 3, delta);
+			auto& animationSet = hasItem ?
+				(isVertical ? movementItemVertical : movementItemHorizontal) :
+				(isVertical ? movementVertical : movementHorizontal);
+
+			sf::Vector2i offset;
+			if (currentDirection == "up") offset = { 0,16 };
+			else if (currentDirection == "down") offset = { 0,0 };
+			else if (currentDirection == "left") offset = { 16,0 };
+			else offset = { 0,16 };
+
+			anim.update(*player, animationSet, offset, { 16,16 }, animationSpeed, 3, delta);
 		} else {
 			if (selectedItem == 0) player->setTexture(idle);
 			else player->setTexture(itemIdle);
-			if (currentDirection == "up") {
-				player->setTextureRect(sf::IntRect(0, 0, 16, 16));
-				oldVectorUP = vectorUP;
-				animationTimer = 0.0;
-			} if (currentDirection == "down") {
-				player->setTextureRect(sf::IntRect(16, 0, 16, 16));
-				oldVectorDOWN = vectorDOWN;
-				animationTimer = 0.0;
-			} if (currentDirection == "left") {
-				player->setTextureRect(sf::IntRect(0, 16, 16, 16));
-				oldVectorLEFT = vectorLEFT;
-				animationTimer = 0.0;
-			} if (currentDirection == "right") {
-				player->setTextureRect(sf::IntRect(16, 16, 16, 16));
-				oldVectorRIGHT = vectorRIGHT;
-				animationTimer = 0.0;
-			};
+
+			sf::Vector2i offset;
+			if (currentDirection == "up") { offset = { 0,0 }; oldVectorUP = vectorUP; }
+			else if (currentDirection == "down") { offset = { 16,0 }; oldVectorDOWN = vectorDOWN; }
+			else if (currentDirection == "left") { offset = { 0,16 }; oldVectorLEFT = vectorLEFT; }
+			else { offset = { 16,16 }; oldVectorRIGHT = vectorRIGHT; }
+
+			player->setTextureRect(sf::IntRect(offset, {16,16}));
 		};
 	};
 };
