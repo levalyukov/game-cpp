@@ -35,7 +35,7 @@ class World {
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, orderManager, *ui.getOrderDisplay(), items_container);
 			//eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 12.25f, true });
 			//eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager, orderManager, eventManager, *ui.getOrderDisplay(), items); }, 1.5f, !true });
-			orderManager.addOrder("test-1", { 1, items.getRecipeInfo(1)->title, items.getRecipeInfo(1)->cook_time, items.getRecipeInfo(1)->icon_path});
+			orderManager.addOrder("test-1", { 1, items.getRecipeInfo(1)->title, items.getRecipeInfo(1)->cook_time, items.getRecipeInfo(1)->icon_path, 100});
 			ui.getOrderDisplay()->update();
 		};
 

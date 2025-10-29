@@ -10,9 +10,9 @@ class OrdersManager {
 		struct Order {
 			unsigned int id;
 			std::string title;
-			float timeout = 0;
+			float timeout;
 			const std::string iconPath;
-			float customer_wait = 0.f;
+			float customer_wait;
 			bool cookeed = false;
 		};
 

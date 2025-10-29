@@ -29,6 +29,7 @@ class Builds {
 		inline void initResources(ResourceManager& resourceManager) {
 			resourceManager.loadTexture("kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
 			resourceManager.loadTexture("warehouse", "../../../assets/textures/entity/builds/warehouse/warehouse.png");
+			resourceManager.loadTexture("trashbox", "../../../assets/textures/entity/builds/trashbox/trashbox.png");
 		};
 
 		inline void initBuilds(
@@ -39,6 +40,7 @@ class Builds {
 		) {
 			entityManager.addEntity("kitchen", std::make_unique<Build>(resourceManager.getTexture("kitchen"), sf::Vector2f({ 512.f,512.f }), sf::Vector2i({ 16,16 })));
 			entityManager.addEntity("warehouse", std::make_unique<Build>(resourceManager.getTexture("warehouse"), sf::Vector2f({ 640.f,640.f }), sf::Vector2i({ 16,16 })));
+			entityManager.addEntity("trashbox", std::make_unique<Build>(resourceManager.getTexture("trashbox"), sf::Vector2f({ 740.f,740.f }), sf::Vector2i({ 16,16 })));
 		};
 
 		inline void initParameters(
@@ -52,6 +54,7 @@ class Builds {
 		) {
 			initKitchen(entityManager, uiManager, cookingManager, orderManager, orderDisplay, items);
 			initWarehouse(entityManager, uiManager);
+			initTrashbox(entityManager, items);
 		};
 
 		inline void initKitchen(
@@ -62,6 +65,7 @@ class Builds {
 			OrdersDisplay& orderDisplay,
 			Items& items
 		) {
+			if (!entityManager.getEntity("kitchen")) return;
 			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
 			kitchen->setHandler([&]() {
 				if (Globals::instance().getUIOpened()) return;
@@ -102,6 +106,7 @@ class Builds {
 			EntityManager& entityManager,
 			UIManager& uiManager
 		) {
+			if (!entityManager.getEntity("warehouse")) return;
 			auto warehouse = static_cast<Build*>(entityManager.getEntity("warehouse"));
 			warehouse->setHandler([&]() {
 				if (Globals::instance().getUIOpened()) return;
@@ -119,4 +124,19 @@ class Builds {
 				};
 			});
 		};
+
+		inline void initTrashbox(
+			EntityManager& entityManager,
+			Items& items
+		) {
+			if (!entityManager.getEntity("player")) return;
+			if (!entityManager.getEntity("trashbox")) return;
+			auto trashbox = static_cast<Build*>(entityManager.getEntity("trashbox"));
+			trashbox->setHandler([&]() {
+				auto player = static_cast<Player*>(entityManager.getEntity("player"));
+				if (player->getSelectedItem() != 0) {
+					player->setSelectedItem(0, items);
+				};
+			});
+ 		};
 };
