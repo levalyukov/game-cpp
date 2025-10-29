@@ -58,9 +58,11 @@ void Player::movement(const float delta) {
 		if (isMoving) {
 			float animationSpeed = (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) ? RUN_ANIM : WALK_ANIM;
 			if (selectedItem > 0) animationSpeed = WALK_ANIM * 1.5;
+
 			sf::Texture& targetTexture = (currentDirection == "up" || currentDirection == "down") ? movementVertical : movementHorizontal;
 			if (selectedItem > 0) targetTexture = (currentDirection == "up" || currentDirection == "down") ? movementItemVertical : movementItemHorizontal;
-			
+			else targetTexture = (currentDirection == "up" || currentDirection == "down") ? movementVertical : movementHorizontal;
+
 			if (currentDirection == "up") anim.update(*player, targetTexture, { 0,16 }, { 16,16 }, animationSpeed, 3, delta);
 			if (currentDirection == "down") anim.update(*player, targetTexture, { 0,0 }, { 16,16 }, animationSpeed, 3, delta); 
 			if (currentDirection == "left") anim.update(*player, targetTexture, { 16,0 }, { 16,16 }, animationSpeed, 3, delta);

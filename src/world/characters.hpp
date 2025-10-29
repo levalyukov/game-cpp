@@ -226,50 +226,47 @@ class Characters {
 			float direction = getDirection();
 			sf::Vector2i vector = getVector(direction);
 			static_cast<NPC*>(customer)->getSprite().setPosition(customerMovement[0]);
-			customer->setEvent(
-				[this, npcName, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
-					auto customer_npc = static_cast<NPC*>(entityManager.getEntity(npcName));
-					static bool move_flag_1 = false;
-					static bool move_flag_2 = false;
+			customer->setEvent([this, npcName, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
+				auto customer_npc = static_cast<NPC*>(entityManager.getEntity(npcName));
+				static bool move_flag_1 = false;
+				static bool move_flag_2 = false;
 
-					if (!move_flag_1) {
-						if (customer_npc->getSprite().getPosition() != customerMovement[1]) {
-							customer_npc->getSprite().move(static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5)), 0);
-							customer_npc->getAnimation().update(
-								customer_npc->getSprite(),
-								customer_npc->getTextureMoveHorizontal(),
-								{ 0,0 }, { 16,16 },
-								WALK_ANIM, 3, customer_npc->getDelta()
-							);
-						} else move_flag_1 = true;
+				if (!move_flag_1) {
+					if (customer_npc->getSprite().getPosition() != customerMovement[1]) {
+						customer_npc->getSprite().move(static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5)), 0);
+						customer_npc->getAnimation().update(
+							customer_npc->getSprite(),
+							customer_npc->getTextureMoveHorizontal(),
+							{ 0,0 }, { 16,16 },
+							WALK_ANIM, 3, customer_npc->getDelta()
+						);
+					} else move_flag_1 = true;
+				};
+
+				if (move_flag_1 && !move_flag_2) {
+					if (customer_npc->getSprite().getPosition() != customerMovement[2]) {
+						customer_npc->getSprite().move(0, static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5)));
+						customer_npc->getAnimation().update(
+							customer_npc->getSprite(),
+							customer_npc->getTextureMoveVertical(),
+							{ 0,16 }, { 16,16 },
+							WALK_ANIM, 3, customer_npc->getDelta()
+						);
+					} else {
+						move_flag_2 = true;
+						customer_npc->getSprite().setTexture(customer_npc->getTextureIDLE());
+						customer_npc->getSprite().setTextureRect(sf::IntRect({ 0,0 }, ENTITY_SIZE));
+						static unsigned int customer_order = getOrder(items);
+						eventManager.addEvent(
+							"order-" + npc_id, { [&orderManager, &ordersDisplay, &items]() {
+								std::cout << "The customer has placed an order: " + std::to_string(customer_order) << std::endl;
+								auto recipe = items.getRecipeInfo(customer_order);
+								orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cook_time, recipe->icon_path, recipe->customer_wait });
+								ordersDisplay.update();
+							}, 1.f }
+						);
 					};
-
-					if (move_flag_1 && !move_flag_2) {
-						if (customer_npc->getSprite().getPosition() != customerMovement[2]) {
-							customer_npc->getSprite().move(0, static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5)));
-							customer_npc->getAnimation().update(
-								customer_npc->getSprite(),
-								customer_npc->getTextureMoveVertical(),
-								{ 0,16 }, { 16,16 },
-								WALK_ANIM, 3, customer_npc->getDelta()
-							);
-						} else {
-							move_flag_2 = true;
-							customer_npc->getSprite().setTexture(customer_npc->getTextureIDLE());
-							customer_npc->getSprite().setTextureRect(sf::IntRect({ 0,0 }, ENTITY_SIZE));
-							static unsigned int customer_order = getOrder(items);
-							eventManager.addEvent(
-								"order-" + npc_id, { [&orderManager, &ordersDisplay, &items]() {
-									std::cout << "The customer has placed an order: " + std::to_string(customer_order) << std::endl;
-									auto recipe = items.getRecipeInfo(customer_order);
-									orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cook_time, recipe->icon_path, recipe->customer_wait });
-									ordersDisplay.update();
-								}, 1.f }
-							);
-						};
-					};
-
-				}
-			);
+				};
+			});
 		};
 };
