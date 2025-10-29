@@ -71,6 +71,7 @@ class Builds {
 				if (Globals::instance().getUIOpened()) return;
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
 				auto build = static_cast<Build*>(entityManager.getEntity("kitchen"));
+				if (player->getSelectedItem() != 0) return;
 				if (entityManager.getDistance(build->getSprite(), player->getSprite()) <= DISTANCE_FOR_INTERACTION) {
 					if (!cookingManager.getCookeedFlag() && !cookingManager.getCookingFlag()) {
 						Globals::instance().setUIOpened(true);
@@ -86,10 +87,8 @@ class Builds {
 							};
 						};
 					} else if (cookingManager.getCookeedFlag() && entityManager.getEntity("player")) {
-						auto player = static_cast<Player*>(entityManager.getEntity("player"));
 						if (player->getSelectedItem() != 0) return;
 						player->setSelectedItem(cookingManager.getRecipe(cookingManager.getCookingRecipeName())->id, items);
-						
 						if (orderManager.orders.empty()) return;
 						for (auto& order : orderManager.orders) {
 							if (orderManager.getOrder(order.first)->id == player->getSelectedItem()) {
@@ -97,6 +96,7 @@ class Builds {
 								break;
 							};
 						}; orderDisplay.update();
+						cookingManager.resetCookeedFlag();
 					};
 				};
 			});
