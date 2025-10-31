@@ -54,7 +54,7 @@ class Builds {
 		) {
 			initKitchen(entityManager, uiManager, cookingManager, orderManager, orderDisplay, items);
 			initWarehouse(entityManager, uiManager);
-			initTrashbox(entityManager, items);
+			initTrashbox(entityManager, orderManager, items);
 		};
 
 		inline void initKitchen(
@@ -127,16 +127,25 @@ class Builds {
 
 		inline void initTrashbox(
 			EntityManager& entityManager,
+			OrdersManager& orderManager,
 			Items& items
 		) {
 			if (!entityManager.getEntity("player")) return;
 			if (!entityManager.getEntity("trashbox")) return;
 			auto trashbox = static_cast<Build*>(entityManager.getEntity("trashbox"));
-			trashbox->setHandler([&]() {
+			trashbox->setHandler([&entityManager, &items, &orderManager]() {
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
-				if (player->getSelectedItem() != 0) {
-					player->setSelectedItem(0, items);
+				bool correspondingOrder = false;
+
+				for (const auto& order : orderManager.orders) {
+					if (order.second.cookeed && order.second.id == player->getSelectedItem()) {
+						correspondingOrder = true;
+						break;
+					};
 				};
+
+				if (!correspondingOrder && player->getSelectedItem() != 0) 
+					player->setSelectedItem(0, items);
 			});
  		};
 };

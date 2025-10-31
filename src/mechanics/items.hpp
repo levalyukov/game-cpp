@@ -38,16 +38,16 @@ class Items {
 				customer_wait(_customer_wait) {};
 		};
 
-		inline bool hasRecipe(const unsigned __int16 id) {
+		inline bool hasRecipe(const uint16_t id) {
 			return (recipes.find(id) != recipes.end()) ? true : false;
 		};
 
-		inline CookRecipe* getRecipeInfo(const unsigned __int16 id) {
+		inline CookRecipe* getRecipeInfo(const uint16_t id) {
 			auto item = recipes.find(id);
 			return (item != recipes.end()) ? &item->second : nullptr;
 		};
 
-		inline Item* getItemInfo(const unsigned __int16 id) {
+		inline Item* getItemInfo(const uint16_t id) {
 			auto item = items.find(id);
 			return (item != items.end()) ? &item->second : nullptr;
 		};
