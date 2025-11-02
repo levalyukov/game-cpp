@@ -10,33 +10,38 @@
 
 class EntityManager {
 	public:
-		inline int getDistance(const sf::Sprite main_entity, const sf::Sprite secondary_entity) {
-			int firstX = static_cast<int>(main_entity.getPosition().x);
-			int firstY = static_cast<int>(main_entity.getPosition().y);
+		inline int getDistance(const sf::Sprite first_entity, const sf::Sprite secondary_entity) {
+			int firstX = static_cast<int>(first_entity.getPosition().x);
+			int firstY = static_cast<int>(first_entity.getPosition().y);
 			int secondX = static_cast<int>(secondary_entity.getPosition().x);
 			int secondY = static_cast<int>(secondary_entity.getPosition().y);
 			int distance = static_cast<int>(std::sqrt(pow(secondX - firstX, 2) + pow(secondY - firstY, 2)));
 			return distance;
 		};
 
-		inline void addEntity(std::string name, std::unique_ptr<Entity>&& entity) { 
-			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {return std::tolower(c); });
-			auto result = entities.emplace(name, std::move(entity));
+		inline void addEntity(const std::string entity_name, std::unique_ptr<Entity>&& entity) {
+			std::string lower_string = entity_name;
+			std::transform(lower_string.begin(), lower_string.end(), lower_string.begin(), 
+				[](unsigned char c) {return std::tolower(c); });
+			auto result = entities.emplace(lower_string, std::move(entity));
 			if (result.second) render_entities.push_back(result.first->second.get());
 		};
 
-		inline Entity* getEntity(std::string enitity_name) {
-			std::transform(enitity_name.begin(), enitity_name.end(), enitity_name.begin(), [](unsigned char c) {return std::tolower(c); });
-			auto entity = entities.find(enitity_name);
+		inline Entity* getEntity(const std::string entity_name) {
+			std::string lower_string = entity_name;
+			std::transform(lower_string.begin(), lower_string.end(), lower_string.begin(),
+				[](unsigned char c) {return std::tolower(c); });
+			auto entity = entities.find(lower_string);
 			return (entity != entities.end()) ? entity->second.get() : nullptr;
 		};
 
-		inline void removeEntity(std::string enitity_name) {
-			std::transform(enitity_name.begin(), enitity_name.end(), enitity_name.begin(), [](unsigned char c) {return std::tolower(c); });
-			auto entity = entities.find(enitity_name);
+		inline void removeEntity(const std::string entity_name) {
+			std::string lower_string = entity_name;
+			std::transform(lower_string.begin(), lower_string.end(), lower_string.begin(), [](unsigned char c) {return std::tolower(c); });
+			auto entity = entities.find(lower_string);
 			auto it = std::find(render_entities.begin(), render_entities.end(), entity->second.get());
 			if (it != render_entities.end()) render_entities.erase(it);
-			if (entity != entities.end()) entities.erase(enitity_name);
+			if (entity != entities.end()) entities.erase(lower_string);
 		};
 		
 		inline void render(const float delta_time, sf::View& game_camera) {
