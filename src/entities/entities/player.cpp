@@ -1,14 +1,13 @@
 #include "player.hpp"
 
 void Player::render(sf::RenderWindow& window, const float delta, sf::View& camera, sf::Clock& clock) {
-	window.draw(shadowSprite);
-	window.draw(*player);
+	if (shadowSprite) window.draw(*shadowSprite);
+	if (player) window.draw(*player);
 	if (itemSprite) { 
 		window.draw(*itemSprite); 
 		itemSprite->setPosition(player->getPosition().x + 12, player->getPosition().y - 20);
-	};
-	movement(delta);
-	shadowSprite.setPosition(player->getPosition());
+	}; movement(delta);
+	shadowSprite->setPosition(player->getPosition()); 
 	camera.setCenter(player->getPosition());
 };
 

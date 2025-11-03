@@ -6,13 +6,13 @@
 class Items {
 	public:
 		struct Item {
-			uint8_t id;
+			unsigned int id;
 			std::string icon;
 			unsigned int price;
 		};
 
 		struct CookRecipe {
-			uint8_t id;
+			unsigned int id;
 			std::string title;
 			std::string description;
 			std::string icon_path;
@@ -22,7 +22,7 @@ class Items {
 
 			CookRecipe() = default;
 			CookRecipe(
-				const uint8_t _id,
+				const unsigned int _id,
 				const std::string _title,
 				const std::string _description,
 				const std::string _icon_path,
@@ -38,16 +38,16 @@ class Items {
 				customer_wait(_customer_wait) {};
 		};
 
-		inline bool hasRecipe(const uint16_t id) {
+		inline bool hasRecipe(const uint8_t id) {
 			return (recipes.find(id) != recipes.end()) ? true : false;
 		};
 
-		inline CookRecipe* getRecipeInfo(const uint16_t id) {
+		inline CookRecipe* getRecipeInfo(const uint8_t id) {
 			auto item = recipes.find(id);
 			return (item != recipes.end()) ? &item->second : nullptr;
 		};
 
-		inline Item* getItemInfo(const uint16_t id) {
+		inline Item* getItemInfo(const uint8_t id) {
 			auto item = items.find(id);
 			return (item != items.end()) ? &item->second : nullptr;
 		};
@@ -65,8 +65,8 @@ class Items {
 
 		std::map<unsigned __int16, CookRecipe> recipes = {
 			{1, {1, "Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f, 60.f}},
-			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 5.f, 60.f}},
-			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 5.f, 60.f}},
-			{4, {4, "Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 5.f, 60.f}},
+			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 1.f, 60.f}},
+			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 1.f, 60.f}},
+			{4, {4, "Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 1.f, 60.f}},
 		};
 };

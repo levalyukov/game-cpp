@@ -11,7 +11,11 @@ const sf::Vector2i ENTITY_SIZE = {16,16};
 
 class Entity {
 	public:
+		virtual float getDelta() const = 0;
 		virtual float getDepth() const = 0;
+		virtual sf::Texture& getTextureIDLE() const = 0;
+		virtual sf::Texture& getTextureMoveVertical() const = 0;
+		virtual sf::Texture& getTextureMoveHorizontal() const = 0;
 		virtual void setHandler(std::function<void()> new_handler) = 0;
 		virtual void setEvent(std::function<void()> new_event) = 0;
 		virtual void handler(sf::RenderWindow& window, sf::Event& event) = 0;

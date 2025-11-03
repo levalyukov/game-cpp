@@ -19,12 +19,19 @@ class Build : public Entity {
 		};
 
 		inline sf::Sprite& getSprite() const { return *sprite; };
-		inline float getDepth() const override  { return sprite->getPosition().y; };
+
+		inline float getDelta() const override { return NULL; };
+		inline float getDepth() const override { return sprite->getPosition().y; };
+		inline sf::Texture& getTextureIDLE() const override { return build_texture; };
+		inline sf::Texture& getTextureMoveVertical() const override { return build_texture; };
+		inline sf::Texture& getTextureMoveHorizontal() const override { return build_texture; };
 		inline void setEvent(std::function<void()> new_event) override { event_ = new_event; };
 		inline void setHandler(std::function<void()> new_handler) override { handler_ = new_handler; };
 		inline void event(sf::RenderWindow& window, sf::Event& event) override { if (event_)event_(); };
 		void handler(sf::RenderWindow& window, sf::Event& event) override;
-		inline void render(sf::RenderWindow& window, float delta_time, sf::View& game_camera, sf::Clock& clock) override { window.draw(*sprite); };
+		inline void render(sf::RenderWindow& window, const float delta, sf::View& camera, sf::Clock& clock) override { 
+			if (sprite) window.draw(*sprite);
+		};
 
 	private:
 		enum MouseState { Normal, Hovered, Pressed };

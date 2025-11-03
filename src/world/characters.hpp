@@ -12,6 +12,7 @@
 #include "../mechanics/items.hpp"
 
 #include <vector>
+#include <stdint.h>
 
 class Characters {
 	public:
@@ -21,7 +22,8 @@ class Characters {
 		};
 
 		std::vector<sf::Vector2f> customerMovement = {
-			sf::Vector2f(25 * 64,8 * 64), sf::Vector2f(12 * 64,8 * 64), sf::Vector2f(12 * 64,7 * 64) // Movement to the restaurant
+			sf::Vector2f(25 * 64,8 * 64), sf::Vector2f(12 * 64,8 * 64), sf::Vector2f(12 * 64,7 * 64), // Movement to the restaurant
+			sf::Vector2f(0 * 64,8 * 64)
 		};
 
 		inline void spawn(
@@ -104,11 +106,11 @@ class Characters {
 			return passerbyMovement[dist(rd)];
 		};
 
-		inline unsigned int getOrder(Items& items) {
+		inline uint8_t getNewOrder(Items& items) {
 			std::random_device rd; 
 			std::mt19937 rand(rd());
 			std::uniform_int_distribution<int> dist(1, items.getRecipesSize());
-			return dist(rd);
+			return static_cast<uint8_t>(dist(rd));
 		};
 
 		inline void player(ResourceManager& resourceManager, EntityManager& entityManager) const {
@@ -224,18 +226,20 @@ class Characters {
 			std::string npcName = "npc-customer-" + npc_id;
 			if (!entityManager.getEntity(npcName)) return;
 
-			auto customer = entityManager.getEntity(npcName);
+			auto customer = static_cast<NPC*>(entityManager.getEntity(npcName));
 			float direction = getDirection();
 			sf::Vector2i vector = getVector(direction);
-			static_cast<NPC*>(customer)->getSprite().setPosition(customerMovement[0]);
-			customer->setEvent([this, npcName, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
+			customer->getSprite().setPosition(customerMovement[0]);
+			customer->setOrder(getNewOrder(items));
+			entityManager.getEntity(npcName)->setEvent([this, npcName, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
 				auto customer_npc = (entityManager.getEntity(npcName)) ? static_cast<NPC*>(entityManager.getEntity(npcName)) : nullptr;
 				static bool move_flag_1 = false;
 				static bool move_flag_2 = false;
+				float move_speed = static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5));
 
 				if (!move_flag_1) {
 					if (customer_npc->getSprite().getPosition() != customerMovement[1]) {
-						customer_npc->getSprite().move(static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5)), 0);
+						customer_npc->getSprite().move(move_speed, 0);
 						customer_npc->getAnimation().update(
 							customer_npc->getSprite(),
 							customer_npc->getTextureMoveHorizontal(),
@@ -247,7 +251,7 @@ class Characters {
 
 				if (move_flag_1 && !move_flag_2) {
 					if (customer_npc->getSprite().getPosition() != customerMovement[2]) {
-						customer_npc->getSprite().move(0, static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5)));
+						customer_npc->getSprite().move(0, move_speed);
 						customer_npc->getAnimation().update(
 							customer_npc->getSprite(),
 							customer_npc->getTextureMoveVertical(),
@@ -258,15 +262,13 @@ class Characters {
 						move_flag_2 = true;
 						customer_npc->getSprite().setTexture(customer_npc->getTextureIDLE());
 						customer_npc->getSprite().setTextureRect(sf::IntRect({ 0,0 }, ENTITY_SIZE));
-						static unsigned int customer_order = getOrder(items);
 						eventManager.addEvent(
-							"order-" + npc_id, { [&orderManager, &ordersDisplay, &items]() {
-								std::cout << "The customer has placed an order: " + std::to_string(customer_order) << std::endl;
-								auto recipe = items.getRecipeInfo(customer_order);
+							"order-" + npc_id, { [customer_npc, &orderManager, &ordersDisplay, &items]() {
+								auto recipe = items.getRecipeInfo(customer_npc->getOrder());
 								orderManager.addOrder(
-									"order-" + std::to_string(customer_order), 
+									"order-" + std::to_string(customer_npc->getOrder()),
 									{ 
-										customer_order, 
+										static_cast<unsigned int>(customer_npc->getOrder()),
 										recipe->title,
 										recipe->icon_path, 
 										recipe->customer_wait 
@@ -291,12 +293,48 @@ class Characters {
 			if (!entityManager.getEntity(npcName)) return;
 
 			auto customer = static_cast<NPC*>(entityManager.getEntity(npcName));
-			customer->setHandler([&entityManager, &orderManager, &items, &customer]() {
+			customer->setHandler([this, &entityManager, &orderManager, &ordersDisplay, &items, npcName]() {
 				auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
-				if (player && customer) {
-					if (player->getSelectedItem() == customer->getOrder()) {
+				if (player) {
+					auto npc = static_cast<NPC*>(entityManager.getEntity(npcName));
+					if (static_cast<int>(player->getSelectedItem()) == static_cast<int>(npc->getOrder())) {
 						player->setSelectedItem(0, items);
-						//orderManager.getOrder()
+						orderManager.removeOrder("order-"+std::to_string(static_cast<int>(npc->getOrder())));
+						ordersDisplay.update();
+						npc->setEvent([this, npcName, &entityManager]() {
+							auto npc = static_cast<NPC*>(entityManager.getEntity(npcName));
+							static bool movement_flag_1 = false;
+							static bool movement_flag_2 = false;
+							float move_speed = static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5));
+
+							if (!movement_flag_1) {
+								if (npc->getSprite().getPosition() != customerMovement[1]) {
+									npc->getSprite().move(0, -move_speed);
+									npc->getAnimation().update(
+										npc->getSprite(),
+										npc->getTextureMoveVertical(),
+										{ 0,0 }, { 16,16 },
+										WALK_ANIM, 3, npc->getDelta()
+									);
+								} else movement_flag_1 = true;
+							}; 
+							
+							if (movement_flag_1 && !movement_flag_2) {
+								if (npc->getSprite().getPosition() != customerMovement[3]) {
+									npc->getSprite().move(move_speed, 0);
+									npc->getAnimation().update(
+										npc->getSprite(),
+										npc->getTextureMoveHorizontal(),
+										{ 0,0 }, { 16,16 },
+										WALK_ANIM, 3, npc->getDelta()
+									);
+								} else {
+									movement_flag_2 = true;
+									entityManager.removeEntity(npcName);
+								};
+							};
+
+						});
 					};
 				};
 			});

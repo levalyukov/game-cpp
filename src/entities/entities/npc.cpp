@@ -25,8 +25,9 @@ void NPC::handler(sf::RenderWindow& window, sf::Event& event) {
 };
 
 void NPC::render(sf::RenderWindow& window, const float delta, sf::View& game_camera, sf::Clock& clock) {
-	window.draw(*sprite);
-	window.draw(shadow);
-	shadow.setPosition(sprite->getPosition());
-	if (!isDeltaSaved) deltaSaved = delta; isDeltaSaved = true;
+	if (sprite) window.draw(*sprite);
+	if (shadow) {
+		window.draw(*shadow);
+		shadow->setPosition(sprite->getPosition());
+	}; if (!isDeltaSaved) deltaSaved = delta; isDeltaSaved = true;
 };
