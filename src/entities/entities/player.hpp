@@ -1,10 +1,12 @@
 #pragma once
 
-#include <memory>
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 #include "../../core/globals.hpp"
 #include "../../mechanics/items.hpp"
+
+#include <stdint.h>
+#include <memory>
 
 class Player : public Entity {
 	public:
@@ -31,6 +33,8 @@ class Player : public Entity {
 			shadowSprite.setTexture(shadowTexture);
 			shadowSprite.setScale(4, 4);
 		};
+
+		~Player() {};
 
 		void movement(float deltaTime);
 		void setSelectedItem(uint8_t new_item, Items& items);

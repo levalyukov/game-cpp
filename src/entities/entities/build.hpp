@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../entity.hpp"
+#include <memory>
 
 class Build : public Entity {
 	public:
@@ -17,9 +18,6 @@ class Build : public Entity {
 			sprite->setPosition(build_position);
 		};
 
-		std::function<void()> handler_;
-		std::function<void()> event_;
-
 		inline sf::Sprite& getSprite() const { return *sprite; };
 		inline float getDepth() const override  { return sprite->getPosition().y; };
 		inline void setEvent(std::function<void()> new_event) override { event_ = new_event; };
@@ -31,6 +29,9 @@ class Build : public Entity {
 	private:
 		enum MouseState { Normal, Hovered, Pressed };
 		MouseState m_state = Normal;
+
+		std::function<void()> handler_;
+		std::function<void()> event_;
 
 		std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>();
 		sf::Texture& build_texture;

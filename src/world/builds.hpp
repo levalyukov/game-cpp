@@ -67,7 +67,7 @@ class Builds {
 		) {
 			if (!entityManager.getEntity("kitchen")) return;
 			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
-			kitchen->setHandler([&]() {
+			kitchen->setHandler([&entityManager, &cookingManager, &uiManager, &orderManager, &orderDisplay, &items]() {
 				if (Globals::instance().getUIOpened()) return;
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
 				auto build = static_cast<Build*>(entityManager.getEntity("kitchen"));
@@ -108,7 +108,7 @@ class Builds {
 		) {
 			if (!entityManager.getEntity("warehouse")) return;
 			auto warehouse = static_cast<Build*>(entityManager.getEntity("warehouse"));
-			warehouse->setHandler([&]() {
+			warehouse->setHandler([&entityManager, &uiManager]() {
 				if (Globals::instance().getUIOpened()) return;
 
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));

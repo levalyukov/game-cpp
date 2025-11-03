@@ -37,7 +37,7 @@ void OrdersDisplay::update() {
 		auto& config = order.second;
 
 		sf::Texture* orderTexture = (config.cookeed) ? resourceManager.getTexture("order-ready") : resourceManager.getTexture("order");
-		if (!config.iconPath.empty()) resourceManager.loadTexture(orderIcon, config.iconPath);
+		if (!config.icon.empty()) resourceManager.loadTexture(orderIcon, config.icon);
 		if (orderTexture) uiManager.addElement(orderName, uiManager.gui.createSprite(orderTexture));
 		if (resourceManager.getTexture(orderIcon)) uiManager.addElement(orderIcon, uiManager.gui.createSprite(resourceManager.getTexture(orderIcon)));
 		if (!config.title.empty()) uiManager.addElement(orderTitle, uiManager.gui.createLabel(config.title, resourceManager.getFont("nunito"), 22, sf::Color::Black));

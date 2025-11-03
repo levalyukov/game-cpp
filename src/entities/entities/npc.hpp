@@ -3,6 +3,9 @@
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 
+#include <stdint.h>
+#include <memory>
+
 class NPC : public Entity {
 	public:
 		NPC(
@@ -22,9 +25,8 @@ class NPC : public Entity {
 			shadow.setScale({ 4,4 });
 		};
 
-		std::function<void()> handler_;
-		std::function<void()> event_;
-
+		inline void setOrder(uint8_t new_order) { order = new_order; };
+		inline uint8_t getOrder() const { return order; };
 		inline sf::Texture& getTextureIDLE() const { return idleTexture; };
 		inline sf::Texture& getTextureMoveVertical() const { return movementVertical; };
 		inline sf::Texture& getTextureMoveHorizontal() const { return movementHorizontal; };
@@ -43,12 +45,17 @@ class NPC : public Entity {
 		enum MouseState { Normal, Hovered, Pressed };
 		MouseState mouseState = Normal;
 
+		std::function<void()> handler_;
+		std::function<void()> event_;
+
 		std::unique_ptr<sf::Sprite> sprite = nullptr;
 		sf::Sprite shadow;
 		sf::Texture& idleTexture;
 		sf::Texture& movementVertical;
 		sf::Texture& movementHorizontal;
 		sf::Texture& shadowTexture;
+
+		uint8_t order = 0;
 
 		bool isPressed = false;
 		bool isDeltaSaved = false;

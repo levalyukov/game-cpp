@@ -55,6 +55,7 @@ class Characters {
 			initNPCResources(resourceManager, new_customer_id);
 			spawnCustomer(resourceManager, entityManager, new_customer_id);
 			setCustomerEvent(resourceManager, entityManager, orderManager, eventManager, ordersDisplay, items, new_customer_id);
+			setCustomerHandle(resourceManager, entityManager, orderManager, ordersDisplay, items, new_customer_id);
 		};
 
 	private:
@@ -199,12 +200,14 @@ class Characters {
 			passerby->setEvent(
 				[this, npcName, passerby, direction, vector, &entityManager]() {
 					auto npc = static_cast<NPC*>(passerby);
-					auto player = static_cast<Player*>(entityManager.getEntity("player"));
+					auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
 					static float time = 0.f;
 					npc->getSprite().move({ static_cast<float>(direction - (direction * 0.5)),0 });
 					npc->getAnimation().update(npc->getSprite(), npc->getTextureMoveHorizontal(), vector, {16,16}, WALK_ANIM, 3, npc->getDelta());
-					if (entityManager.getDistance(player->getSprite(), npc->getSprite()) > DELETE_PASSERBY) {
-						entityManager.removeEntity(npcName);
+					if (player) {
+						if (entityManager.getDistance(player->getSprite(), npc->getSprite()) > DELETE_PASSERBY) {
+							entityManager.removeEntity(npcName);
+						};
 					};
 				});
 		};
@@ -222,12 +225,11 @@ class Characters {
 			if (!entityManager.getEntity(npcName)) return;
 
 			auto customer = entityManager.getEntity(npcName);
-			auto player = static_cast<Player*>(entityManager.getEntity("player"));
 			float direction = getDirection();
 			sf::Vector2i vector = getVector(direction);
 			static_cast<NPC*>(customer)->getSprite().setPosition(customerMovement[0]);
 			customer->setEvent([this, npcName, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
-				auto customer_npc = static_cast<NPC*>(entityManager.getEntity(npcName));
+				auto customer_npc = (entityManager.getEntity(npcName)) ? static_cast<NPC*>(entityManager.getEntity(npcName)) : nullptr;
 				static bool move_flag_1 = false;
 				static bool move_flag_2 = false;
 
@@ -261,10 +263,40 @@ class Characters {
 							"order-" + npc_id, { [&orderManager, &ordersDisplay, &items]() {
 								std::cout << "The customer has placed an order: " + std::to_string(customer_order) << std::endl;
 								auto recipe = items.getRecipeInfo(customer_order);
-								orderManager.addOrder("order-" + std::to_string(customer_order), { customer_order, recipe->title, recipe->cook_time, recipe->icon_path, recipe->customer_wait });
-								ordersDisplay.update();
+								orderManager.addOrder(
+									"order-" + std::to_string(customer_order), 
+									{ 
+										customer_order, 
+										recipe->title,
+										recipe->icon_path, 
+										recipe->customer_wait 
+									}
+								); ordersDisplay.update();
 							}, 1.f }
 						);
+					};
+				};
+			});
+		};
+
+		inline void setCustomerHandle(
+			ResourceManager& resourceManager,
+			EntityManager& entityManager,
+			OrdersManager& orderManager,
+			OrdersDisplay& ordersDisplay,
+			Items& items,
+			const std::string npc_id
+		) {
+			std::string npcName = "npc-customer-" + npc_id;
+			if (!entityManager.getEntity(npcName)) return;
+
+			auto customer = static_cast<NPC*>(entityManager.getEntity(npcName));
+			customer->setHandler([&entityManager, &orderManager, &items, &customer]() {
+				auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
+				if (player && customer) {
+					if (player->getSelectedItem() == customer->getOrder()) {
+						player->setSelectedItem(0, items);
+						//orderManager.getOrder()
 					};
 				};
 			});
