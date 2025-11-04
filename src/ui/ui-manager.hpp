@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "gui.hpp"
 #include "elements/ui-element.hpp"
@@ -17,21 +17,24 @@ class UIManager {
 
 		inline void addElement(const std::string name_element, std::unique_ptr<UIElement> element) {
 			std::string lower_name = name_element;
-			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), 
+				[](unsigned char c) { return std::tolower(c); });
 			auto result = ui_elements.emplace(lower_name, std::move(element));
 			if (result.second) renderUI.emplace_back(result.first->second.get());
 		};
 
 		inline UIElement* getElement(const std::string name_element) {
 			std::string lower_name = name_element;
-			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), 
+				[](unsigned char c) { return std::tolower(c); });
 			auto element = ui_elements.find(lower_name);
 			return (element != ui_elements.end()) ? element->second.get() : nullptr;
 		};
 
 		inline void removeElement(const std::string name_element) {
 			std::string lower_name = name_element;
-			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) { return std::tolower(c); });
+			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), 
+				[](unsigned char c) { return std::tolower(c); });
 			auto element = ui_elements.find(lower_name);
 			if (element != ui_elements.end()) {
 				auto it = std::find(renderUI.begin(), renderUI.end(), element->second.get());

@@ -1,16 +1,21 @@
-#pragma once
+﻿#pragma once
 
 #include "globals.hpp"
 #include "resources/resources.hpp"
 #include "tilemap/tilemap.hpp"
+
 #include "../world/world.hpp"
 #include "../ui/ui-manager.hpp"
 #include "../ui/screens/ui.hpp"
+
 #include "../mechanics/cooking-manager.hpp"
 #include "../mechanics/economy-manager.hpp"
+#include "../mechanics/rating-manager.hpp"
 #include "../mechanics/glocery-shop-manager.hpp"
 #include "../mechanics/event-manager.hpp"
 #include "../mechanics/items.hpp"
+
+#include <memory>
 
 class Game {
 	public:
@@ -48,6 +53,7 @@ class Game {
 		std::unique_ptr<GloceryShopManager> gloceryShopManager = std::make_unique<GloceryShopManager>();
 		std::unique_ptr<WarehouseManager> warehouseManager = std::make_unique<WarehouseManager>();
 		std::unique_ptr<OrdersManager> ordersManager = std::make_unique<OrdersManager>();
+		std::unique_ptr<Rating> ratingManager = std::make_unique<Rating>();
 
 		std::unique_ptr<UI> ui = std::make_unique<UI>(
 			*uiManager, *resourceManager, *cookingManager, 

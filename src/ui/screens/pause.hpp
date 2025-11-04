@@ -1,8 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "../../core/globals.hpp"
 #include "../../core/resources/resources.hpp"
 #include "../ui-manager.hpp"
+
+#include <string>
 
 class Pause {
 	public:

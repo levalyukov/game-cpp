@@ -1,10 +1,12 @@
-#pragma once
+﻿#pragma once
 
 #include "../ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
 #include "../../mechanics/economy-manager.hpp"
 #include "glocery-shop.hpp"
 #include "IHUD.h"
+
+#include <string>
 
 class HUD : public IHUD {
 	public:

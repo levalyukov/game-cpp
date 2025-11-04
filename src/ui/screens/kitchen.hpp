@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "../screens/hud.hpp"
 #include "../../core/globals.hpp"
@@ -6,6 +6,7 @@
 #include "../../core/resources/resources.hpp"
 #include "../../mechanics/cooking-manager.hpp"
 
+#include <string>
 #include <iostream>
 
 class KitchenMenu {

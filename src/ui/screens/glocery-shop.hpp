@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "IHUD.h"
 #include "../ui-manager.hpp"
@@ -6,6 +6,8 @@
 #include "../../mechanics/glocery-shop-manager.hpp"
 #include "../../mechanics/economy-manager.hpp"
 #include "../../mechanics/warehouse-manager.hpp"
+
+#include <string>
 
 class GloceryShop {
 	public:

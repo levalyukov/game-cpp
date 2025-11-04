@@ -1,4 +1,4 @@
-#include "glocery-shop.hpp"
+﻿#include "glocery-shop.hpp"
 
 void GloceryShop::setup() {
 	initResources();
@@ -21,7 +21,7 @@ void GloceryShop::initElements() {
 	uiManager.addElement("glocery-background", uiManager.gui.createColorRect(sf::Color(0, 0, 0, 100), { windowX,windowY }));
 	uiManager.addElement("glocery-panel", uiManager.gui.createSprite(resourceManager.getTexture("glocery-panel")));
 	uiManager.addElement("glocery-close-button", uiManager.gui.createButton(resourceManager.getTexture("glocery-close-button"), { 16,16 }));
-	uiManager.addElement("glocery-page-label", uiManager.gui.createLabel("0/0", resourceManager.getFont("nunito"), 22, sf::Color::White));
+	uiManager.addElement("glocery-page-label", uiManager.gui.createLabel(L"0/0", resourceManager.getFont("nunito"), 22, sf::Color::White));
 };
 
 void GloceryShop::initLayers() {
@@ -60,7 +60,10 @@ void GloceryShop::initButtons() {
 
 	if (uiManager.getElement("glocery-page-label")) {
 		auto pages = static_cast<Label*>(uiManager.getElement("glocery-page-label"));
-		pages->setMessage(std::to_string(page) + "/" + std::to_string(static_cast<int>(maxPages)));
+
+		auto page_str = std::to_string(page);
+		auto max_pages = std::to_string(static_cast<int>(maxPages));
+		pages->setMessage(std::wstring(page_str.begin(), page_str.end()) + L"/" + std::wstring(max_pages.begin(), max_pages.end()));
 	};
 
 	unsigned int index = 0;
@@ -69,12 +72,15 @@ void GloceryShop::initButtons() {
 		std::string buttonLabelName = "glocery-button-title-" + std::to_string(index);
 		std::string buttonLabelPriceName = "glocery-button-title-" + std::to_string(index) + "-price";
 
+		auto title = std::wstring(product.second.title.begin(), product.second.title.end());
+		auto price = std::to_string(product.second.price);
+
 		uiManager.removeElement(buttonName);
 		uiManager.removeElement(buttonLabelName);
 		uiManager.removeElement(buttonLabelPriceName);
 		uiManager.addElement(buttonName, uiManager.gui.createButton(resourceManager.getTexture("glocery-button"), { 152,18 }));
-		uiManager.addElement(buttonLabelName, uiManager.gui.createLabel(product.second.title, resourceManager.getFont("nunito"), 24, sf::Color::White));
-		uiManager.addElement(buttonLabelPriceName, uiManager.gui.createLabel(std::to_string(product.second.price), resourceManager.getFont("nunito"), 24, sf::Color::White));
+		uiManager.addElement(buttonLabelName, uiManager.gui.createLabel(title, resourceManager.getFont("nunito"), 24, sf::Color::White));
+		uiManager.addElement(buttonLabelPriceName, uiManager.gui.createLabel(std::wstring(price.begin(), price.end()), resourceManager.getFont("nunito"), 24, sf::Color::White));
 
 		auto panel = static_cast<Sprite*>(uiManager.getElement("glocery-panel"));
 		auto buttonProduct = static_cast<Button*>(uiManager.getElement(buttonName));

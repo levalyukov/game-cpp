@@ -1,4 +1,4 @@
-#include "pause.hpp"
+﻿#include "pause.hpp"
 
 void Pause::setup() {
 	initResources();
@@ -20,8 +20,8 @@ void Pause::initElements() {
 	uiManager.addElement("pause-button-quit", uiManager.gui.createButton(resourseManager.getTexture("pause-buttons"), { 48,16 }));
 	
 	// labels
-	uiManager.addElement("pause-button-continue-label", uiManager.gui.createLabel("Continue", resourseManager.getFont("nunito"), 24, sf::Color::White));
-	uiManager.addElement("pause-button-quit-label", uiManager.gui.createLabel("Exit & Save", resourseManager.getFont("nunito"), 24, sf::Color::White));
+	uiManager.addElement("pause-button-continue-label", uiManager.gui.createLabel(L"Continue", resourseManager.getFont("nunito"), 24, sf::Color::White));
+	uiManager.addElement("pause-button-quit-label", uiManager.gui.createLabel(L"Exit & Save", resourseManager.getFont("nunito"), 24, sf::Color::White));
 }
 
 void Pause::initLayers() {

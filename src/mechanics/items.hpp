@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <map>
 #include <string>
@@ -7,15 +7,15 @@
 class Items {
 	public:
 		struct Item {
-			unsigned int id;
+			unsigned int id = 0;
 			std::string icon;
-			unsigned int price;
+			unsigned int price = 0;
 		};
 
 		struct CookRecipe {
-			unsigned int id;
-			std::string title;
-			std::string description;
+			unsigned int id = 0;
+			std::wstring title;
+			std::wstring description;
 			std::string icon;
 			unsigned int output = 0;
 			float cook_time = 0.f;
@@ -24,8 +24,8 @@ class Items {
 			CookRecipe() = default;
 			CookRecipe(
 				const unsigned int _id,
-				const std::string _title,
-				const std::string _description,
+				const std::wstring _title,
+				const std::wstring _description,
 				const std::string _icon_path,
 				const unsigned int _output,
 				const float _cook_time,
@@ -69,9 +69,9 @@ class Items {
 		};
 
 		std::map<uint16_t, CookRecipe> recipes = {
-			{1, {1, "Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f, 60.f}},
-			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 1.f, 60.f}},
-			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 1.f, 60.f}},
-			{4, {4, "Ramen", "Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 1.f, 60.f}},
+			{1, {1, L"Борщ", L"Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f, 60.f}},
+			{2, {2, L"Куриный", L"Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 1.f, 60.f}},
+			{3, {3, L"Щи", L"Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 1.f, 60.f}},
+			{4, {4, L"Рамен", L"Recipe Description", "../../../assets/textures/ui/icons/soup-4.png", 4, 1.f, 60.f}},
 		};
 };

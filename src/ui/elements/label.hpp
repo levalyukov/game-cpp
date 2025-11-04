@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 
 #include "ui-element.hpp"
 
 class Label : public UIElement {
 	public:
 		inline Label(
-			std::string message,
+			std::wstring message,
 			sf::Font* font,
 			unsigned __int8 size,
 			sf::Color color,
@@ -20,7 +20,9 @@ class Label : public UIElement {
 		};
 
 		inline sf::Text& getText() const { return *text; };
-		inline void setMessage(std::string new_msg) { text->setString(new_msg); };
+		inline void setMessage(std::wstring new_msg) { 
+			text->setString(new_msg);
+		};
 		inline void setColor(sf::Color new_color) { text->setColor(new_color); };
 		inline void setSize(uint8_t new_size) { text->setCharacterSize(new_size); };
 		inline void setPosition(sf::Vector2f new_position) { text->setPosition(new_position); };

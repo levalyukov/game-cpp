@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -9,7 +9,7 @@ class OrdersManager {
 	public:
 		struct Order {
 			unsigned int id;
-			std::string title;
+			std::wstring title;
 			const std::string icon;
 			float customer_wait;
 			bool cookeed = false;

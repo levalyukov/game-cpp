@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "elements/label.hpp"
 #include "elements/button.hpp"
@@ -6,6 +6,7 @@
 #include "elements/color-rect.hpp"
 #include "elements/progress-bar.hpp"
 
+#include <string>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -14,7 +15,7 @@
 class GUI {
 	public:
 		inline std::unique_ptr<Label> createLabel(
-			std::string label_text,
+			std::wstring label_text,
 			sf::Font* label_font,
 			unsigned __int8 label_size,
 			sf::Color label_color,

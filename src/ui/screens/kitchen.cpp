@@ -1,4 +1,4 @@
-#include "kitchen.hpp"
+﻿#include "kitchen.hpp"
 
 void KitchenMenu::setup() {
 	initResources();
@@ -17,11 +17,11 @@ void KitchenMenu::initElements() {
 	uiManager.addElement("kitchen-ui-background", uiManager.gui.createColorRect(sf::Color(0, 0, 0, 100), { static_cast<float>(window.getSize().x),static_cast<float>(window.getSize().y) }));
 	uiManager.addElement("kitchen-ui-panel", uiManager.gui.createSprite(resourceManager.getTexture("kitchen-ui-panel"), { 0,0 }));
 	uiManager.addElement("kitchen-ui-close-button", uiManager.gui.createButton(resourceManager.getTexture("kitchen-ui-close-button"), { 16,16 }));
-	uiManager.addElement("kitchen-ui-recipe-header", uiManager.gui.createLabel("Recipe header", resourceManager.getFont("nunito"), 26, sf::Color::White));
-	uiManager.addElement("kitchen-ui-recipe-description", uiManager.gui.createLabel("Recipe Description", resourceManager.getFont("nunito"), 20, sf::Color::White));
-	uiManager.addElement("kitchen-ui-recipe-conditions", uiManager.gui.createLabel("Recipe Conditions", resourceManager.getFont("nunito"), 20, sf::Color::White));
+	uiManager.addElement("kitchen-ui-recipe-header", uiManager.gui.createLabel(L"Recipe header", resourceManager.getFont("nunito"), 26, sf::Color::White));
+	uiManager.addElement("kitchen-ui-recipe-description", uiManager.gui.createLabel(L"Recipe Description", resourceManager.getFont("nunito"), 20, sf::Color::White));
+	uiManager.addElement("kitchen-ui-recipe-conditions", uiManager.gui.createLabel(L"Recipe Conditions", resourceManager.getFont("nunito"), 20, sf::Color::White));
 	uiManager.addElement("kitchen-ui-recipe-button-cooking", uiManager.gui.createButton(resourceManager.getTexture("kitchen-ui-buttons"), { 73,18 }));
-	uiManager.addElement("kitchen-ui-recipe-button-cooking-label", uiManager.gui.createLabel("Cooking", resourceManager.getFont("nunito"), 24, sf::Color::White));
+	uiManager.addElement("kitchen-ui-recipe-button-cooking-label", uiManager.gui.createLabel(L"Cooking", resourceManager.getFont("nunito"), 24, sf::Color::White));
 };
 
 void KitchenMenu::initParameters() {

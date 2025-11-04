@@ -1,4 +1,4 @@
-#include "hud.hpp"
+﻿#include "hud.hpp"
 
 void HUD::setup() {
 	initResources();
@@ -12,7 +12,8 @@ void HUD::initResources() {
 };
 
 void HUD::initElements() {
-	uiManager.addElement("hud-money", uiManager.gui.createLabel(std::to_string(economyManager.getMoney()), resourceManager.getFont("nunito"), 24, sf::Color::White));
+	auto balance = std::to_string(economyManager.getMoney());
+	uiManager.addElement("hud-money", uiManager.gui.createLabel(std::wstring(balance.begin(), balance.end()), resourceManager.getFont("nunito"), 24, sf::Color::White));
 	uiManager.addElement("hud-button-store", uiManager.gui.createButton(resourceManager.getTexture("hud-glorecy-button"), { 16,16 }));
 };
 
@@ -44,7 +45,8 @@ void HUD::initParameters() {
 void HUD::update() {
 	if (uiManager.getElement("hud-money")) {
 		auto label = static_cast<Label*>(uiManager.getElement("hud-money"));
-		label->setMessage(std::to_string(economyManager.getMoney()));
+		auto balance = std::to_string(economyManager.getMoney());
+		label->setMessage(std::wstring(balance.begin(), balance.end()));
 		label->setGlobalPositionText(UIElement::TopRight, label->getText(), { -8,8 });
 	};
 };
