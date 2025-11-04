@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include <stdint.h>
 
 class Items {
 	public:
@@ -15,7 +16,7 @@ class Items {
 			unsigned int id;
 			std::string title;
 			std::string description;
-			std::string icon_path;
+			std::string icon;
 			unsigned int output = 0;
 			float cook_time = 0.f;
 			float customer_wait = 0.f;
@@ -33,13 +34,17 @@ class Items {
 				title(_title),
 				description(_description),
 				output(_output),
-				icon_path(_icon_path),
+				icon(_icon_path),
 				cook_time(_cook_time),
 				customer_wait(_customer_wait) {};
 		};
 
-		inline bool hasRecipe(const uint8_t id) {
+		inline bool hasRecipe(const uint8_t id) const {
 			return (recipes.find(id) != recipes.end()) ? true : false;
+		};
+
+		inline bool hasItem(const uint8_t id) const {
+			return (items.find(id) != items.end()) ? true : false;
 		};
 
 		inline CookRecipe* getRecipeInfo(const uint8_t id) {
@@ -52,18 +57,18 @@ class Items {
 			return (item != items.end()) ? &item->second : nullptr;
 		};
 
-		inline size_t getItemsSize() const { return items.size(); };
-		inline size_t getRecipesSize() const { return recipes.size(); };
+		inline size_t getAllItems() const { return items.size(); };
+		inline size_t getAllRecipes() const { return recipes.size(); };
 
 	private:
-		std::map<unsigned __int16, Item> items = {
+		std::map<uint16_t, Item> items = {
 			{1, {1, "../../../assets/textures/ui/icons/soup-1.png", 100}},
 			{2, {2, "../../../assets/textures/ui/icons/soup-2.png", 100}},
 			{3, {3, "../../../assets/textures/ui/icons/soup-3.png", 100}},
 			{4, {4, "../../../assets/textures/ui/icons/soup-4.png", 100}},
 		};
 
-		std::map<unsigned __int16, CookRecipe> recipes = {
+		std::map<uint16_t, CookRecipe> recipes = {
 			{1, {1, "Borsch", "Recipe Description", "../../../assets/textures/ui/icons/soup-1.png", 1, 1.f, 60.f}},
 			{2, {2, "Chicken soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-2.png", 2, 1.f, 60.f}},
 			{3, {3, "Vegan Soup", "Recipe Description", "../../../assets/textures/ui/icons/soup-3.png", 3, 1.f, 60.f}},

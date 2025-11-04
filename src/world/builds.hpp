@@ -89,6 +89,7 @@ class Builds {
 					} else if (cookingManager.getCookeedFlag() && entityManager.getEntity("player")) {
 						if (player->getSelectedItem() != 0) return;
 						player->setSelectedItem(cookingManager.getRecipe(cookingManager.getCookingRecipeName())->id, items);
+						cookingManager.resetCookeedFlag();
 						if (orderManager.orders.empty()) return;
 						for (auto& order : orderManager.orders) {
 							if (orderManager.getOrder(order.first)->id == player->getSelectedItem()) {
@@ -96,7 +97,6 @@ class Builds {
 								break;
 							};
 						}; orderDisplay.update();
-						cookingManager.resetCookeedFlag();
 					};
 				};
 			});

@@ -5,6 +5,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cctype>
+#include <stdint.h>
+
 #include "items.hpp"
 
 class CookingManager {
@@ -17,25 +19,25 @@ class CookingManager {
 		};
 
 		std::map<std::string, Items::CookRecipe> availableRecipes;
-		inline void addRecipe(const std::string name, unsigned __int16 id) {
+		inline void addRecipe(const std::string recipe_name, uint16_t id) {
 			if (items.hasRecipe(id)) {
-				std::string lower_name = name;
+				std::string lower_name = recipe_name;
 				std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(),
 					[](unsigned char c) {return std::tolower(c); });
 				availableRecipes.emplace(lower_name, *items.getRecipeInfo(id));
 			};
 		};
 
-		inline Items::CookRecipe* getRecipe(const std::string name) {
-			std::string lower_name = name;
+		inline Items::CookRecipe* getRecipe(const std::string recipe_name) {
+			std::string lower_name = recipe_name;
 			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(),
 				[](unsigned char c) {return std::tolower(c); });
 			auto item = availableRecipes.find(lower_name);
 			return (item != availableRecipes.end()) ? &item->second : nullptr;
 		};
 
-		inline void startCookProcess(const std::string nameRecipe) {
-			std::string lower_name = nameRecipe;
+		inline void startCookProcess(const std::string recipe_name) {
+			std::string lower_name = recipe_name;
 			std::transform(lower_name.begin(), lower_name.end(), lower_name.begin(), [](unsigned char c) {return std::tolower(c); });
 			recipeTime = getRecipe(lower_name)->cook_time;
 			cookTimer = 0.f;

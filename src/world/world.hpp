@@ -33,8 +33,8 @@ class World {
 			ui(main_ui) {
 			characters->spawn(resourceManager, entityManager, economyManager, *ui.getHUD());
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, orderManager, *ui.getOrderDisplay(), items_container);
-			//eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 12.25f, true });
-			eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager, orderManager, eventManager, *ui.getOrderDisplay(), items); }, 1.5f, !true });
+			eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 12.25f, true });
+			eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager, orderManager, eventManager, *ui.getOrderDisplay(), items); }, 1.5f, true });
 			ui.getOrderDisplay()->update();
 		};
 

@@ -48,7 +48,7 @@ class Player : public Entity {
 		inline void setHandler(std::function<void()> new_handler) override {};
 		inline void event(sf::RenderWindow& window, sf::Event& event) override {};
 		inline void handler(sf::RenderWindow& window, sf::Event& event) override {};
-		void render(sf::RenderWindow& window, float delta, sf::View& gameCamera, sf::Clock& clock) override;
+		void render(sf::RenderWindow& window, float delta, sf::View& camera, sf::Clock& clock) override;
 	
 	private:
 		void movement(float deltaTime);

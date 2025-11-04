@@ -53,16 +53,20 @@ class Characters {
 			OrdersDisplay& ordersDisplay,
 			Items& items
 		) {
-			std::string new_customer_id = generetingNewCustomerID(entityManager);
-			initNPCResources(resourceManager, new_customer_id);
-			spawnCustomer(resourceManager, entityManager, new_customer_id);
-			setCustomerEvent(resourceManager, entityManager, orderManager, eventManager, ordersDisplay, items, new_customer_id);
-			setCustomerHandle(resourceManager, entityManager, orderManager, ordersDisplay, items, new_customer_id);
+			if (!hasCustomer) {
+				std::string new_customer_id = generetingNewCustomerID(entityManager);
+				initNPCResources(resourceManager, new_customer_id);
+				spawnCustomer(resourceManager, entityManager, new_customer_id);
+				setCustomerEvent(resourceManager, entityManager, orderManager, eventManager, ordersDisplay, items, new_customer_id);
+				setCustomerHandle(resourceManager, entityManager, orderManager, ordersDisplay, items, new_customer_id);
+				hasCustomer = true;
+			};
 		};
 
 	private:
 		Utils utils;
 		const int DELETE_PASSERBY = 1000;
+		bool hasCustomer = false;
 
 		inline float getDirection() {
 			if (utils.rangeRandom(0, 1) == 0) return -WALK_SPEED;
@@ -109,7 +113,7 @@ class Characters {
 		inline uint8_t getNewOrder(Items& items) {
 			std::random_device rd; 
 			std::mt19937 rand(rd());
-			std::uniform_int_distribution<int> dist(1, items.getRecipesSize());
+			std::uniform_int_distribution<int> dist(1, items.getAllRecipes());
 			return static_cast<uint8_t>(dist(rd));
 		};
 
@@ -164,7 +168,7 @@ class Characters {
 					resourceManager.getTexture("npc-" + npc_id + "-walk-vertical"),
 					resourceManager.getTexture("npc-" + npc_id + "-walk-horizontal"),
 					resourceManager.getTexture("entity-shadow")
-				));
+			));
 		};
 
 		inline void spawnCustomer(
@@ -199,19 +203,18 @@ class Characters {
 			float direction = getDirection();
 			sf::Vector2i vector = getVector(direction);
 			static_cast<NPC*>(passerby)->getSprite().setPosition(getPasserbyPosition(direction));
-			passerby->setEvent(
-				[this, npcName, passerby, direction, vector, &entityManager]() {
-					auto npc = static_cast<NPC*>(passerby);
-					auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
-					static float time = 0.f;
-					npc->getSprite().move({ static_cast<float>(direction - (direction * 0.5)),0 });
-					npc->getAnimation().update(npc->getSprite(), npc->getTextureMoveHorizontal(), vector, {16,16}, WALK_ANIM, 3, npc->getDelta());
-					if (player) {
-						if (entityManager.getDistance(player->getSprite(), npc->getSprite()) > DELETE_PASSERBY) {
-							entityManager.removeEntity(npcName);
-						};
+			passerby->setEvent([this, npcName, passerby, direction, vector, &entityManager]() {
+				auto npc = static_cast<NPC*>(passerby);
+				auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
+				static float time = 0.f;
+				npc->getSprite().move({ static_cast<float>(direction - (direction * 0.5)),0 });
+				npc->getAnimation().update(npc->getSprite(), npc->getTextureMoveHorizontal(), vector, {16,16}, WALK_ANIM, 3, npc->getDelta());
+				if (player) {
+					if (entityManager.getDistance(player->getSprite(), npc->getSprite()) > DELETE_PASSERBY) {
+						entityManager.removeEntity(npcName);
 					};
-				});
+				};
+			});
 		};
 
 		inline void setCustomerEvent(
@@ -231,13 +234,13 @@ class Characters {
 			sf::Vector2i vector = getVector(direction);
 			customer->getSprite().setPosition(customerMovement[0]);
 			customer->setOrder(getNewOrder(items));
-			entityManager.getEntity(npcName)->setEvent([this, npcName, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
+
+			auto movement_flags = std::make_shared<std::pair<bool, bool>>(false, false);
+			entityManager.getEntity(npcName)->setEvent([this, npcName, movement_flags, npc_id, &entityManager, &eventManager, &orderManager, &ordersDisplay, &items]() {
 				auto customer_npc = (entityManager.getEntity(npcName)) ? static_cast<NPC*>(entityManager.getEntity(npcName)) : nullptr;
-				static bool move_flag_1 = false;
-				static bool move_flag_2 = false;
 				float move_speed = static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5));
 
-				if (!move_flag_1) {
+				if (!movement_flags->first) {
 					if (customer_npc->getSprite().getPosition() != customerMovement[1]) {
 						customer_npc->getSprite().move(move_speed, 0);
 						customer_npc->getAnimation().update(
@@ -246,10 +249,10 @@ class Characters {
 							{ 0,0 }, { 16,16 },
 							WALK_ANIM, 3, customer_npc->getDelta()
 						);
-					} else move_flag_1 = true;
+					} else movement_flags->first = true;
 				};
 
-				if (move_flag_1 && !move_flag_2) {
+				if (movement_flags->first && !movement_flags->second) {
 					if (customer_npc->getSprite().getPosition() != customerMovement[2]) {
 						customer_npc->getSprite().move(0, move_speed);
 						customer_npc->getAnimation().update(
@@ -259,23 +262,19 @@ class Characters {
 							WALK_ANIM, 3, customer_npc->getDelta()
 						);
 					} else {
-						move_flag_2 = true;
+						movement_flags->second = true;
 						customer_npc->getSprite().setTexture(customer_npc->getTextureIDLE());
 						customer_npc->getSprite().setTextureRect(sf::IntRect({ 0,0 }, ENTITY_SIZE));
-						eventManager.addEvent(
-							"order-" + npc_id, { [customer_npc, &orderManager, &ordersDisplay, &items]() {
-								auto recipe = items.getRecipeInfo(customer_npc->getOrder());
-								orderManager.addOrder(
-									"order-" + std::to_string(customer_npc->getOrder()),
-									{ 
-										static_cast<unsigned int>(customer_npc->getOrder()),
-										recipe->title,
-										recipe->icon_path, 
-										recipe->customer_wait 
-									}
-								); ordersDisplay.update();
-							}, 1.f }
-						);
+						auto recipe = items.getRecipeInfo(static_cast<int>(customer_npc->getOrder()));
+						orderManager.addOrder(
+							"order-" + std::to_string(static_cast<int>(customer_npc->getOrder())),
+							{
+								static_cast<unsigned int>(customer_npc->getOrder()),
+								recipe->title,
+								recipe->icon,
+								recipe->customer_wait
+							}
+						); ordersDisplay.update();
 					};
 				};
 			});
@@ -293,7 +292,8 @@ class Characters {
 			if (!entityManager.getEntity(npcName)) return;
 
 			auto customer = static_cast<NPC*>(entityManager.getEntity(npcName));
-			customer->setHandler([this, &entityManager, &orderManager, &ordersDisplay, &items, npcName]() {
+			auto movement_flags = std::make_shared<std::pair<bool, bool>>(false, false);
+			customer->setHandler([this, movement_flags, &entityManager, &orderManager, &ordersDisplay, &items, npcName]() {
 				auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
 				if (player) {
 					auto npc = static_cast<NPC*>(entityManager.getEntity(npcName));
@@ -301,13 +301,11 @@ class Characters {
 						player->setSelectedItem(0, items);
 						orderManager.removeOrder("order-"+std::to_string(static_cast<int>(npc->getOrder())));
 						ordersDisplay.update();
-						npc->setEvent([this, npcName, &entityManager]() {
+						npc->setEvent([this, npcName, movement_flags, &entityManager]() {
 							auto npc = static_cast<NPC*>(entityManager.getEntity(npcName));
-							static bool movement_flag_1 = false;
-							static bool movement_flag_2 = false;
 							float move_speed = static_cast<float>(-WALK_SPEED - (-WALK_SPEED * 0.5));
 
-							if (!movement_flag_1) {
+							if (!movement_flags->first) {
 								if (npc->getSprite().getPosition() != customerMovement[1]) {
 									npc->getSprite().move(0, -move_speed);
 									npc->getAnimation().update(
@@ -316,10 +314,10 @@ class Characters {
 										{ 0,0 }, { 16,16 },
 										WALK_ANIM, 3, npc->getDelta()
 									);
-								} else movement_flag_1 = true;
+								} else movement_flags->first = true;
 							}; 
 							
-							if (movement_flag_1 && !movement_flag_2) {
+							if (movement_flags->first && !movement_flags->second) {
 								if (npc->getSprite().getPosition() != customerMovement[3]) {
 									npc->getSprite().move(move_speed, 0);
 									npc->getAnimation().update(
@@ -329,7 +327,8 @@ class Characters {
 										WALK_ANIM, 3, npc->getDelta()
 									);
 								} else {
-									movement_flag_2 = true;
+									movement_flags->second = true;
+									hasCustomer = false;
 									entityManager.removeEntity(npcName);
 								};
 							};
