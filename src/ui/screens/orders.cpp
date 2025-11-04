@@ -1,4 +1,4 @@
-#include "orders.hpp"
+﻿#include "orders.hpp"
 
 void OrdersDisplay::setup() {
 	initResources();
@@ -16,11 +16,13 @@ void OrdersDisplay::update() {
 		std::string orderName = "order-" + std::to_string(id);
 		std::string orderIcon = "order-" + std::to_string(id) + "-icon";
 		std::string orderTitle = "order-title" + std::to_string(id);
+		std::string orderProgress = "order-progress-bar-" + std::to_string(id);
 
 		if (resourceManager.getTexture(orderIcon)) resourceManager.removeTexture(orderIcon);
 		if (uiManager.getElement(orderName)) uiManager.removeElement(orderName);;
 		if (uiManager.getElement(orderIcon)) uiManager.removeElement(orderIcon);;
 		if (uiManager.getElement(orderTitle)) uiManager.removeElement(orderTitle);;
+		if (uiManager.getElement(orderProgress)) uiManager.removeElement(orderProgress);;
 	};
 
 	int id = 0;
