@@ -12,22 +12,19 @@ void OrdersDisplay::initResources() {
 };
 
 void OrdersDisplay::update() {
-	for (uint8_t id = 0; id < MAX_ORDERS; id++) {
+	for (int id = 0; id < MAX_ORDERS; id++) {
 		std::string orderName = "order-" + std::to_string(id);
 		std::string orderIcon = "order-" + std::to_string(id) + "-icon";
 		std::string orderTitle = "order-title" + std::to_string(id);
 
-		if (!uiManager.getElement(orderName)) break;
-		if (!uiManager.getElement(orderIcon)) break;
-		if (!uiManager.getElement(orderTitle)) break;
-
-		uiManager.removeElement(orderName);
-		uiManager.removeElement(orderIcon);
-		uiManager.removeElement(orderTitle);
+		if (resourceManager.getTexture(orderIcon)) resourceManager.removeTexture(orderIcon);
+		if (uiManager.getElement(orderName)) uiManager.removeElement(orderName);;
+		if (uiManager.getElement(orderIcon)) uiManager.removeElement(orderIcon);;
+		if (uiManager.getElement(orderTitle)) uiManager.removeElement(orderTitle);;
 	};
 
-	uint8_t id = 0;
-	uint8_t buttonX = 0;
+	int id = 0;
+	int buttonX = 0;
 	for (const auto& order : ordersManager.orders) {
 		buttonX += 8;
 		std::string orderName = "order-" + std::to_string(id);
@@ -37,7 +34,7 @@ void OrdersDisplay::update() {
 		auto& config = order.second;
 
 		sf::Texture* orderTexture = (config.cookeed) ? resourceManager.getTexture("order-ready") : resourceManager.getTexture("order");
-		if (!config.icon.empty()) resourceManager.loadTexture(orderIcon, config.icon);
+		if (!config.icon.empty()) if (!resourceManager.getTexture(orderIcon)) resourceManager.loadTexture(orderIcon, config.icon);
 		if (orderTexture) uiManager.addElement(orderName, uiManager.gui.createSprite(orderTexture));
 		if (resourceManager.getTexture(orderIcon)) uiManager.addElement(orderIcon, uiManager.gui.createSprite(resourceManager.getTexture(orderIcon)));
 		if (!config.title.empty()) uiManager.addElement(orderTitle, uiManager.gui.createLabel(config.title, resourceManager.getFont("nunito"), 22, sf::Color::Black));
