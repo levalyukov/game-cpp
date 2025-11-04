@@ -2,7 +2,6 @@
 
 #include <map>
 #include <string>
-#include <iostream>
 #include <algorithm>
 #include <cctype>
 #include <stdint.h>
@@ -48,7 +47,6 @@ class CookingManager {
 		inline void cookingProcess(const float delta) {
 			if (cookingFlag) {
 				cookTimer += delta;
-				std::cout << cookTimer << std::endl;
 				if (cookTimer >= recipeTime) {
 					cookingFlag = false;
 					cookedFlag = true;

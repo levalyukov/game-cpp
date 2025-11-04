@@ -37,7 +37,7 @@ void HUD::initParameters() {
 	buttonStore->setHandleEvent(
 		[&]() {
 			if (globals.getUIOpened()) return;
-			gloceryShop.setVisible(true); 
+			gloceryShop.setVisible(true);
 		}
 	);
 };

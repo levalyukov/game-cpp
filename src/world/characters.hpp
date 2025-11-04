@@ -323,7 +323,6 @@ class Characters {
 				auto player = (entityManager.getEntity("player")) ? static_cast<Player*>(entityManager.getEntity("player")) : nullptr;
 				if (player) {
 					auto npc = static_cast<NPC*>(entityManager.getEntity(npcName));
-					std::cout << entityManager.getDistance(player->getSprite(), npc->getSprite()) << std::endl;
 					if (entityManager.getDistance(player->getSprite(), npc->getSprite()) <= 125) {
 						if (!*order_received) {
 							*order_received = true;
