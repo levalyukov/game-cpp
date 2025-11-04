@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <map>
 #include <string>
@@ -11,11 +11,10 @@
 
 class CookingManager {
 	public:
-		CookingManager(Items& items_container) : items(items_container) {
+		CookingManager(
+			Items& items_container
+		) : items(items_container) {
 			addRecipe("borsch", 1);
-			addRecipe("chicken", 2);
-			addRecipe("vegan", 3);
-			addRecipe("recipe", 4);
 		};
 
 		std::map<std::string, Items::CookRecipe> availableRecipes;

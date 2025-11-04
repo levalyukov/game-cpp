@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "../entities/entity-manager.hpp"
 #include "../core/resources/resources.hpp"
@@ -31,15 +31,15 @@ class World {
 			orderManager(order_manager),
 			items(items_container),
 			ui(main_ui) {
-			characters->spawn(resourceManager, entityManager, economyManager, *ui.getHUD());
+			characters->spawn(resourceManager, entityManager);
 			builds->create(resourceManager, entityManager, uiManager, cookingManager, orderManager, *ui.getOrderDisplay(), items_container);
 			eventManager.addEvent("passerby", { [&]() {characters->passerby(resourceManager, entityManager); }, 12.25f, true });
-			eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager, orderManager, eventManager, *ui.getOrderDisplay(), items); }, 1.5f, true });
+			eventManager.addEvent("customer", { [&]() {characters->customer(resourceManager, entityManager, cookingManager, orderManager, eventManager, *ui.getOrderDisplay(), economyManager, items, *ui.getHUD()); }, 1.5f, true });
 			ui.getOrderDisplay()->update();
 		};
 
-		inline void render(float delta, sf::View& game_camera) {
-			entityManager.render(delta, game_camera);
+		inline void render(const float delta, sf::View& camera) {
+			entityManager.render(delta, camera);
 			cookingManager.cookingProcess(delta);
 			eventManager.update(delta);
 		};
