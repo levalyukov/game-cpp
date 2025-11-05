@@ -266,8 +266,7 @@ class Characters {
 								{ 0,0 }, { 16,16 },
 								WALK_ANIM, 3, customer_npc->getDelta()
 							);
-						}
-						else movement_flags->first = true;
+						} else movement_flags->first = true;
 					};
 
 					if (movement_flags->first && !movement_flags->second) {
@@ -279,8 +278,7 @@ class Characters {
 								{ 0,16 }, { 16,16 },
 								WALK_ANIM, 3, customer_npc->getDelta()
 							);
-						}
-						else {
+						} else {
 							movement_flags->second = true;
 							customer_npc->getSprite().setTexture(customer_npc->getTextureIDLE());
 							customer_npc->getSprite().setTextureRect(sf::IntRect({ 0,0 }, ENTITY_SIZE));
@@ -365,7 +363,7 @@ class Characters {
 										};
 									};
 
-									});
+								});
 							};
 						};
 					};

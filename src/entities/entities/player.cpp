@@ -1,4 +1,4 @@
-#include "player.hpp"
+﻿#include "player.hpp"
 
 void Player::render(sf::RenderWindow& window, const float delta, sf::View& camera, sf::Clock& clock) {
 	if (shadowSprite) window.draw(*shadowSprite);
@@ -12,6 +12,7 @@ void Player::render(sf::RenderWindow& window, const float delta, sf::View& camer
 };
 
 void Player::movement(const float delta) {
+	//printf("X: %.2f | Y: %.2f\n", player->getPosition().x / 64, player->getPosition().y/64);
 	if (!stopped_flag) {
 		bool movementUp = false;
 		bool movementDown = false;

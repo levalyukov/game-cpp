@@ -10,6 +10,8 @@
 #include "nature.hpp"
 #include "builds.hpp"
 
+#define DISTANCE_FOR_INTERACTION 125
+
 class World {
 	public:
 		World(

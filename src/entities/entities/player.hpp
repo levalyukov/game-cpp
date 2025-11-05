@@ -1,10 +1,11 @@
-#pragma once
+﻿#pragma once
 
 #include "../entity.hpp"
 #include "../../core/animations/animations.hpp"
 #include "../../core/globals.hpp"
 #include "../../mechanics/items.hpp"
 
+#include <iostream>
 #include <stdint.h>
 #include <memory>
 
@@ -48,10 +49,10 @@ class Player : public Entity {
 		inline void setHandler(std::function<void()> new_handler) override {};
 		inline void event(sf::RenderWindow& window, sf::Event& event) override {};
 		inline void handler(sf::RenderWindow& window, sf::Event& event) override {};
-		void render(sf::RenderWindow& window, float delta, sf::View& camera, sf::Clock& clock) override;
+		void render(sf::RenderWindow& window, const float delta, sf::View& camera, sf::Clock& clock) override;
 	
 	private:
-		void movement(float deltaTime);
+		void movement(const float deltaTime);
 
 		sf::Vector2i spriteSize{ 16,16 };
 		std::unique_ptr<sf::Sprite> player = nullptr;

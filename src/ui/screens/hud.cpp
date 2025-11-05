@@ -34,12 +34,9 @@ void HUD::initLayers() {
 void HUD::initParameters() {
 	if (!uiManager.getElement("hud-button-store")) return;
 	auto buttonStore = static_cast<Button*>(uiManager.getElement("hud-button-store"));
-	buttonStore->setHandleEvent(
-		[&]() {
-			if (globals.getUIOpened()) return;
-			gloceryShop.setVisible(true);
-		}
-	);
+	buttonStore->setHandleEvent([&]() {
+		if (!globals.getUIOpened()) gloceryShop.setVisible(true);
+	});
 };
 
 void HUD::update() {
