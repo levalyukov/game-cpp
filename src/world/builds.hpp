@@ -7,6 +7,8 @@
 #include "../ui/screens/orders.hpp"
 #include "../ui/ui-manager.hpp"
 
+#define DISTANCE_FOR_INTERACTION 125
+
 class Builds {
 	public:
 		inline void create(
@@ -25,9 +27,12 @@ class Builds {
 
 	private:
 		inline void initResources(ResourceManager& resourceManager) {
-			resourceManager.loadTexture("kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
-			resourceManager.loadTexture("warehouse", "../../../assets/textures/entity/builds/warehouse/warehouse.png");
-			resourceManager.loadTexture("trashbox", "../../../assets/textures/entity/builds/trashbox/trashbox.png");
+			resourceManager.loadTexture(
+				"kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
+			resourceManager.loadTexture(
+				"warehouse", "../../../assets/textures/entity/builds/warehouse/warehouse.png");
+			resourceManager.loadTexture(
+				"trashbox", "../../../assets/textures/entity/builds/trashbox/trashbox.png");
 		};
 
 		inline void initBuilds(
@@ -36,9 +41,26 @@ class Builds {
 			UIManager& uiManager, 
 			CookingManager& cookingManager
 		) {
-			entityManager.addEntity("kitchen", std::make_unique<Build>(resourceManager.getTexture("kitchen"), sf::Vector2f({ 11*64,5*64 }), sf::Vector2i({ 16,16 })));
-			entityManager.addEntity("warehouse", std::make_unique<Build>(resourceManager.getTexture("warehouse"), sf::Vector2f({ 14*64,5*64 }), sf::Vector2i({ 16,16 })));
-			entityManager.addEntity("trashbox", std::make_unique<Build>(resourceManager.getTexture("trashbox"), sf::Vector2f({ 13*64,5*64 }), sf::Vector2i({ 16,16 })));
+			entityManager.addEntity(
+				"kitchen", 
+				std::make_unique<Build>(
+					resourceManager.getTexture("kitchen"), 
+					sf::Vector2f({ 11*64,4*64 }), 
+					sf::Vector2i({ 16,32 })
+			));
+			entityManager.addEntity(
+				"warehouse", 
+				std::make_unique<Build>(
+					resourceManager.getTexture("warehouse"), 
+					sf::Vector2f({ 14*64,5*64 }), 
+					sf::Vector2i({ 16,16 })
+			));
+			entityManager.addEntity("trashbox", 
+				std::make_unique<Build>(
+					resourceManager.getTexture("trashbox"), 
+					sf::Vector2f({ 13*64,5*64 }), 
+					sf::Vector2i({ 16,16 })
+			));
 		};
 
 		inline void initParameters(

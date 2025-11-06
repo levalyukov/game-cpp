@@ -29,7 +29,7 @@ class Player : public Entity {
 			player = std::make_unique<sf::Sprite>();
 			player->setTexture(idle);
 			player->setTextureRect(sf::IntRect(16, 0, spriteSize.x, spriteSize.y));
-			player->setPosition({ (25 * 64) / 2,(17 * 64) / 2 });
+			player->setPosition({ 12 * 64,6 * 64 });
 			player->setScale(4, 4);
 			shadowSprite = std::make_unique<sf::Sprite>();
 			shadowSprite->setTexture(shadowTexture);
