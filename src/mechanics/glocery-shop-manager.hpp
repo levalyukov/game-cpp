@@ -1,14 +1,16 @@
-#pragma once
+﻿#pragma once
 #define MAX_GLOCERY_SHOP_SLOTS 4
+
 #include <map>
+#include <stdint.h>
 
 class GloceryShopManager {
 	public:
 		struct Product {
 			std::string title = "";
 			const std::string icon = "";
-			unsigned __int32 price = 0;
-			unsigned __int16 value = 1;
+			uint32_t price = 0;
+			uint32_t value = 1;
 		};
 
 		std::map<std::string, Product> shop;

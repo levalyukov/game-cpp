@@ -9,9 +9,9 @@
 #include <string>
 #include <iostream>
 
-class KitchenMenu {
+class BakeMenu {
 	public:
-		KitchenMenu(
+		BakeMenu(
 			UIManager& ui_manager,
 			ResourceManager& resource_manager, 
 			CookingManager& cooking_manager,

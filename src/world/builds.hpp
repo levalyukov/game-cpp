@@ -28,11 +28,13 @@ class Builds {
 	private:
 		inline void initResources(ResourceManager& resourceManager) {
 			resourceManager.loadTexture(
-				"kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
+				"bake",	"../../../assets/textures/entity/builds/bake/bake.png");
 			resourceManager.loadTexture(
-				"warehouse", "../../../assets/textures/entity/builds/warehouse/warehouse.png");
+				"fridge",	"../../../assets/textures/entity/builds/fridge/fridge.png");
 			resourceManager.loadTexture(
 				"trashbox", "../../../assets/textures/entity/builds/trashbox/trashbox.png");
+			resourceManager.loadTexture(
+				"kitchen", "../../../assets/textures/entity/builds/kitchen/kitchen.png");
 		};
 
 		inline void initBuilds(
@@ -41,26 +43,42 @@ class Builds {
 			UIManager& uiManager, 
 			CookingManager& cookingManager
 		) {
-			entityManager.addEntity(
-				"kitchen", 
-				std::make_unique<Build>(
-					resourceManager.getTexture("kitchen"), 
-					sf::Vector2f({ 11*64,4*64 }), 
+			if (resourceManager.getTexture("bake")
+			&& !entityManager.getEntity("bake")) {
+				entityManager.addEntity("bake",
+					std::make_unique<Build>(
+					resourceManager.getTexture("bake"),
+					sf::Vector2f({ 11 * 64,4 * 64 }),
 					sf::Vector2i({ 16,32 })
-			));
-			entityManager.addEntity(
-				"warehouse", 
-				std::make_unique<Build>(
-					resourceManager.getTexture("warehouse"), 
-					sf::Vector2f({ 14*64,5*64 }), 
+				));
+			};
+			if (resourceManager.getTexture("fridge") 
+			&& !entityManager.getEntity("fridge")) {
+				entityManager.addEntity("fridge",
+					std::make_unique<Build>(
+					resourceManager.getTexture("fridge"),
+					sf::Vector2f({ 14 * 64,4 * 64 }),
+					sf::Vector2i({ 16,32 })
+				));
+			};
+			if (resourceManager.getTexture("trashbox") 
+			&& !entityManager.getEntity("trashbox")) {
+				entityManager.addEntity("trashbox",
+					std::make_unique<Build>(
+					resourceManager.getTexture("trashbox"),
+					sf::Vector2f({ 13 * 64,5 * 64 }),
 					sf::Vector2i({ 16,16 })
-			));
-			entityManager.addEntity("trashbox", 
-				std::make_unique<Build>(
-					resourceManager.getTexture("trashbox"), 
-					sf::Vector2f({ 13*64,5*64 }), 
-					sf::Vector2i({ 16,16 })
-			));
+				));
+			};
+			if (resourceManager.getTexture("kitchen") 
+			&& !entityManager.getEntity("kitchen")) {
+				entityManager.addEntity("kitchen",
+					std::make_unique<Build>(
+					resourceManager.getTexture("kitchen"),
+					sf::Vector2f({ 16 * 64,5 * 64 }),
+					sf::Vector2i({ 32,16 })
+				));
+			};
 		};
 
 		inline void initParameters(
@@ -73,7 +91,7 @@ class Builds {
 			Items& items
 		) {
 			initKitchen(entityManager, uiManager, cookingManager, orderManager, orderDisplay, items);
-			initWarehouse(entityManager, uiManager);
+			initFridge(entityManager, uiManager);
 			initTrashbox(entityManager, orderManager, items);
 		};
 
@@ -85,22 +103,22 @@ class Builds {
 			OrdersDisplay& orderDisplay,
 			Items& items
 		) {
-			if (!entityManager.getEntity("kitchen")) return;
-			auto kitchen = static_cast<Build*>(entityManager.getEntity("kitchen"));
-			kitchen->setHandler([&entityManager, &cookingManager, &uiManager, &orderManager, &orderDisplay, &items]() {
+			if (!entityManager.getEntity("bake")) return;
+			auto bake = static_cast<Build*>(entityManager.getEntity("bake"));
+			bake->setHandler([&entityManager, &cookingManager, &uiManager, &orderManager, &orderDisplay, &items]() {
 				if (Globals::instance().getUIOpened()) return;
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
-				auto build = static_cast<Build*>(entityManager.getEntity("kitchen"));
+				auto build = static_cast<Build*>(entityManager.getEntity("bake"));
 				if (player->getSelectedItem() != 0) return;
 				if (entityManager.getDistance(build->getSprite(), player->getSprite()) <= DISTANCE_FOR_INTERACTION) {
 					if (!cookingManager.getCookeedFlag() && !cookingManager.getCookingFlag()) {
 						Globals::instance().setUIOpened(true);
-						uiManager.getElement("kitchen-ui-background")->setVisible(true);
-						uiManager.getElement("kitchen-ui-panel")->setVisible(true);
-						uiManager.getElement("kitchen-ui-close-button")->setVisible(true);
+						uiManager.getElement("bake-ui-background")->setVisible(true);
+						uiManager.getElement("bake-ui-panel")->setVisible(true);
+						uiManager.getElement("bake-ui-close-button")->setVisible(true);
 						for (int y = 0; y < cookingManager.availableRecipes.size(); y++) {
-							std::string buttonRecipe = "kitchen-ui-recipe-button-" + std::to_string(y);
-							std::string buttonLabelRecipe = "kitchen-ui-recipe-button-" + std::to_string(y) + "-label";
+							std::string buttonRecipe = "bake-ui-recipe-button-" + std::to_string(y);
+							std::string buttonLabelRecipe = "bake-ui-recipe-button-" + std::to_string(y) + "-label";
 							if (uiManager.getElement(buttonRecipe) && uiManager.getElement(buttonLabelRecipe)) {
 								uiManager.getElement(buttonRecipe)->setVisible(true);
 								uiManager.getElement(buttonLabelRecipe)->setVisible(true);
@@ -122,25 +140,26 @@ class Builds {
 			});
 		};
 
-		inline void initWarehouse(
+		inline void initFridge(
 			EntityManager& entityManager,
 			UIManager& uiManager
 		) {
-			if (!entityManager.getEntity("warehouse")) return;
-			auto warehouse = static_cast<Build*>(entityManager.getEntity("warehouse"));
-			warehouse->setHandler([&entityManager, &uiManager]() {
+			if (!entityManager.getEntity("fridge")) return;
+			auto fridge = static_cast<Build*>(entityManager.getEntity("fridge"));
+			fridge->setHandler([&entityManager, &uiManager]() {
 				if (Globals::instance().getUIOpened()) return;
 
 				auto player = static_cast<Player*>(entityManager.getEntity("player"));
-				auto build = static_cast<Build*>(entityManager.getEntity("warehouse"));
+				auto build = static_cast<Build*>(entityManager.getEntity("fridge"));
 				if (entityManager.getDistance(build->getSprite(), player->getSprite()) <= DISTANCE_FOR_INTERACTION) {
-					if (!uiManager.getElement("warehouse-background")) return;
-					if (!uiManager.getElement("warehouse-panel")) return;
+					if (!uiManager.getElement("fridge-background")) return;
+					if (!uiManager.getElement("fridge-panel")) return;
+					if (!uiManager.getElement("fridge-close-button")) return;
 
 					Globals::instance().setUIOpened(true);
-					uiManager.getElement("warehouse-background")->setVisible(true);
-					uiManager.getElement("warehouse-panel")->setVisible(true);
-					uiManager.getElement("warehouse-close-button")->setVisible(true);
+					uiManager.getElement("fridge-background")->setVisible(true);
+					uiManager.getElement("fridge-panel")->setVisible(true);
+					uiManager.getElement("fridge-close-button")->setVisible(true);
 				};
 			});
 		};

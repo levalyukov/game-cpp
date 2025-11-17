@@ -1,4 +1,4 @@
-#include "build.hpp"
+﻿#include "build.hpp"
 
 void Build::handler(sf::RenderWindow& window, sf::Event& event) {
 	bool isHovered = sprite->getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
@@ -15,7 +15,6 @@ void Build::handler(sf::RenderWindow& window, sf::Event& event) {
 			if (event.mouseButton.button == sf::Mouse::Left && isHovered) {
 				m_state = Pressed;
 				isPressed = true;
-				sprite->setTextureRect(sf::IntRect({ 0,build_size.y * Pressed }, build_size));
 			}; break;
 
 		case sf::Event::MouseButtonReleased:

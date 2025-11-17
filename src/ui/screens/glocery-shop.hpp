@@ -5,7 +5,7 @@
 #include "../../core/resources/resources.hpp"
 #include "../../mechanics/glocery-shop-manager.hpp"
 #include "../../mechanics/economy-manager.hpp"
-#include "../../mechanics/warehouse-manager.hpp"
+#include "../../mechanics/fridge-manager.hpp"
 
 #include <string>
 
@@ -16,13 +16,13 @@ class GloceryShop {
 			ResourceManager& resource_manager,
 			EconomyManager& economy_manager,
 			GloceryShopManager& glocery_shop_manager,
-			WarehouseManager& warehouse_manager,
+			FridgeManager& fridge_manager,
 			Globals& global_manager
 		) : resourceManager(resource_manager),
 			uiManager(ui_manager),
 			economyManager(economy_manager),
 			gloceryShopManager(glocery_shop_manager),
-			warehouseManager(warehouse_manager),
+			fridgeManager(fridge_manager),
 			globals(global_manager) {};
 
 		void setup();
@@ -38,7 +38,7 @@ class GloceryShop {
 		ResourceManager& resourceManager;
 		EconomyManager& economyManager;
 		GloceryShopManager& gloceryShopManager;
-		WarehouseManager& warehouseManager;
+		FridgeManager& fridgeManager;
 
 		bool visible = true;
 		unsigned int page = 1;

@@ -92,7 +92,7 @@ void GloceryShop::initButtons() {
 		buttonProduct->setRelativePosition(UIElement::TopLeft, panel->getSprite(), buttonProduct->getSprite(), { 16,16 + (static_cast<float>(index) * 80) });
 		buttonProduct->setHandleEvent([&](){
 			if (economyManager.getMoney() >= product.second.price) {
-				warehouseManager.addItem(product.first, {product.second.title, product.second.icon, 1});
+				fridgeManager.addItem(product.first, {product.second.title, product.second.icon, 1});
 				economyManager.removeMoney(product.second.price);
 				hud->update();
 			} else {

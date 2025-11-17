@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include <map>
 #include <string>
 #include <algorithm>
 
-class WarehouseManager {
+class FridgeManager {
 	public:
 		struct Item {
 			std::string title = "";

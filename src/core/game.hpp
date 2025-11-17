@@ -51,13 +51,13 @@ class Game {
 		std::unique_ptr<UIManager> uiManager = std::make_unique<UIManager>();
 		std::unique_ptr<EconomyManager> economyManager = std::make_unique<EconomyManager>();
 		std::unique_ptr<GloceryShopManager> gloceryShopManager = std::make_unique<GloceryShopManager>();
-		std::unique_ptr<WarehouseManager> warehouseManager = std::make_unique<WarehouseManager>();
+		std::unique_ptr<FridgeManager> fridgeManager = std::make_unique<FridgeManager>();
 		std::unique_ptr<OrdersManager> ordersManager = std::make_unique<OrdersManager>();
 		std::unique_ptr<Rating> ratingManager = std::make_unique<Rating>();
 
 		std::unique_ptr<UI> ui = std::make_unique<UI>(
 			*uiManager, *resourceManager, *cookingManager, 
-			*economyManager, *gloceryShopManager, *warehouseManager, 
+			*economyManager, *gloceryShopManager, *fridgeManager,
 			*ordersManager);
 		std::unique_ptr<World> world = std::make_unique<World>(
 			*uiManager, *entityManager, *resourceManager, 

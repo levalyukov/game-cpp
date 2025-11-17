@@ -1,20 +1,20 @@
-#pragma once
+﻿#pragma once
 
 #include "../../core/globals.hpp"
 #include "../ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
-#include "../../mechanics/warehouse-manager.hpp"
+#include "../../mechanics/fridge-manager.hpp"
 
-class Warehouse {
+class Fridge {
 	public:
-		Warehouse(
+		Fridge(
 			UIManager& ui_manager,
 			ResourceManager& resource_manager,
-			WarehouseManager& warehouse_manager,
+			FridgeManager& fridge_manager,
 			Globals& global_manager
 		) : uiManager(ui_manager),
 			resourceManager(resource_manager),
-			warehouseManager(warehouse_manager),
+			fridgeManager(fridge_manager),
 			globals(global_manager) {}
 
 		void setup();
@@ -25,7 +25,7 @@ class Warehouse {
 		Globals& globals;
 		UIManager& uiManager;
 		ResourceManager& resourceManager;
-		WarehouseManager& warehouseManager;
+		FridgeManager& fridgeManager;
 
 		bool visible = false;
 
