@@ -1,10 +1,11 @@
-#pragma once
+﻿#pragma once
 
+#include "screen.hpp"
 #include "../ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
 #include "../../mechanics/orders-manager.hpp"
 
-class OrdersDisplay {
+class OrdersDisplay : public Screen {
 	public:
 		OrdersDisplay(
 			UIManager& ui_manager,
@@ -14,7 +15,7 @@ class OrdersDisplay {
 			resourceManager(resource_manager),
 			ordersManager(orders_manager) {};
 
-		void setup();
+		void setup() override;
 		void update();
 
 	private:

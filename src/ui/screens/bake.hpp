@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "screen.hpp"
 #include "../screens/hud.hpp"
 #include "../../core/globals.hpp"
 #include "../../ui/ui-manager.hpp"
@@ -9,7 +10,7 @@
 #include <string>
 #include <iostream>
 
-class BakeMenu {
+class BakeMenu : public Screen {
 	public:
 		BakeMenu(
 			UIManager& ui_manager,
@@ -21,7 +22,7 @@ class BakeMenu {
 			cooking(cooking_manager),
 			globals(global_manager) {};
 
-		void setup();
+		void setup() override;
 
 	private:
 		Globals& globals;

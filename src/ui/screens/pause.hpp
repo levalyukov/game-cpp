@@ -1,12 +1,13 @@
 ﻿#pragma once
 
+#include "screen.hpp"
 #include "../../core/globals.hpp"
 #include "../../core/resources/resources.hpp"
 #include "../ui-manager.hpp"
 
 #include <string>
 
-class Pause {
+class Pause : public Screen {
 	public:
 		Pause(
 			UIManager& ui_manager,
@@ -16,7 +17,7 @@ class Pause {
 			resourseManager(resourse_manager),
 			globals(global_manager) {};
 
-		void setup();
+		void setup() override;
 
 	private:
 		Globals& globals;

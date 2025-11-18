@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "screen.hpp"
 #include "IHUD.h"
 #include "../ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
@@ -9,7 +10,7 @@
 
 #include <string>
 
-class GloceryShop {
+class GloceryShop : public Screen {
 	public:
 		GloceryShop(
 			UIManager& ui_manager,
@@ -25,7 +26,7 @@ class GloceryShop {
 			fridgeManager(fridge_manager),
 			globals(global_manager) {};
 
-		void setup();
+		void setup() override;
 		void update();
 		void setVisible(bool new_state);
 		inline bool getVisible() const { return visible; };

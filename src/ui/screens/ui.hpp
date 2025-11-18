@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "screen.hpp"
 #include "pause.hpp"
 #include "hud.hpp"
 #include "bake.hpp"
@@ -8,6 +9,7 @@
 #include "orders.hpp"
 
 #include <memory>
+#include <vector>
 
 class UI {
 	public: 
@@ -25,16 +27,21 @@ class UI {
 			economyManager(economy_manager),
 			gloceryShopManager(glocery_shop_manager),
 			fridgeManager(fridge_manager),
-			ordersManager(orders_manager) { allSetup(); };
-
+			ordersManager(orders_manager) { 
+			screens.emplace_back(pause);
+			screens.emplace_back(kitchenMenu);
+			screens.emplace_back(fridge);
+			screens.emplace_back(orders);
+			allSetup(); 
+		};
+		std::vector<std::shared_ptr<Screen>> screens;
 		inline void allSetup() {
-			pause->setup();
+			for (auto& screen : screens) {
+				if (screen) screen->setup();
+			};
 			hud->setup();
-			kitchenMenu->setup();
-			gloceryShop->setup();
 			gloceryShop->setHUD(hud.get());
-			warehouse->setup();
-			orders->setup();
+			gloceryShop->setup();
 		};
 
 		inline HUD* getHUD() const { return hud.get(); };
@@ -53,9 +60,9 @@ class UI {
 		OrdersManager& ordersManager;
 
 		std::unique_ptr<GloceryShop> gloceryShop = std::make_unique<GloceryShop>(uiManager, resourceManager, economyManager, gloceryShopManager, fridgeManager, globals);
-		std::unique_ptr<Pause> pause = std::make_unique<Pause>(uiManager, resourceManager, globals);
+		std::shared_ptr<Pause> pause = std::make_unique<Pause>(uiManager, resourceManager, globals);
 		std::unique_ptr<HUD> hud = std::make_unique<HUD>(uiManager, resourceManager, economyManager, *gloceryShop, globals);
-		std::unique_ptr<BakeMenu> kitchenMenu = std::make_unique<BakeMenu>(uiManager, resourceManager, cookingManager, globals);
-		std::unique_ptr<Fridge> warehouse = std::make_unique<Fridge>(uiManager, resourceManager, fridgeManager, globals);
-		std::unique_ptr<OrdersDisplay> orders = std::make_unique<OrdersDisplay>(uiManager, resourceManager, ordersManager);
+		std::shared_ptr<BakeMenu> kitchenMenu = std::make_unique<BakeMenu>(uiManager, resourceManager, cookingManager, globals);
+		std::shared_ptr<Fridge> fridge = std::make_unique<Fridge>(uiManager, resourceManager, fridgeManager, globals);
+		std::shared_ptr<OrdersDisplay> orders = std::make_unique<OrdersDisplay>(uiManager, resourceManager, ordersManager);
 };

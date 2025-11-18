@@ -52,6 +52,15 @@ class Builds {
 					sf::Vector2i({ 16,32 })
 				));
 			};
+			if (resourceManager.getTexture("kitchen")
+				&& !entityManager.getEntity("kitchen")) {
+				entityManager.addEntity("kitchen",
+					std::make_unique<Build>(
+						resourceManager.getTexture("kitchen"),
+						sf::Vector2f({ 12 * 64,5 * 64 }),
+						sf::Vector2i({ 32,16 })
+					));
+			};
 			if (resourceManager.getTexture("fridge") 
 			&& !entityManager.getEntity("fridge")) {
 				entityManager.addEntity("fridge",
@@ -66,17 +75,8 @@ class Builds {
 				entityManager.addEntity("trashbox",
 					std::make_unique<Build>(
 					resourceManager.getTexture("trashbox"),
-					sf::Vector2f({ 13 * 64,5 * 64 }),
+					sf::Vector2f({ 15 * 64,5 * 64 }),
 					sf::Vector2i({ 16,16 })
-				));
-			};
-			if (resourceManager.getTexture("kitchen") 
-			&& !entityManager.getEntity("kitchen")) {
-				entityManager.addEntity("kitchen",
-					std::make_unique<Build>(
-					resourceManager.getTexture("kitchen"),
-					sf::Vector2f({ 16 * 64,5 * 64 }),
-					sf::Vector2i({ 32,16 })
 				));
 			};
 		};

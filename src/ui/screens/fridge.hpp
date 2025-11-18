@@ -1,11 +1,12 @@
 ﻿#pragma once
 
+#include "screen.hpp"
 #include "../../core/globals.hpp"
 #include "../ui-manager.hpp"
 #include "../../core/resources/resources.hpp"
 #include "../../mechanics/fridge-manager.hpp"
 
-class Fridge {
+class Fridge : public Screen {
 	public:
 		Fridge(
 			UIManager& ui_manager,
@@ -17,7 +18,7 @@ class Fridge {
 			fridgeManager(fridge_manager),
 			globals(global_manager) {}
 
-		void setup();
+		void setup() override;
 		void update();
 		void setVisible(bool new_state);
 
