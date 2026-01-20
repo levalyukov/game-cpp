@@ -5,6 +5,11 @@ project(soup)
 add_subdirectory(libs/sfml)
 add_subdirectory(libs/catch2)
 
+file(GLOB_RECURSE engine_src "src/engine/*.cpp")
+add_library(engine STATIC ${engine_src})
+list(REMOVE_ITEM SRC_EXECUTABLE ${ENGINE_SOURCES})
+include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/engine)
+
 # .:: Setup tests ::.
 file(GLOB_RECURSE TESTS "tests/*.cpp")
 add_executable(tests ${TESTS})
@@ -21,10 +26,6 @@ file(GLOB_RECURSE src
   "src/*.hpp"
 )
 
-file(GLOB_RECURSE engine_src "src/engine/*.cpp")
-add_library(engine STATIC ${engine_src})
-list(REMOVE_ITEM SRC_EXECUTABLE ${ENGINE_SOURCES})
-include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/engine)
 add_executable(soup ${src})
 target_link_libraries(soup PRIVATE 
   sfml-graphics 

@@ -16,7 +16,7 @@ class Game {
 
   private:
     std::unique_ptr<Engine> engine = std::make_unique<Engine>();
-    sf::Window& window = *engine->getGameWindow();
+    sf::RenderWindow& window = *engine->getGameWindow();
     sf::Event& event = *engine->getGameEvent();
 
     inline void run(void) {
@@ -24,11 +24,15 @@ class Game {
       game();
     };
 
+    std::unique_ptr<UIManager> ui = std::make_unique<UIManager>();
+    std::unique_ptr<LevelManager> level = std::make_unique<LevelManager>();
+    std::unique_ptr<EntityManager> entity = std::make_unique<EntityManager>();
     inline void game(void) {
       while (window.isOpen()) {
-        while (window.pollEvent(event)) {
-          if (event.type == sf::Event::Closed) window.close();
-        };
+        engine->windowEvent();
+        if (ui) ui->update();
+        if (entity) entity->update(window, event);
+        if (level) level->update();
       };
     };
 };

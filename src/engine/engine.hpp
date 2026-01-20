@@ -13,7 +13,7 @@ class Engine {
   public:
     Engine(void) {
       event = std::make_unique<sf::Event>();
-      window = std::make_unique<sf::Window>(
+      window = std::make_unique<sf::RenderWindow>(
       sf::VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), WINDOW_TITLE);
       if (window) {
         window->setFramerateLimit(60);
@@ -24,10 +24,16 @@ class Engine {
       };
     };
 
-    inline sf::Window* getGameWindow(void) const { return window.get(); };
+    inline void windowEvent(void) {
+      while (window->pollEvent(*event)) {
+        if (event->type == sf::Event::Closed) window->close();
+      };
+    };
+    inline sf::RenderWindow* getGameWindow(void) const { return window.get(); };
     inline sf::Event* getGameEvent(void) const { return event.get(); };
+
   private:
-    std::unique_ptr<sf::Window> window = nullptr;
+    std::unique_ptr<sf::RenderWindow> window = nullptr;
     std::unique_ptr<sf::Event> event = nullptr;
     const sf::Uint8* iconPixels = {};
     sf::Image icon;
