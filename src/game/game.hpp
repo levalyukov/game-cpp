@@ -30,7 +30,7 @@ class Game {
     inline void game(void) {
       while (window.isOpen()) {
         engine->windowEvent();
-        if (ui) ui->update();
+        if (ui) ui->update(window, event);
         if (entity) entity->update(window, event);
         if (level) level->update();
       };
