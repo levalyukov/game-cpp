@@ -32,7 +32,7 @@ class Game {
         engine->windowEvent();
         if (ui) ui->update(window, event);
         if (entity) entity->update(window, event);
-        if (level) level->update();
+        if (level) level->update(window, event);
       };
     };
 };
