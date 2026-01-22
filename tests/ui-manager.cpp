@@ -8,7 +8,7 @@
 class Claus : public UIElement {
   public:
     inline void update(sf::RenderWindow& window, sf::Event& event) override {};
-    inline uint8_t getDepth(void) const override {}
+    inline uint8_t getDepth(void) const override { return 0; }
 };
 /*<! ----------------- !>*/
 

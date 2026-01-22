@@ -18,8 +18,9 @@ class UIManager {
       [](unsigned char c) {return std::tolower(c); });
       
       if (!getElement(copy)) {
+        elementsSort.emplace_back(std::move(element.get()));
         elements.emplace(copy, std::move(element));
-        elementsSort.emplace_back(element.get());
+        return true;
       }; return false;
     };
 
