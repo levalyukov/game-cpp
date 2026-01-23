@@ -1,10 +1,11 @@
 ﻿#pragma once
-#ifndef LEVEL_MANAGER_H
-#define LEVEL_MANAGER_H
+#ifndef ENGINE_LEVEL_MANAGER_H
+#define ENGINE_LEVEL_MANAGER_H
 
 #include <map>
+#include <iostream>
 #include <algorithm>
-#include "levels/level.hpp"
+#include "level.hpp"
 #include <SFML/Graphics.hpp>
 
 class LevelManager {
@@ -29,7 +30,7 @@ class LevelManager {
 
       auto lvl = getLevel(copy);
       if (lvl) {
-        poiner = lvl;
+        pointer = lvl;
         return true;
       }; return false;
     };
@@ -50,19 +51,23 @@ class LevelManager {
 
       auto lvl = levels.find(copy);
       if (lvl != levels.end()) {
-        levels.erase(lvl);
+        if (pointer) {
+          if (pointer == lvl->second.get()) pointer = nullptr;
+        }; levels.erase(lvl);
         return true;
       }; return false;
     };
 
+    inline Level* getPointer(void) const { return pointer; };
+
     inline void update(sf::RenderWindow& window, sf::Event& event) {
       if (levels.empty()) return;
-      if (poiner) poiner->update(window, event);
+      if (pointer) pointer->update(window, event);
     };
 
   private:
     std::map<std::string, std::unique_ptr<Level>> levels;
-    Level* poiner = nullptr;
+    Level* pointer = nullptr;
 };
 
 #endif
