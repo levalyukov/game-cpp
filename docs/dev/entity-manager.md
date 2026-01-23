@@ -2,7 +2,7 @@
 
 Позволяет хранить, манипулировать и удалять сущностей с наследуемым абстрактным классом `Entity`.
 
-Тест: [tests/entity-manager.cpp](../../tests/entity-manager.cpp)
+Тест: [tests/entity-manager.cpp](../../src/engine/tests/entity-manager.cpp)
 
 ## Методы
 

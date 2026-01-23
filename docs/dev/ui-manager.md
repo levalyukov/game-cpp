@@ -2,7 +2,7 @@
 
 Позволяет отрисовывать UI-элементы, наследующие класс `UIElement`, для создания целостного игрового UI.
 
-Тест: [tests/ui-manager.cpp](../../tests/ui-manager.cpp)
+Тест: [tests/ui-manager.cpp](../../src/engine/tests/ui-manager.cpp)
 
 ## Методы
 
