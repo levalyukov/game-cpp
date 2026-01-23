@@ -1,14 +1,15 @@
 ﻿#include <memory>
 #include <stdint.h>
 #include <catch2/catch_all.hpp>
-#include <ui/elements/element.hpp>
 #include <ui/ui-manager.hpp>
+#include <ui/element.hpp>
 
 /*<! ----------------- !>*/
 class Claus : public UIElement {
   public:
     inline void update(sf::RenderWindow& window, sf::Event& event) override {};
-    inline uint8_t getDepth(void) const override { return 0; }
+    inline void setDepth(uint8_t depth) override {};
+    inline uint8_t getDepth(void) const override { return 0; };
 };
 /*<! ----------------- !>*/
 

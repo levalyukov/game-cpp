@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef AUDIO_H
-#define AUDIO_H
+#ifndef ENGINE_AUDIO_H
+#define ENGINE_AUDIO_H
 
 class AudioManager {};
 

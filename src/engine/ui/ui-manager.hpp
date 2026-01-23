@@ -1,12 +1,12 @@
 ﻿#pragma once
-#ifndef UI_MANAGER_H
-#define UI_MANAGER_H
+#ifndef ENGINE_UI_MANAGER_H
+#define ENGINE_UI_MANAGER_H
 
 #include <map>
 #include <vector>
 #include <string.h>
 #include <algorithm>
-#include "elements/element.hpp"
+#include "element.hpp"
 
 class UIManager {
 	public:

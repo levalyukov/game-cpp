@@ -1,7 +1,7 @@
 ﻿#include <memory>
 #include <catch2/catch_all.hpp>
 #include <entity/entity-manager.hpp>
-#include <entity/entities/entity.hpp>
+#include <entity/entity.hpp>
 
 /*<!-- Imitation of the entity class -->*/
 class Ritchie : public Entity {

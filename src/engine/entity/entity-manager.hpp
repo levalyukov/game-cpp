@@ -1,12 +1,12 @@
 ﻿#pragma once
-#ifndef ENTITY_MANAGER_H
-#define ENTITY_MANAGER_H
+#ifndef ENGINE_ENTITY_MANAGER_H
+#define ENGINE_ENTITY_MANAGER_H
 
 #include <map>
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "entities/entity.hpp"
+#include "entity.hpp"
 
 class EntityManager {
 	public:
@@ -68,4 +68,4 @@ class EntityManager {
     std::map<std::string, std::unique_ptr<Entity>> entities;
 };
 
-#endif ENTITY_MANAGER_H
+#endif

@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef COLLISIONS_H
-#define COLLISIONS_H
+#ifndef ENGINE_COLLISIONS_H
+#define ENGINE_COLLISIONS_H
 
 class CollisionsManager {};
 
