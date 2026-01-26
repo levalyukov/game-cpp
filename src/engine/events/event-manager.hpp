@@ -40,7 +40,7 @@ class EventManager {
       }; return false;
     };
 
-    inline Event_t* getEvent(const std::string& name) {
+    inline Event_t* getEvent(const std::string& name) const {
       std::string copy = name;
       std::transform(copy.begin(), copy.end(), copy.begin(),
         [](unsigned char c) {return std::tolower(c); });

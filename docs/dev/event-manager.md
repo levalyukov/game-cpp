@@ -34,7 +34,7 @@ bool addEvent(const std::string& name, std::unique_ptr<Event_t> event);
 
 Возвращает сырой указатель на событие, при его отсутствии возвращает `nullptr`.
 ```cpp
-Event_t* getEvent(const std::string& name);
+Event_t* getEvent(const std::string& name) const;
 ```
 
 Удаляет событие. Возвращает `true` при успешном удалении.
