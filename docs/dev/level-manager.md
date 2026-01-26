@@ -51,7 +51,7 @@ class GameMap1 : public Level {
     };
 };
 ```
-game.hpp:
+game.cpp:
 ```cpp
 #include "game.hpp"
 #include "level1.hpp"
