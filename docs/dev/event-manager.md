@@ -2,6 +2,8 @@
 
 Позволяет выполнять лямбды-функции через заданное время.
 
+Тест: [tests/event-manager.cpp](../../src/engine/tests/event-manager.cpp)
+
 ### Структура `Event_t`
 
 ```cpp
