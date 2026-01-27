@@ -7,6 +7,7 @@
 #include <ui/ui-manager.hpp>
 #include <entity/entity-manager.hpp>
 #include <levels/level-manager.hpp>
+#include <events/event-manager.hpp>
 
 class Game {
   public:
@@ -26,16 +27,12 @@ class Game {
       };
     };
 
-    std::unique_ptr<UIManager> ui = std::make_unique<UIManager>();
     std::unique_ptr<LevelManager> level = std::make_unique<LevelManager>();
-    std::unique_ptr<EntityManager> entity = std::make_unique<EntityManager>();
 
     void init(void);
     inline void game(void) {
       while (window.isOpen()) {
         engine->windowEvent();
-        if (ui) ui->update(window, event);
-        if (entity) entity->update(window, event);
         if (level) level->update(window, event);
       };
     };
