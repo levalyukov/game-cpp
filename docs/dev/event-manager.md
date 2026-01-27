@@ -27,7 +27,9 @@ Event_t(std::function<void()> _lambda, uint32_t _frequency, bool _repeat);
 
 ### Методы
 
-Добавление события. Возвращает `true` при успешном добавлении.
+Добавление события. 
+
+Возвращает `true` при успешном добавлении.
 ```cpp
 bool addEvent(const std::string& name, std::unique_ptr<Event_t> event);
 ```
@@ -37,7 +39,9 @@ bool addEvent(const std::string& name, std::unique_ptr<Event_t> event);
 Event_t* getEvent(const std::string& name) const;
 ```
 
-Удаляет событие. Возвращает `true` при успешном удалении.
+Удаляет событие. 
+
+Возвращает `true` при успешном удалении.
 ```cpp
 bool removeEvent(const std::string& name);
 ```
@@ -49,13 +53,38 @@ void update(void);
 
 ### Пример кода
 
+level1.hpp
 ```cpp
-std::unique_ptr<EventManager> events = std::make_unique<EventManager>();
+#pragma once
 
-void Game::init(void) {
+#include <memory>
+#include <levels/level.hpp>
+#include <levels/level-manager.hpp>
+
+class GameMap1 : public Level {
+  public:
+    inline void update(sf::RenderWindow& window, sf::Event& event) override {
+      if (events) events->update();
+
+      window.clear(sf::Color(255, 105, 180));
+      window.display();
+    };
+
+  private:
+    std::unique_ptr<EventManager> events = std::make_unique<EventManager>();
+
+    void init(void);
+};
+```
+
+level1.cpp
+```cpp
+#include "level1.hpp"
+
+void GameMap1::init(void) {
   if (events) {
     events->addEvent("event1", std::make_unique<Event_t>(
-    []() {std::cout << "- Hello!\n\t" << std::endl; }, 1, true));
+      []() {std::cout << "- Hello!\n\t" << std::endl; }, 1, true));
   };
 };
 ```
