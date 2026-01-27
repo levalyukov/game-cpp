@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class Level {
+class Scene {
   public:
     virtual void update(sf::RenderWindow& window, sf::Event& event) = 0;
 };

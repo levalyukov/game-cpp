@@ -4,10 +4,7 @@
 
 #include <memory>
 #include <engine.hpp>
-#include <ui/ui-manager.hpp>
-#include <entity/entity-manager.hpp>
-#include <levels/level-manager.hpp>
-#include <events/event-manager.hpp>
+#include <scenes/scene-manager.hpp>
 
 class Game {
   public:
@@ -27,13 +24,13 @@ class Game {
       };
     };
 
-    std::unique_ptr<LevelManager> level = std::make_unique<LevelManager>();
+    std::unique_ptr<SceneManager> scene = std::make_unique<SceneManager>();
 
     void init(void);
     inline void game(void) {
       while (window.isOpen()) {
         engine->windowEvent();
-        if (level) level->update(window, event);
+        if (scene) scene->update(window, event);
       };
     };
 };

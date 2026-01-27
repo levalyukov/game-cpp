@@ -1,20 +1,20 @@
-﻿# Класс `LevelManager`
+﻿# Класс `SceneManager`
 
 Позволяет хранить и перемещаться между уровнями.
 
-Тест: [tests/level-manager.cpp](../../src/engine/tests/level-manager.cpp)
+Тест: [tests/scene-manager.cpp](../../src/engine/tests/scene-manager.cpp)
 
 ## Методы
-Добавляет новую карту, которая наследует класс `Level`, в хралищие карт. 
+Добавляет новую карту, которая наследует класс `Scene`, в хралищие карт. 
 
 Возвращает `true` при успешном добавлении.
 ```cpp
-inline bool addLevel(const std::string& name, std::unique_ptr<Level> level)
+inline bool addScene(const std::string& name, std::unique_ptr<Scene> scene)
 ```
 
 Возвращает сырой указатель при условии, что указанная карта существует в хранилище карт.
 ```cpp
-inline Level* getLevel(const std::string& name)
+inline Scene* getScene(const std::string& name)
 ```
 
 Удаляет существующую карту из хранилища. Если указатель был ранее на этой карте - указатель становится nullptr.
@@ -22,12 +22,12 @@ inline Level* getLevel(const std::string& name)
 Возвращает `true` при успешном удалении.
 
 ```cpp
-inline bool removeLevel(const std::string& name)
+inline bool removeScene(const std::string& name)
 ```
 
 Устанавливает указатель на новую карту. Возвращает `true` при успешной смене. 
 ```cpp
-inline bool setLevel(const std::string& name)
+inline bool setScene(const std::string& name)
 ```
 
 Отрисовывает каждый кадр выбранную локацию.
@@ -37,13 +37,13 @@ inline void update(sf::RenderWindow& window, sf::Event& event)
 
 ### Пример кода
 
-level1.hpp:
+scene1.hpp:
 ```cpp
 #pragma once
 
-#include <levels/level.hpp>
+#include <scenes/scene.hpp>
 
-class GameMap1 : public Level {
+class GameMap1 : public Scene {
   public:
     inline void update(sf::RenderWindow& window, sf::Event& event) override {
       window.clear(sf::Color(255, 105, 180));
@@ -54,14 +54,14 @@ class GameMap1 : public Level {
 game.cpp:
 ```cpp
 #include "game.hpp"
-#include "level1.hpp"
+#include "scene1.hpp"
 
 void Game::init(void) {
-  if (level->addLevel("level1", std::make_unique<GameMap1>())) {
-    level->setLevel("level1");
+  if (scene->addScene("scene1", std::make_unique<GameMap1>())) {
+    scene->setScene("scene1");
   };
 };
 ```
 **Результат**:
 
-![screenshot_level_](assets/level-manager.png)
+![screenshot_scene](assets/scene-manager.png)

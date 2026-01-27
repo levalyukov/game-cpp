@@ -1,15 +1,15 @@
 ﻿#pragma once
 
 #include <memory>
-#include <levels/level.hpp>
+#include <scenes/scene.hpp>
 #include <ui/ui-manager.hpp>
-#include <levels/level-manager.hpp>
+#include <scenes/scene-manager.hpp>
 #include <entity/entity-manager.hpp>
 #include <events/event-manager.hpp>
 
-class GameMap1 : public Level {
+class GameMap1 : public Scene {
   public:
-    GameMap1(LevelManager* level_manager) : levels(*level_manager) { init(); };
+    GameMap1(SceneManager* scene_manager) : scenes(*scene_manager) { init(); };
 
     inline void update(sf::RenderWindow& window, sf::Event& event) override {
       if (ui) ui->update(window, event);
@@ -21,7 +21,7 @@ class GameMap1 : public Level {
     };
 
   private:
-    LevelManager& levels;
+    SceneManager& scenes;
     std::unique_ptr<UIManager> ui = std::make_unique<UIManager>();
     std::unique_ptr<EntityManager> entity = std::make_unique<EntityManager>();
     std::unique_ptr<EventManager> events = std::make_unique<EventManager>();
