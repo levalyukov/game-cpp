@@ -42,10 +42,10 @@ virtual void update(sf::RenderWindow& window, sf::Event& event) = 0;
 
 Установить новую Z-координату UI-элемента.
 ```cpp
-virtual void setDepth(const uint8_t depth) = 0;
+virtual void setDepth(const int16_t depth) = 0;
 ```
 
-Возвращает 8-ми битное Z-координату UI-элемента.
+Возвращает 16-и битное Z-координату UI-элемента.
 ```cpp
-virtual uint8_t getDepth(void) const = 0;
+virtual int16_t getDepth(void) const = 0;
 ```

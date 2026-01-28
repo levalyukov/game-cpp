@@ -62,7 +62,6 @@ class UIManager {
         if (element.second) element.second->update(window, event);
       };
     };
-    /* ----------------- */
 
     /* -- Fonts -- */
     inline bool addFont(const std::string& name, const std::string& path_to_font) {
@@ -98,8 +97,6 @@ class UIManager {
         return true;
       }; return false;
     };
-
-    /* ----------- */
 
     /* -- Textures -- */
     inline bool addTexture(const std::string& name, const std::string& path_to_texture) {
