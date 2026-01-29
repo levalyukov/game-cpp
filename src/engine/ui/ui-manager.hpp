@@ -10,7 +10,6 @@
 
 class UIManager {
 	public:
-
     /* -- UI Elements -- */
     inline bool addElement(const std::string& name, std::unique_ptr<UIElement> element) {
       if (!element) return false;

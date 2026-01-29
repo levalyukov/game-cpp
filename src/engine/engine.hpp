@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef GAME_ENGINE_H
-#define GAME_ENGINE_H
+#ifndef MIREN
+#define MIREN
 
 #include <SFML/Graphics.hpp>
 
@@ -24,13 +24,12 @@ class Engine {
       };
     };
 
-    inline void windowEvent(void) {
-      while (window->pollEvent(*event)) {
-        if (event->type == sf::Event::Closed) window->close();
-      };
-    };
     inline sf::RenderWindow* getGameWindow(void) const { return window.get(); };
     inline sf::Event* getGameEvent(void) const { return event.get(); };
+    inline void windowEvent(void) {
+      while (window->pollEvent(*event)) 
+        if (event->type == sf::Event::Closed) window->close();
+    };
 
   private:
     std::unique_ptr<sf::RenderWindow> window = nullptr;
