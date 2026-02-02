@@ -4,6 +4,7 @@
 #include <memory>
 #include "element.hpp"
 #include <functional>
+#include "label.hpp"
 #if defined(DEBUG)
 #include <logger.h>
 #endif
@@ -24,26 +25,29 @@ class Button : public UIElement {
     };
 
     inline void setFunction(const std::function<void()> lambda) { button = lambda; };
-    inline sf::Text& getButtonText(void) const { return *text.get(); };
+    inline Label& getButtonText(void) const { return *text.get(); };
     inline sf::Sprite& getButton(void) const { return *sprite.get(); };
     inline void setDepth(const int16_t new_depth) { depth = new_depth; };
     inline int16_t getDepth(void) const { return depth; };
 
-    inline bool setText(sf::Font* text_font, const std::wstring& message) {
+    inline bool setButtonText(sf::Font* font, const std::wstring& message) {
       if (!sprite) return false;
-      if (!text_font) return false;
+      if (!font) return false;
 
       if (!text) {
-        font = text_font;
-        text = std::make_unique<sf::Text>();
-        text->setFont(*font);
-        text->setPosition(sprite->getPosition());
+        text = std::make_unique<Label>(message, font);
+        #if defined(DEBUG)
+        LOGO("The text for the button has been successfully created.");
+        #endif
         return true;
-      }; return false;
+      }; 
+      #if defined(DEBUG)
+      LOGE("Error when creating the button text.");
+      #endif
+      return false;
     };
 
     inline void update(sf::RenderWindow& window, sf::Event& event) {
-      if (text) window.draw(*text);
       if (sprite) {
         bool hovered = sprite->getGlobalBounds().contains(
           window.mapPixelToCoords(sf::Mouse::getPosition(window)));
@@ -70,6 +74,8 @@ class Button : public UIElement {
         sprite->setTextureRect(sf::IntRect({ 0,state * 16 }, size));
         window.draw(*sprite);
       };
+
+      if (text) text->update(window, event);
     };
 
   private:
@@ -80,8 +86,7 @@ class Button : public UIElement {
 
     std::function<void()> button;
     std::unique_ptr<sf::Sprite> sprite = nullptr;
-    std::unique_ptr<sf::Text> text = nullptr;
-    sf::Font* font = nullptr;
+    std::unique_ptr<Label> text = nullptr;
     sf::Texture& texture;
     sf::Vector2i size;
 };
