@@ -9,6 +9,7 @@
 #include <string.h>
 #include <algorithm>
 #include "elements/element.hpp"
+#include "elements/label.hpp"
 
 class UIManager {
 	public:
@@ -16,9 +17,10 @@ class UIManager {
       TopLeft, TopCenter, TopRight,
       MiddleLeft, MiddleCenter, MiddleRight,
       BottomLeft, BottomCenter, BottomRight};
-    void setElementPosition(sf::RenderWindow& window, 
-      sf::Sprite& sprite, UIPosition position, sf::Vector2i margin = {0,0});
-
+    void setElementPosition(sf::RenderWindow& window,
+      sf::Sprite& sprite, UIPosition position, const sf::Vector2i margin = { 0,0 });
+    void setLabelPosition(const sf::Sprite& parent, const Label& label,
+      UIPosition position, const sf::Vector2i margin = { 0,0 });
     /* 
       True if the item was successfully added
       \return True if the item was successfully added
