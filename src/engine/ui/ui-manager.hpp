@@ -4,13 +4,25 @@
 
 #include <map>
 #include <vector>
+#include <logger.h>
+#include <iostream>
 #include <string.h>
 #include <algorithm>
 #include "elements/element.hpp"
 
 class UIManager {
 	public:
-    /* -- UI Elements -- */
+    enum UIPosition {
+      TopLeft, TopCenter, TopRight,
+      MiddleLeft, MiddleCenter, MiddleRight,
+      BottomLeft, BottomCenter, BottomRight};
+    void setElementPosition(sf::RenderWindow& window, 
+      sf::Sprite& sprite, UIPosition position, sf::Vector2i margin = {0,0});
+
+    /* 
+      True if the item was successfully added
+      \return True if the item was successfully added
+    */
     inline bool addElement(const std::string& name, std::unique_ptr<UIElement> element) {
       if (!element) return false;
 
@@ -25,6 +37,10 @@ class UIManager {
       }; return false;
     };
 
+    /*
+      Get an existing element
+      \return Pointer to the element, if it exists
+    */
     inline UIElement* getElement(const std::string& name) const {
       std::string copy = name;
       std::transform(copy.begin(), copy.end(), copy.begin(),
@@ -51,6 +67,10 @@ class UIManager {
       return true;
     };
 
+    /*
+      Rendering of all UI elements, use ONLY in the main loop!
+      \return Nothing
+    */
     inline void update(sf::RenderWindow& window, sf::Event& event) {
       if (elements.empty()) return;
 
@@ -62,7 +82,6 @@ class UIManager {
       };
     };
 
-    /* -- Fonts -- */
     inline bool addFont(const std::string& name, const std::string& path_to_font) {
       std::string copy = name;
       std::transform(copy.begin(), copy.end(), copy.begin(),
@@ -97,7 +116,6 @@ class UIManager {
       }; return false;
     };
 
-    /* -- Textures -- */
     inline bool addTexture(const std::string& name, const std::string& path_to_texture) {
       std::string copy = name;
       std::transform(copy.begin(), copy.end(), copy.begin(),

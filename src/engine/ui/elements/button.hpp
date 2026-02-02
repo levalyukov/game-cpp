@@ -4,23 +4,26 @@
 #include <memory>
 #include "element.hpp"
 #include <functional>
+#if defined(DEBUG)
+#include <logger.h>
+#endif
 
 class Button : public UIElement {
   public:
     Button(
-      const std::function<void()> lambda,
       sf::Texture* button_texture,
       const sf::Vector2i& button_size,
       const sf::Vector2i& button_position
-    ) : button(lambda),
-        texture(*button_texture),
+    ) : texture(*button_texture),
         size(button_size){
       if (!sprite) sprite = std::make_unique<sf::Sprite>();
+      sprite->setScale(4, 4);
       sprite->setTexture(texture);
       sprite->setPosition(button_position.x, button_position.y);
-      sprite->setScale(4, 4);
+      sprite->setTextureRect(sf::IntRect({ 0,0 }, size));
     };
 
+    inline void setFunction(const std::function<void()> lambda) { button = lambda; };
     inline sf::Text& getButtonText(void) const { return *text.get(); };
     inline sf::Sprite& getButton(void) const { return *sprite.get(); };
     inline void setDepth(const int16_t new_depth) { depth = new_depth; };
@@ -53,6 +56,9 @@ class Button : public UIElement {
           if (!pressed) {
             pressed = true;
             if (button) button();
+            #if defined(DEBUG)
+            else LOGE("Lambda of the button is invalid.");
+            #endif
           };
         }; 
         
