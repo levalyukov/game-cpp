@@ -27,7 +27,7 @@ inline bool removeScene(const std::string& name)
 
 Устанавливает указатель на новую карту. Возвращает `true` при успешной смене. 
 ```cpp
-inline bool setScene(const std::string& name)
+inline bool setPointer(const std::string& name)
 ```
 
 Отрисовывает каждый кадр выбранную локацию.

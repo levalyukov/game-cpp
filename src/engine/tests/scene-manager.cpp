@@ -35,18 +35,18 @@ TEST_CASE("Remove null element", "[SceneManager]") {
 TEST_CASE("Change poiner to level", "[SceneManager]") {
   SceneManager sm;
   REQUIRE(sm.addScene("goo", std::make_unique<Spawn>()));
-  CHECK(sm.setScene("goo"));
+  CHECK(sm.setPointer("goo"));
 };
 
 TEST_CASE("Change pointer to null level", "[SceneManager]") {
   SceneManager sm;
-  CHECK(!sm.setScene("loo"));
+  CHECK(!sm.setPointer("loo"));
 };
 
 TEST_CASE("Change poiner to level and remove", "[SceneManager]") {
   SceneManager sm;
   REQUIRE(sm.addScene("joo", std::make_unique<Spawn>()));
-  REQUIRE(sm.setScene("joo"));
+  REQUIRE(sm.setPointer("joo"));
   REQUIRE(sm.getPointer() == sm.getScene("joo"));
   REQUIRE(sm.removeScene("joo"));
   CHECK(!sm.getPointer());

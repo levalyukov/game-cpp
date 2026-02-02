@@ -7,6 +7,9 @@
 #include <algorithm>
 #include "scene.hpp"
 #include <SFML/Graphics.hpp>
+#if defined(DEBUG)
+#include <logger.h>
+#endif
 
 class SceneManager {
   public:
@@ -23,7 +26,7 @@ class SceneManager {
       }; return false;
     };
 
-    inline bool setScene(const std::string& name) {
+    inline bool setPointer(const std::string& name) {
       std::string copy = name;
       std::transform(copy.begin(), copy.end(), copy.begin(),
       [](unsigned char c) {return std::tolower(c); });
@@ -31,6 +34,9 @@ class SceneManager {
       auto lvl = getScene(copy);
       if (lvl) {
         pointer = lvl;
+        #if defined(DEBUG)
+        LOGO("Changed scene: %s", copy.c_str());
+        #endif
         return true;
       }; return false;
     };
