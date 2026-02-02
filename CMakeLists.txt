@@ -1,6 +1,11 @@
 ﻿cmake_minimum_required(VERSION 3.24)
 project(soup)
 
+if (CMAKE_BUILD_TYPE STREQUAL "Debug") 
+  add_compile_definitions(DEBUG)
+  message("Built in debugging mode.")
+endif()
+
 # .:: Libraries ::.
 add_subdirectory(libs/sfml)
 add_subdirectory(libs/catch2)

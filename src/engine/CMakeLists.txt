@@ -4,8 +4,13 @@ project(miren)
 file(GLOB_RECURSE engine_src "*.cpp")
 list(FILTER engine_src EXCLUDE REGEX ".*tests.*")
 add_library(engine STATIC ${engine_src})
-list(REMOVE_ITEM SRC_EXECUTABLE ${ENGINE_SOURCES})
 target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(engine PUBLIC
+  sfml-graphics
+  sfml-window
+  sfml-system
+)
 
 file(GLOB_RECURSE engine_tests "tests/*.cpp")
 add_executable(mirentests ${engine_tests})
