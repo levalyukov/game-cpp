@@ -14,7 +14,7 @@ class Button : public UIElement {
     Button(
       sf::Texture* button_texture,
       const sf::Vector2i& button_size,
-      const sf::Vector2i& button_position
+      const sf::Vector2i& button_position = {0,0}
     ) : texture(*button_texture),
         size(button_size){
       if (!sprite) sprite = std::make_unique<sf::Sprite>();
@@ -27,8 +27,10 @@ class Button : public UIElement {
     inline void setFunction(const std::function<void()> lambda) { button = lambda; };
     inline Label& getButtonText(void) const { return *text.get(); };
     inline sf::Sprite& getButton(void) const { return *sprite.get(); };
-    inline void setDepth(const int16_t new_depth) { depth = new_depth; };
-    inline int16_t getDepth(void) const { return depth; };
+    inline void setDepth(const int16_t new_depth) override { depth = new_depth; };
+    inline int16_t getDepth(void) const override { return depth; };
+    inline bool getVisible(void) const override { return visible; };
+    inline void setVisible(const bool& new_state) override { visible = new_state; };
 
     inline bool setButtonText(sf::Font* font, const std::wstring& message) {
       if (!sprite) return false;
@@ -36,6 +38,7 @@ class Button : public UIElement {
 
       if (!text) {
         text = std::make_unique<Label>(message, font);
+        text->getLabel().setPosition(sprite->getPosition());
         #if defined(DEBUG)
         LOGO("The text for the button has been successfully created.");
         #endif
@@ -47,7 +50,7 @@ class Button : public UIElement {
       return false;
     };
 
-    inline void update(sf::RenderWindow& window, sf::Event& event) {
+    inline void update(sf::RenderWindow& window, sf::Event& event) override {
       if (sprite) {
         bool hovered = sprite->getGlobalBounds().contains(
           window.mapPixelToCoords(sf::Mouse::getPosition(window)));
@@ -82,6 +85,7 @@ class Button : public UIElement {
     enum state_t {NONE, HOVERED, PRESSED};
     state_t state = state_t::NONE;
     int16_t depth = 0;
+    bool visible = true;
     bool pressed = false;
 
     std::function<void()> button;
