@@ -34,7 +34,7 @@ class EventManager {
         [](unsigned char c) {return std::tolower(c); });
 
       if (!getEvent(copy)) {
-        event->time = event->frequency + (delay-clock->getElapsedTime().asSeconds());
+        event->time = event->frequency + (delay - timer->getElapsedTime().asSeconds());
         events.emplace(copy, std::move(event));
         return true;
       }; return false;
@@ -63,9 +63,9 @@ class EventManager {
 
     inline void update(void) {
       if (events.empty()) return;
-      if (!clock) return;
+      if (!timer) return;
 
-      if (clock->getElapsedTime().asSeconds() >= delay) {
+      if (timer->getElapsedTime().asSeconds() >= delay) {
         for (auto& event : events) {
           if (event.second->time == 0) {
 
@@ -86,7 +86,7 @@ class EventManager {
   private:
     uint64_t delay = 0;
     std::map<std::string, std::unique_ptr<Event_t>> events;
-    std::unique_ptr<sf::Clock> clock = std::make_unique<sf::Clock>();
+    std::unique_ptr<sf::Clock> timer = std::make_unique<sf::Clock>();
 };
 
 #endif
