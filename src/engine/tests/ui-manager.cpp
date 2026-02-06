@@ -10,6 +10,8 @@ class Claus : public UIElement {
     inline void update(sf::RenderWindow& window, sf::Event& event) override {};
     inline void setDepth(int16_t depth) override {};
     inline int16_t getDepth(void) const override { return 0; };
+    inline bool getVisible(void) const override { return true; };
+    inline void setVisible(const bool& new_state) override {};
 };
 /*<! ----------------- !>*/
 
