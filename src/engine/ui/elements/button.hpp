@@ -30,7 +30,12 @@ class Button : public UIElement {
     inline void setDepth(const int16_t new_depth) override { depth = new_depth; };
     inline int16_t getDepth(void) const override { return depth; };
     inline bool getVisible(void) const override { return visible; };
-    inline void setVisible(const bool& new_state) override { visible = new_state; };
+    inline void setVisible(const bool& new_state) override { 
+      #if defined(DEBUG)
+      LOGI("Changed visible (old: %i, new: %i)", visible, new_state);
+      #endif
+      visible = new_state;
+    };
 
     inline bool setButtonText(sf::Font* font, const std::wstring& message) {
       if (!sprite) return false;
@@ -55,13 +60,17 @@ class Button : public UIElement {
         bool hovered = sprite->getGlobalBounds().contains(
           window.mapPixelToCoords(sf::Mouse::getPosition(window)));
        
-        if (hovered && state == state_t::NONE) state = state_t::HOVERED;
+        if (hovered && state == state_t::NONE) {
+          state = state_t::HOVERED;
+        };
+
         if (hovered && state != state_t::PRESSED
         && event.type == sf::Event::MouseButtonPressed
         && event.mouseButton.button == sf::Mouse::Left){
           state = state_t::PRESSED;
           if (!pressed) {
             pressed = true;
+
             if (button) button();
             #if defined(DEBUG)
             else LOGE("Lambda of the button is invalid.");
@@ -72,7 +81,11 @@ class Button : public UIElement {
         if (event.type == sf::Event::MouseButtonReleased) {
           pressed = false;
           state = state_t::HOVERED;
-        }; if (!hovered) state = state_t::NONE;
+        }; 
+        
+        if (!hovered) {
+          state = state_t::NONE;
+        };
 
         sprite->setTextureRect(sf::IntRect({ 0,state * 16 }, size));
         window.draw(*sprite);

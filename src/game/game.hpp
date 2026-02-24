@@ -29,8 +29,10 @@ class Game {
     void init(void);
     inline void game(void) {
       while (window.isOpen()) {
-        engine->windowEvent();
-        if (scene) scene->update(window, event);
+        while (window.pollEvent(event)) {
+          if (event.type == sf::Event::Closed) window.close();
+          if (scene) scene->update(window, event);
+        };
       };
     };
 };

@@ -18,12 +18,15 @@ class Label : public UIElement {
     };
 
     inline sf::Text& getLabel(void) const { return *text.get(); };
-    inline void update(sf::RenderWindow& window, sf::Event& event) { window.draw(*text); };
-    inline void setDepth(const int16_t new_depth) { depth = new_depth; };
-    inline int16_t getDepth(void) const { return depth; };
+    inline void update(sf::RenderWindow& window, sf::Event& event) override { window.draw(*text); };
+    inline void setDepth(const int16_t new_depth) override { depth = new_depth; };
+    inline int16_t getDepth(void) const override { return depth; };
+    inline bool getVisible(void) const override { return visible; };
+    inline void setVisible(const bool& new_state) override { visible = new_state; };
 
   private:
     int16_t depth = 0;
     sf::Font& font;
+    bool visible = true;
     std::unique_ptr<sf::Text> text = nullptr;
 };

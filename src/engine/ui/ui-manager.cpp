@@ -96,6 +96,7 @@ void UIManager::setElementPosition(
     spriteHeight, spriteWidth, newPositionX, newPositionY);
   #endif
 };
+
 void UIManager::setLabelPosition(const sf::Sprite& parent, const Label& label,
   UIManager::UIPosition position, const sf::Vector2i margin) {
   const int parentX = parent.getPosition().x;

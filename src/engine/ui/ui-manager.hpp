@@ -21,8 +21,9 @@ class UIManager {
       sf::Sprite& sprite, UIPosition position, const sf::Vector2i margin = { 0,0 });
     void setLabelPosition(const sf::Sprite& parent, const Label& label,
       UIPosition position, const sf::Vector2i margin = { 0,0 });
+
     /* 
-      True if the item was successfully added
+      Add UIElement in container.
       \return True if the item was successfully added
     */
     inline bool addElement(const std::string& name, std::unique_ptr<UIElement> element) {
@@ -79,9 +80,11 @@ class UIManager {
       std::sort(elementsSort.begin(), elementsSort.end(), 
       [](UIElement* a, UIElement* b) { return a->getDepth() < b->getDepth(); });
 
-      for (const auto& element : elements) {
-        if (element.second) element.second->update(window, event);
-      };
+      for (const auto& element : elements)
+        if (element.second) {
+          if (element.second->getVisible()) 
+            element.second->update(window, event);
+        };
     };
 
     inline bool addFont(const std::string& name, const std::string& path_to_font) {
