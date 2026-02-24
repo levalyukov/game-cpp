@@ -61,7 +61,7 @@ class UIContainer : public UIElement {
         if (items.second) {
           items.second->setVisible(new_state);
           #if defined(DEBUG) 
-          LOGI("Changed visible (%i) for: %s", new_state, items.first);
+          LOGI("Changed visible (%i) for: %s", new_state, items.first.c_str());
           #endif
         };
       };
